@@ -12,7 +12,7 @@ function Searchbar(props) {
         align-items : start;
         background: #f7f7f7;
     `
-    
+
     return (
         <StyledDiv>
             <InputField />

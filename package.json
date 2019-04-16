@@ -7,7 +7,10 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
+<<<<<<< HEAD
     "react-transition-group": "^2.9.0",
+=======
+>>>>>>> 996ee87bc3df445491e2f7c56c523278dd91926a
     "styled-components": "^4.2.0"
   },
   "scripts": {

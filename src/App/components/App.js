@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Main } from './Main/Main' 
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Main } from './Main/Main'
 
 class App extends Component {
   render() {
     return (
-      <div>
-        this is App area
-        <Main />
-      </div>
+      <Router>
+        <div>
+          <h3>this is App area</h3>
+          <Main />
+        </div>
+      </Router>
     );
   }
 }

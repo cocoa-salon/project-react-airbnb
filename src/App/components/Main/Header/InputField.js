@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { style } from './inputFieldStyle';
-const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
 
+const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
 
 const StyledInputPanel = styled(InputPanel)`
     width: 350px;
@@ -14,6 +15,7 @@ const StyledInputPanel = styled(InputPanel)`
     border-radius: 4px;
     box-shadow: 1px 1px 3px;
     transition: box-shadow 0.2s; 
+    z-index: 100; 
     &:hover {
         box-shadow: 1px 1px 10px;     
     };
@@ -68,19 +70,17 @@ function InputField(props) {
 
     const handleOnChange = event => setInputValue(event.target.value);
 
-    const removeInputValue = () => {
-        setInputValue("")
-    }
+    const removeInputValue = () => setInputValue("")
 
-    const handleonMouseEnter = () => setIsCursorEntered(true);
+    const handleOnMouseEnter = () => setIsCursorEntered(true);
 
-    const handleonMouseLeave = () => setIsCursorEntered(false);
+    const handleOnMouseLeave = () => setIsCursorEntered(false);
 
     const closeResultWindow = () => setInProp(false);
 
     return (
-        <div onMouseEnter={handleonMouseEnter}
-            onMouseLeave={handleonMouseLeave}
+        <div onMouseEnter={handleOnMouseEnter}
+            onMouseLeave={handleOnMouseLeave}
         >
             <CSSTransition in={inProp} timeout={200} classNames="input-field" classNames="input-panel">
                 <StyledInputPanel >
@@ -97,7 +97,7 @@ function InputField(props) {
             </CSSTransition>
             <CSSTransition in={inProp} timeout={200} classNames="result-window">
                 <StyledResultWindow onClick={closeResultWindow} className="styledResultWindow">
-                    {inProp === true ? <AdditionalButtons  /> : null}
+                    {inProp === true ? <AdditionalButtons /> : null}
                 </StyledResultWindow>
             </CSSTransition>
         </div>
@@ -126,13 +126,20 @@ const AdditionalButtons = function (props) {
     return (
         <StyledDiv>
             에어비엔비 둘러보기<br />
-            <StyledButton>모두</StyledButton>
-            <StyledButton>숙소</StyledButton>
-            <StyledButton>트립</StyledButton>
-            <StyledButton>레스토랑</StyledButton>
-        </StyledDiv>
+            <Link to="/all">
+                <StyledButton>모두</StyledButton>
+            </Link>
+            <Link to="/inn">
+                <StyledButton>숙소</StyledButton>
+            </Link>
+            <Link to="/trip">
+                <StyledButton>트립</StyledButton>
+            </Link>
+            <Link to="/restaurant">
+                <StyledButton>레스토랑</StyledButton>
+            </Link>
+        </StyledDiv >
     )
 }
-
 
 export { InputField }; 

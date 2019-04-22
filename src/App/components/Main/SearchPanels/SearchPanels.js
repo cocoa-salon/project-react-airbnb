@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import { AllSearchTab } from './SearchTabs/AllSearchTab';
 import { InnSearchTab } from './SearchTabs/InnSearchTab';
@@ -57,6 +57,25 @@ const StyledDiv = styled.div`
 
 function SearchTabs(props) {
     const [selectedButton, setSelectedButton] = useState(props.selectedButton);
+    const [adultNum, setAdultNum] = useState(0);
+    const [childNum, setChildNum] = useState(0);
+    const [toddlerNum, setToddlerNum] = useState(0);
+    const [guestNum, setGuestNum] = useState(0);
+
+
+    const calculateGuestNum = (name) => {
+        if (name === "removeAdult") { setAdultNum(adultNum - 1); setGuestNum(guestNum - 1); }
+        if (name === "addAdult") { setAdultNum(adultNum + 1); setGuestNum(guestNum + 1); }
+        if (name === "removeChildren") { setChildNum(childNum - 1); setGuestNum(guestNum - 1); }
+        if (name === "addChildren") { setChildNum(childNum + 1); setGuestNum(guestNum + 1); }
+        if (name === "removeToddler") { setToddlerNum(toddlerNum - 1); }
+        if (name === "addToddler") { setToddlerNum(toddlerNum + 1); }
+    }
+
+    // 성인 0 인 상태에서 유아++ 선택시 성인 자동으로 1 
+    // 로직을 어떻게 짤까. 
+
+
 
     const setButtonName = (event) => {
         const name = event.target.name
@@ -72,12 +91,14 @@ function SearchTabs(props) {
         props.handleOnMouseEnter();
     }
 
+
+
     const SearchOptionPanel = ({ ...rest }) => {
         switch (props.selectedButton) {
             case "date":
                 return <Calendar {...rest} />;
             case "guest":
-                return <Guest {...rest} />;
+                return <Guest {...rest} calculateGuestNum={calculateGuestNum} adultNum={adultNum} childNum={childNum} toddlerNum={toddlerNum} />;
             case "innType":
                 return <InnType {...rest} />;
             case "instantBook":
@@ -93,12 +114,14 @@ function SearchTabs(props) {
         }
     }
 
+    const SearchTabProps = { guestNum: guestNum, toddlerNum: toddlerNum, passButtonClick: setButtonName }
+
     return (
         <div>
-            {props.match.params.id === "all" ? <AllSearchTab passButtonClick={setButtonName} /> :
-                props.match.params.id === "inn" ? <InnSearchTab passButtonClick={setButtonName} /> :
-                    props.match.params.id === "trip" ? <TripSearchTab passButtonClick={setButtonName} /> :
-                        props.match.params.id === "restaurant" ? <RestaurantSearchTab passButtonClick={setButtonName} /> : null
+            {props.match.params.id === "all" ? <AllSearchTab {...SearchTabProps} /> :
+                props.match.params.id === "inn" ? <InnSearchTab {...SearchTabProps} /> :
+                    props.match.params.id === "trip" ? <TripSearchTab {...SearchTabProps} /> :
+                        props.match.params.id === "restaurant" ? <RestaurantSearchTab {...SearchTabProps} /> : null
             }
             <SearchOptionPanel handleOnMouseLeave={handleOnMouseLeave} handleOnMouseEnter={handleOnMouseEnter} />
         </div>

@@ -12,7 +12,7 @@ function AllSearchTab(props) {
         <SearchTabStyle >
             <h4>AllSearchPanel</h4>
             <DateSetButton passButtonClick={passButtonClick}  />
-            <GuestSetNumButton passButtonClick={passButtonClick}/>
+            <GuestSetNumButton guestNum={props.guestNum} toddlerNum={props.toddlerNum} passButtonClick={passButtonClick}/>
         </SearchTabStyle>
 
 // 여기에?

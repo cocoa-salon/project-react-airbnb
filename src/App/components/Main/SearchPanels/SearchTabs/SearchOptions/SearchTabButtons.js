@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyledOptionButton } from './OptionButtonStyle'
 
 const SearchTabButtons = {
     DateSetButton: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
-            
+
         }
         return (
             <StyledOptionButton name="date" onClick={passButtonClick}>
@@ -15,13 +15,18 @@ const SearchTabButtons = {
     },
 
     GuestSetNumButton: (props) => {
+        // const [isDisplayed, setIsDisplayed] = useState(false);
+        
         function passButtonClick(event) {
             props.passButtonClick(event);
-            
         }
+
         return (
             <StyledOptionButton name="guest" onClick={passButtonClick}>
-                인원
+                {props.guestNum === 0 ? "인원" :
+                    props.guestNum > 0 ? `게스트 ${props.guestNum}`  : ''
+                }
+                {props.toddlerNum > 0 ? `유아 ${[props.toddlerNum]}` : '' }
             </StyledOptionButton>
         )
     },
@@ -29,7 +34,7 @@ const SearchTabButtons = {
     InnTypeSetButton: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
-            
+
         }
         return (
             <StyledOptionButton name="innType" onClick={passButtonClick}>
@@ -41,7 +46,7 @@ const SearchTabButtons = {
     InstantBookSetButton: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
-            
+
         }
         return (
             <StyledOptionButton name="instantBook" onClick={passButtonClick}>
@@ -53,7 +58,7 @@ const SearchTabButtons = {
     PriceSetButton: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
-            
+
         }
         return (
             <StyledOptionButton name="price" onClick={passButtonClick}>
@@ -65,7 +70,7 @@ const SearchTabButtons = {
     TimeSetButton: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
-            
+
         }
         return (
             <StyledOptionButton name="time" onClick={passButtonClick}>
@@ -77,7 +82,7 @@ const SearchTabButtons = {
     FilterAddButton: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
-            
+
         }
         return (
             <StyledOptionButton name="filterAdd" onClick={passButtonClick}>

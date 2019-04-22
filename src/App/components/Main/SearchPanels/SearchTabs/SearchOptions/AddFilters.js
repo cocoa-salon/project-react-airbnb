@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { StyledOptionButton } from './OptionButtonStyle'
 import { SearchOptionStyle } from './SearchOptionStyle';
 
 

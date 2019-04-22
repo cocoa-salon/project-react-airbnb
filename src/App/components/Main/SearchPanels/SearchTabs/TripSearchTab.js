@@ -10,7 +10,7 @@ function TripSearchTab(props) {
         <SearchTabStyle>
             <h4>TripSearchPanel</h4>
             <DateSetButton passButtonClick={passButtonClick} />
-            <GuestSetNumButton passButtonClick={passButtonClick} />
+            <GuestSetNumButton passButtonClick={passButtonClick} guestNum={props.guestNum} toddlerNum={props.toddlerNum} passButtonClick={passButtonClick} />
             <PriceSetButton passButtonClick={passButtonClick} />
             <TimeSetButton passButtonClick={passButtonClick} />
         </SearchTabStyle>

@@ -5,8 +5,7 @@ const SearchOptionStyle = styled.div`
     z-index: 30;
     width: 500px;
     height: 400px; 
-    background: #f9c00c; 
-    opacity: 0.2;
+    background: #f4f7f7; 
 `
 
 export { SearchOptionStyle };

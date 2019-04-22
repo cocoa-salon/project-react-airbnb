@@ -11,7 +11,7 @@ function RestaurantSearchTab(props) {
         <SearchTabStyle>
             <h4>RestaurantSearchPanel</h4>
             <DateSetButton passButtonClick={passButtonClick} />
-            <GuestSetNumButton passButtonClick={passButtonClick} />
+            <GuestSetNumButton passButtonClick={passButtonClick} guestNum={props.guestNum} toddlerNum={props.toddlerNum} passButtonClick={passButtonClick} />
         </SearchTabStyle>
     )
 }

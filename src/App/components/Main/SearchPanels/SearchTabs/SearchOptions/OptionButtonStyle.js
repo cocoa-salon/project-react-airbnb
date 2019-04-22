@@ -15,6 +15,9 @@ const StyledOptionButton = styled.button`
         font-weight: bold; 
         border-radius: none; 
     }
+    &:active {
+        background: red; 
+    }
 `
 
 export { StyledOptionButton };

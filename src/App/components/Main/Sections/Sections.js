@@ -15,6 +15,7 @@ function Sections(props) {
 }
 
 const StyledDiv = styled.div`
+    position: relative; 
     width: 100%;
     height: 1000px;
     border: 2px solid grey;

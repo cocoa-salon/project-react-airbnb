@@ -106,10 +106,12 @@ function InputField(props) {
 
 const AdditionalButtons = function (props) {
     const StyledDiv = styled.div`
+        position: relative; 
+        z-index: 30;
         padding-top: 10px;
         margin-left: 3px;
         margin-bottom: 50px; 
-        color: slightgrey;
+        background: white;
     `
     const StyledButton = styled.button`
         width: 70px; 
@@ -126,16 +128,16 @@ const AdditionalButtons = function (props) {
     return (
         <StyledDiv>
             에어비엔비 둘러보기<br />
-            <Link to="/all">
+            <Link to="/search/all">
                 <StyledButton>모두</StyledButton>
             </Link>
-            <Link to="/inn">
+            <Link to="/search/inn">
                 <StyledButton>숙소</StyledButton>
             </Link>
-            <Link to="/trip">
+            <Link to="/search/trip">
                 <StyledButton>트립</StyledButton>
             </Link>
-            <Link to="/restaurant">
+            <Link to="/search/restaurant">
                 <StyledButton>레스토랑</StyledButton>
             </Link>
         </StyledDiv >

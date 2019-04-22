@@ -13,7 +13,8 @@ function Header(props) {
 }
 
 const StyeldHeader = styled.header`
-    width: 100%; 
+    position: relative; 
+    width: 100%;
     height: 150px; 
     background: #f7f7f7; 
     border: solid 2px grey; 

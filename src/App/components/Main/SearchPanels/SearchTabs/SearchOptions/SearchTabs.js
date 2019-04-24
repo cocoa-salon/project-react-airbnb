@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyledOptionButton } from './OptionButtonStyle'
 
-const SearchTabButtons = {
-    DateSetButton: (props) => {
+const SearchTabs = {
+    DateSetTab: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
 
@@ -14,7 +14,7 @@ const SearchTabButtons = {
         )
     },
 
-    GuestSetNumButton: (props) => {        
+    GuestSetTab: (props) => {        
         function passButtonClick(event) {
             props.passButtonClick(event);
         }
@@ -29,7 +29,7 @@ const SearchTabButtons = {
         )
     },
 
-    InnTypeSetButton: (props) => {
+    InnTypeSetTab: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
 
@@ -41,7 +41,7 @@ const SearchTabButtons = {
         )
     },
 
-    InstantBookSetButton: (props) => {
+    InstantBookSetTab: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
 
@@ -53,7 +53,7 @@ const SearchTabButtons = {
         )
     },
 
-    PriceSetButton: (props) => {
+    PriceSetTab: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
 
@@ -65,7 +65,7 @@ const SearchTabButtons = {
         )
     },
 
-    TimeSetButton: (props) => {
+    TimeSetTab: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
 
@@ -77,7 +77,7 @@ const SearchTabButtons = {
         )
     },
 
-    FilterAddButton: (props) => {
+    FilterAddTab: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
 
@@ -90,7 +90,7 @@ const SearchTabButtons = {
     }
 }
 
-export { SearchTabButtons }
+export { SearchTabs }
 
 
 

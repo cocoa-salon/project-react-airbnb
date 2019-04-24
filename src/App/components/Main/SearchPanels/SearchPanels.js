@@ -25,8 +25,8 @@ function SearchPanel(props) {
         props.handleOnMouseEnter();
     }
 
-    const passSelectedButton = (name) => {
-        props.passSelectedButton(name)
+    const passSelectedTab = (tabName) => {
+        props.passSelectedTab(tabName)
     }
 
     return (
@@ -36,7 +36,7 @@ function SearchPanel(props) {
                 <SearchTabs
                     handleOnMouseLeave={handleOnMouseLeave}
                     handleOnMouseEnter={handleOnMouseEnter}
-                    passSelectedButton={passSelectedButton}
+                    passSelectedTab={passSelectedTab}
                     selectedButton={props.selectedButton}
                     match={match}
                 />
@@ -55,6 +55,9 @@ const StyledDiv = styled.div`
 
 function SearchTabs(props) {
     const [selectedButton, setSelectedButton] = useState(0);
+
+    const [selectedTabName, setSelectedTabName] = useState('');
+
     const [adultNum, setAdultNum] = useState(0);
     const [childNum, setChildNum] = useState(0);
     const [toddlerNum, setToddlerNum] = useState(0);
@@ -67,7 +70,7 @@ function SearchTabs(props) {
         maxChildNum: 5,
         maxToddlerNum: 5
     };
-    const [isButtonDisabled, SetIsButtonDisabled] = useState({
+    const [isButtonActivated, setIsButtonActivated] = useState({
         minAdult: false,
         maxAdult: true,
         minChild: false,
@@ -76,83 +79,93 @@ function SearchTabs(props) {
         maxToddler: true,
     });
 
-    const [target, setTarget] = useState('');
-
-    const calculateGuestNum = (name) => {
-        if (name === "addAdult" || name === "addChildren" || name === "addToddler") increaseGuestNum(name);
-        else if (name === "removeAdult" || name === "removeChildren" || name === "removeToddler") decreaseGuestNum(name);
+    const calculateGuestNum = (buttonName) => {
+        if (buttonName === "addAdult" || buttonName === "addChildren" || buttonName === "addToddler") increaseGuestNum(buttonName);
+        else if (buttonName === "removeAdult" || buttonName === "removeChildren" || buttonName === "removeToddler") decreaseGuestNum(buttonName);
     };
 
-    const increaseGuestNum = (name) => {
-        if (name === "addAdult" && adultNum < guestNumLimit.maxAdultNum) {
+    const increaseGuestNum = (buttonName) => {
+        if (buttonName === "addAdult" && adultNum < guestNumLimit.maxAdultNum) {
             setAdultNum(adultNum + 1);
             setGuestNum(guestNum + 1);
-        } if (adultNum === 0 && name !== "addAdult") {
-            addEssentialAdult(name);
-        } if (adultNum > 0 && name === "addChildren" && childNum < guestNumLimit.maxChildNum) {
+        } if (adultNum === 0 && buttonName !== "addAdult") {
+            addEssentialAdult(buttonName);
+        } if (adultNum > 0 && buttonName === "addChildren" && childNum < guestNumLimit.maxChildNum) {
             setChildNum(childNum + 1);
             setGuestNum(guestNum + 1)
-        } if (adultNum > 0 && name === "addToddler" && toddlerNum < guestNumLimit.maxToddlerNum) {
+        } if (adultNum > 0 && buttonName === "addToddler" && toddlerNum < guestNumLimit.maxToddlerNum) {
             setToddlerNum(toddlerNum + 1);
         }
-        setTarget(name);
+        setSelectedButton(buttonName);
     };
 
-    const addEssentialAdult = (name) => {
+    const addEssentialAdult = (buttonName) => {
         setAdultNum(adultNum + guestNumLimit.minAdultNum);
-        if (name === "addChildren") {
+        if (buttonName === "addChildren") {
             setChildNum(childNum + 1);
             setGuestNum(2)
-        } if (name === "addToddler") {
+        } if (buttonName === "addToddler") {
             setToddlerNum(1);
             setGuestNum(1)
         }
     };
 
-    const decreaseGuestNum = (name) => {
-        if (name === "removeAdult" && adultNum === guestNumLimit.minAdultNum) return;
-        if (name === "removeAdult" && adultNum > guestNumLimit.minAdultNum) {
+    const decreaseGuestNum = (buttonName) => {
+        if (buttonName === "removeAdult" && adultNum === guestNumLimit.minAdultNum) return;
+        if (buttonName === "removeAdult" && adultNum > guestNumLimit.minAdultNum) {
             setAdultNum(adultNum - 1);
             setGuestNum(guestNum - 1);
-        } if (name === "removeChildren" && childNum > 0) {
+        } if (buttonName === "removeChildren" && childNum > 0) {
             setChildNum(childNum - 1);
             setGuestNum(guestNum - 1);
-        } if (name === "removeToddler" && toddlerNum > 0) {
+        } if (buttonName === "removeToddler" && toddlerNum > 0) {
             setToddlerNum(toddlerNum - 1);
         }
-        setTarget(name);
+        setSelectedButton(buttonName);
 
     }
 
-    const disableButtonStyleAdult = () => {
-        if (adultNum <= guestNumLimit.minAdultNum) SetIsButtonDisabled({ ...isButtonDisabled, minAdult: false });
-        else if (adultNum >= guestNumLimit.maxAdultNum) SetIsButtonDisabled({ ...isButtonDisabled, maxAdult: false });
-        else if (adultNum > guestNumLimit.minAdultNum && adultNum < guestNumLimit.maxAdultNum) SetIsButtonDisabled({ ...isButtonDisabled, minAdult: true, maxAdult: true });
+    const switchButtonStateAdult = () => {
+        if (adultNum <= guestNumLimit.minAdultNum)  
+            setIsButtonActivated({ ...isButtonActivated, minAdult: false });
+        else if (adultNum >= guestNumLimit.maxAdultNum) 
+            setIsButtonActivated({ ...isButtonActivated, maxAdult: false });
+        else if (adultNum > guestNumLimit.minAdultNum && adultNum < guestNumLimit.maxAdultNum) 
+            setIsButtonActivated({ ...isButtonActivated, minAdult: true, maxAdult: true });
     }
 
-    const disableButtonStyleChild = () => {
-        if (childNum === guestNumLimit.minChildNum) SetIsButtonDisabled({ ...isButtonDisabled, minChild: false });
-        else if (childNum >= guestNumLimit.maxChildNum) SetIsButtonDisabled({ ...isButtonDisabled, maxChild: false });
-        else if (childNum > guestNumLimit.minChildNum && childNum < guestNumLimit.maxChildNum) SetIsButtonDisabled({ ...isButtonDisabled, minChild: true, maxChild: true });
+    const switchButtonStateChild = () => {
+        if (childNum === guestNumLimit.minChildNum) 
+            setIsButtonActivated({ ...isButtonActivated, minChild: false });
+        else if (childNum >= guestNumLimit.maxChildNum) 
+            setIsButtonActivated({ ...isButtonActivated, maxChild: false });
+        else if (childNum > guestNumLimit.minChildNum && childNum < guestNumLimit.maxChildNum) 
+            setIsButtonActivated({ ...isButtonActivated, minChild: true, maxChild: true });
     }
 
-    const disableButtonStyleToddler = () => {
-        if (toddlerNum === guestNumLimit.minToddlerNum) SetIsButtonDisabled({ ...isButtonDisabled, minToddler: false });
-        else if (toddlerNum >= guestNumLimit.maxToddlerNum) SetIsButtonDisabled({ ...isButtonDisabled, maxToddler: false });
-        else if (toddlerNum > guestNumLimit.minToddlerNum && toddlerNum < guestNumLimit.maxToddlerNum) SetIsButtonDisabled({ ...isButtonDisabled, minToddler: true, maxToddler: true });
+    const switchButtonStateToddler = () => {
+        if (toddlerNum === guestNumLimit.minToddlerNum) 
+            setIsButtonActivated({ ...isButtonActivated, minToddler: false });
+        else if (toddlerNum >= guestNumLimit.maxToddlerNum) 
+            setIsButtonActivated({ ...isButtonActivated, maxToddler: false });
+        else if (toddlerNum > guestNumLimit.minToddlerNum && toddlerNum < guestNumLimit.maxToddlerNum) 
+            setIsButtonActivated({ ...isButtonActivated, minToddler: true, maxToddler: true });
     }
 
     useEffect(() => {
-        if (target === "addAdult" || target === "removeAdult") { disableButtonStyleAdult(); console.log("what?") }
-        else if (target === "addChildren" || target === "removeChildren") { disableButtonStyleChild(); console.log("what?"); }
-        else if (target === "addToddler" || target === "removeToddler") { disableButtonStyleToddler(); console.log("what?"); }
+        if (selectedButton === "addAdult" || selectedButton === "removeAdult") 
+            switchButtonStateAdult(); 
+        else if (selectedButton === "addChildren" || selectedButton === "removeChildren") 
+            switchButtonStateChild(); 
+        else if (selectedButton === "addToddler" || selectedButton === "removeToddler") 
+            switchButtonStateToddler();
     }, [adultNum, childNum, toddlerNum, guestNum]);
 
 
-    const setButtonName = (event) => {
-        const name = event.target.name
-        setSelectedButton(name);
-        props.passSelectedButton(name);
+    const setTabName = (event) => {
+        const tabName = event.target.name
+        setSelectedTabName(tabName);
+        props.passSelectedTab(tabName);
     };
 
     const handleOnMouseLeave = () => {
@@ -168,7 +181,7 @@ function SearchTabs(props) {
             case "date":
                 return <Calendar {...rest} />;
             case "guest":
-                return <Guest {...rest} isButtonDisabled={isButtonDisabled} calculateGuestNum={calculateGuestNum} adultNum={adultNum} childNum={childNum} toddlerNum={toddlerNum} />;
+                return <Guest {...rest} isButtonActivated={isButtonActivated} calculateGuestNum={calculateGuestNum} adultNum={adultNum} childNum={childNum} toddlerNum={toddlerNum} />;
             case "innType":
                 return <InnType {...rest} />;
             case "instantBook":
@@ -184,7 +197,7 @@ function SearchTabs(props) {
         }
     };
 
-    const SearchTabProps = { guestNum: guestNum, toddlerNum: toddlerNum, passButtonClick: setButtonName };
+    const SearchTabProps = { guestNum: guestNum, toddlerNum: toddlerNum, passButtonClick: setTabName };
 
     return (
         <div>

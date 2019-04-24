@@ -5,10 +5,10 @@ import { SearchPanel } from './SearchPanels/SearchPanels';
 
 function Main() {
     const [isMouseLeaved, setMouseLeaved] = useState(true);
-    const [selectedButton, setSelectedButton] = useState('none');
+    const [selectedTabName, setSelectedTabName] = useState('none');
 
-    const passSelectedButton = (name) => {
-        setSelectedButton(name);
+    const setSelectedTab = (tabName) => {
+        setSelectedTabName(tabName);
     }
 
     function handleOnMouseLeave() {
@@ -20,8 +20,8 @@ function Main() {
     }
     
     const closeSearchOptionPanel = () => {
-        if(isMouseLeaved === true && selectedButton !== "none") { 
-            setSelectedButton("none"); 
+        if(isMouseLeaved === true && selectedTabName !== "none") { 
+            setSelectedTabName("none"); 
         }
     }
 
@@ -31,8 +31,8 @@ function Main() {
             <SearchPanel 
                 handleOnMouseLeave={handleOnMouseLeave} 
                 handleOnMouseEnter={handleOnMouseEnter} 
-                selectedButton={selectedButton} 
-                passSelectedButton={passSelectedButton}
+                selectedButton={selectedTabName} 
+                passSelectedTab={setSelectedTab}
             />
             <Sections />
         </div>

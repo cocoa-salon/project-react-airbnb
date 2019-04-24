@@ -9,8 +9,8 @@ function Guest(props) {
     const handleOnMouseEnter = () => props.handleOnMouseEnter();
 
     const calculateGuestNum = (event) => {
-        const name = event.target.name;
-        props.calculateGuestNum(name);
+        const buttonName = event.target.name;
+        props.calculateGuestNum(buttonName);
     }
 
     return (
@@ -18,25 +18,25 @@ function Guest(props) {
             <StyledDiv>
                 <StyledP>성인</StyledP> 
                 <StyledButtonDiv>
-                    <RemoveAdultButton isButtonDisabled={props.isButtonDisabled} name="removeAdult">-</RemoveAdultButton>
+                    <RemoveAdultButton isButtonActivated={props.isButtonActivated} name="removeAdult">-</RemoveAdultButton>
                     <StyledNumDiv>{props.adultNum} +</StyledNumDiv>
-                    <AddAdultButton isButtonDisabled={props.isButtonDisabled} name="addAdult">+</AddAdultButton>
+                    <AddAdultButton isButtonActivated={props.isButtonActivated} name="addAdult">+</AddAdultButton>
                 </StyledButtonDiv>
             </StyledDiv>
             <StyledDiv>
                 <StyledP>어린이</StyledP>
                 <StyledButtonDiv>
-                    <RemoveChildButton isButtonDisabled={props.isButtonDisabled} name="removeChildren">-</RemoveChildButton>
+                    <RemoveChildButton isButtonActivated={props.isButtonActivated} name="removeChildren">-</RemoveChildButton>
                     <StyledNumDiv>{props.childNum} +</StyledNumDiv>
-                    <AddChildButton isButtonDisabled={props.isButtonDisabled} name="addChildren">+</AddChildButton>
+                    <AddChildButton isButtonActivated={props.isButtonActivated} name="addChildren">+</AddChildButton>
                 </StyledButtonDiv>
             </StyledDiv>
             <StyledDiv>
                 <StyledP>유아</StyledP> 
                 <StyledButtonDiv>
-                    <RemoveToddlerButton isButtonDisabled={props.isButtonDisabled} name="removeToddler">-</RemoveToddlerButton>
+                    <RemoveToddlerButton isButtonActivated={props.isButtonActivated} name="removeToddler">-</RemoveToddlerButton>
                     <StyledNumDiv>{props.toddlerNum} +</StyledNumDiv>
-                    <AddToddlerButton isButtonDisabled={props.isButtonDisabled} name="addToddler">+</AddToddlerButton>
+                    <AddToddlerButton isButtonActivated={props.isButtonActivated} name="addToddler">+</AddToddlerButton>
                 </StyledButtonDiv>
             </StyledDiv>
         </SearchOptionStyle>
@@ -55,28 +55,28 @@ const StyledButton = styled.button`
 `
 
 const AddAdultButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonDisabled.maxAdult ? "#008c9e" : "#c6e5d9" };
-    color : ${ props => props.isButtonDisabled.maxAdult ? "#008c9e" : "#c6e5d9" };
+    border-color: ${ props => props.isButtonActivated.maxAdult ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonActivated.maxAdult ? "#008c9e" : "#c6e5d9" };
 `
 const RemoveAdultButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonDisabled.minAdult ? "#008c9e" : "#c6e5d9" };
-    color : ${ props => props.isButtonDisabled.minAdult ? "#008c9e" : "#c6e5d9" };
+    border-color: ${ props => props.isButtonActivated.minAdult ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonActivated.minAdult ? "#008c9e" : "#c6e5d9" };
 `
 const AddChildButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonDisabled.maxChild ? "#008c9e" : "#c6e5d9" };
-    color : ${ props => props.isButtonDisabled.maxChild ? "#008c9e" : "#c6e5d9" };
+    border-color: ${ props => props.isButtonActivated.maxChild ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonActivated.maxChild ? "#008c9e" : "#c6e5d9" };
 `
 const RemoveChildButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonDisabled.minChild ? "#008c9e" : "#c6e5d9" };
-    color : ${ props => props.isButtonDisabled.minChild ? "#008c9e" : "#c6e5d9" };
+    border-color: ${ props => props.isButtonActivated.minChild ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonActivated.minChild ? "#008c9e" : "#c6e5d9" };
 `
 const AddToddlerButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonDisabled.maxToddler ? "#008c9e" : "#c6e5d9" };
-    color : ${ props => props.isButtonDisabled.maxToddler ? "#008c9e" : "#c6e5d9" };
+    border-color: ${ props => props.isButtonActivated.maxToddler ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonActivated.maxToddler ? "#008c9e" : "#c6e5d9" };
 `
 const RemoveToddlerButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonDisabled.minToddler ? "#008c9e" : "#c6e5d9" };
-    color : ${ props => props.isButtonDisabled.minToddler ? "#008c9e" : "#c6e5d9" };
+    border-color: ${ props => props.isButtonActivated.minToddler ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonActivated.minToddler ? "#008c9e" : "#c6e5d9" };
 `
 
 const StyledDiv = styled.div`

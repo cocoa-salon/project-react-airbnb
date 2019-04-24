@@ -14,9 +14,7 @@ const SearchTabButtons = {
         )
     },
 
-    GuestSetNumButton: (props) => {
-        // const [isDisplayed, setIsDisplayed] = useState(false);
-        
+    GuestSetNumButton: (props) => {        
         function passButtonClick(event) {
             props.passButtonClick(event);
         }

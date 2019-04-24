@@ -32,7 +32,7 @@ function Main() {
                 handleOnMouseLeave={handleOnMouseLeave} 
                 handleOnMouseEnter={handleOnMouseEnter} 
                 selectedButton={selectedButton} 
-                passSelectedButton={passSelectedButton}   
+                passSelectedButton={passSelectedButton}
             />
             <Sections />
         </div>

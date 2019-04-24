@@ -1,53 +1,104 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { SearchOptionStyle } from './SearchOptionStyle';
 
 function Guest(props) {
-    // const modifyGuestNum = () => setIsDisplayed(!isDisplayed);
 
     const handleOnMouseLeave = () => props.handleOnMouseLeave();
     const handleOnMouseEnter = () => props.handleOnMouseEnter();
-
-    // 유아, 어린이 선택시 무조건 성인 1명 추가, 감소 버튼 눌러도 1에서 감소하지 않음. 
 
     const calculateGuestNum = (event) => {
         const name = event.target.name;
         props.calculateGuestNum(name);
     }
 
-    // 왜 창을 닫았다 다시 열면 0으로 초기화... 아 새로 렌더를 하니까 그렇구나. 이걸 어디에 저장해야 할 텐데
-
     return (
         <SearchOptionStyle onMouseLeave={handleOnMouseLeave} onMouseEnter={handleOnMouseEnter} onClick={calculateGuestNum} >
-            <div>
-                성인 <button name="removeAdult">-</button>
-                {props.adultNum} +
-                    <button name="addAdult">+</button>
-            </div>
-            <div>
-                어린이 <button name="removeChildren">-</button>
-                {props.childNum} +
-                    <button name="addChildren">+</button>
-            </div>
-            <div>
-                유아 <button name="removeToddler">-</button>
-                {props.toddlerNum} +
-                    <button name="addToddler">+</button>
-            </div>
+            <StyledDiv>
+                <StyledP>성인</StyledP> 
+                <StyledButtonDiv>
+                    <RemoveAdultButton isButtonDisabled={props.isButtonDisabled} name="removeAdult">-</RemoveAdultButton>
+                    <StyledNumDiv>{props.adultNum} +</StyledNumDiv>
+                    <AddAdultButton isButtonDisabled={props.isButtonDisabled} name="addAdult">+</AddAdultButton>
+                </StyledButtonDiv>
+            </StyledDiv>
+            <StyledDiv>
+                <StyledP>어린이</StyledP>
+                <StyledButtonDiv>
+                    <RemoveChildButton isButtonDisabled={props.isButtonDisabled} name="removeChildren">-</RemoveChildButton>
+                    <StyledNumDiv>{props.childNum} +</StyledNumDiv>
+                    <AddChildButton isButtonDisabled={props.isButtonDisabled} name="addChildren">+</AddChildButton>
+                </StyledButtonDiv>
+            </StyledDiv>
+            <StyledDiv>
+                <StyledP>유아</StyledP> 
+                <StyledButtonDiv>
+                    <RemoveToddlerButton isButtonDisabled={props.isButtonDisabled} name="removeToddler">-</RemoveToddlerButton>
+                    <StyledNumDiv>{props.toddlerNum} +</StyledNumDiv>
+                    <AddToddlerButton isButtonDisabled={props.isButtonDisabled} name="addToddler">+</AddToddlerButton>
+                </StyledButtonDiv>
+            </StyledDiv>
         </SearchOptionStyle>
     )
 }
 
 
+const StyledButton = styled.button`
+    display: inline-block;
+    border-radius: 50%; 
+    width:40px;
+    height:40px;
+    margin-left: 30px;
+    outline: none;
+    font-size: 20px; 
+`
 
+const AddAdultButton = styled(StyledButton)`
+    border-color: ${ props => props.isButtonDisabled.maxAdult ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonDisabled.maxAdult ? "#008c9e" : "#c6e5d9" };
+`
+const RemoveAdultButton = styled(StyledButton)`
+    border-color: ${ props => props.isButtonDisabled.minAdult ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonDisabled.minAdult ? "#008c9e" : "#c6e5d9" };
+`
+const AddChildButton = styled(StyledButton)`
+    border-color: ${ props => props.isButtonDisabled.maxChild ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonDisabled.maxChild ? "#008c9e" : "#c6e5d9" };
+`
+const RemoveChildButton = styled(StyledButton)`
+    border-color: ${ props => props.isButtonDisabled.minChild ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonDisabled.minChild ? "#008c9e" : "#c6e5d9" };
+`
+const AddToddlerButton = styled(StyledButton)`
+    border-color: ${ props => props.isButtonDisabled.maxToddler ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonDisabled.maxToddler ? "#008c9e" : "#c6e5d9" };
+`
+const RemoveToddlerButton = styled(StyledButton)`
+    border-color: ${ props => props.isButtonDisabled.minToddler ? "#008c9e" : "#c6e5d9" };
+    color : ${ props => props.isButtonDisabled.minToddler ? "#008c9e" : "#c6e5d9" };
+`
 
+const StyledDiv = styled.div`
+    display: flex;
+    flex-direction: row; 
+    padding: 10px; 
+`
 
+const StyledP = styled.p`
+    flex: 100px;
+`
 
+const StyledButtonDiv = styled.div`
+    flex: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+`
 
-
-
-
-
-
+const StyledNumDiv = styled.div`
+    margin-left: 10px; 
+`
 
 export { Guest };

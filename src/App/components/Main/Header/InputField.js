@@ -105,6 +105,7 @@ function InputField(props) {
 }
 
 const AdditionalButtons = function (props) {
+
     const StyledDiv = styled.div`
         position: relative; 
         z-index: 30;

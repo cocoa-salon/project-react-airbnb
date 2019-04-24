@@ -7,12 +7,12 @@ const { DateSetButton, GuestSetNumButton } = SearchTabButtons;
 
 function AllSearchTab(props) {
     const passButtonClick = event => props.passButtonClick(event); 
-    
+    const GuestSetNumButtonProps = { guestNum : props.guestNum, toddlerNum: props.toddlerNum}
     return (
         <SearchTabStyle >
             <h4>AllSearchPanel</h4>
             <DateSetButton passButtonClick={passButtonClick}  />
-            <GuestSetNumButton guestNum={props.guestNum} toddlerNum={props.toddlerNum} passButtonClick={passButtonClick}/>
+            <GuestSetNumButton passButtonClick={passButtonClick} {...GuestSetNumButtonProps}/>
         </SearchTabStyle>
 
 // 여기에?

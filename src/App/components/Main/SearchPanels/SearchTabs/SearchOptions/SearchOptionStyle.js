@@ -3,8 +3,8 @@ import styled from 'styled-components';
 const SearchOptionStyle = styled.div`
     position: relative; 
     z-index: 30;
-    width: 500px;
-    height: 400px; 
+    width: 400px;
+    height: auto;
     background: #f4f7f7; 
 `
 

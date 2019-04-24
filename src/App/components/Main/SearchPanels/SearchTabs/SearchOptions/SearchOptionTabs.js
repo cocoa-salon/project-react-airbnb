@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledOptionButton } from './OptionButtonStyle'
 
-const SearchTabs = {
+const SearchOptionTabs = {
     DateSetTab: (props) => {
         function passButtonClick(event) {
             props.passButtonClick(event);
@@ -90,7 +90,7 @@ const SearchTabs = {
     }
 }
 
-export { SearchTabs }
+export { SearchOptionTabs }
 
 
 

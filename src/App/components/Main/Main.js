@@ -7,7 +7,9 @@ function Main() {
     const [isMouseLeaved, setMouseLeaved] = useState(true);
     const [selectedTabName, setSelectedTabName] = useState('none');
 
-    const setSelectedTab = (tabName) => {
+
+    // 날짜, 인원, 숙소타입, 가격, 즉시예약, 필터추가 탭(검색옵션탭)
+    const setSelectedTab = (tabName) => {        
         setSelectedTabName(tabName);
     }
 
@@ -31,7 +33,10 @@ function Main() {
             <SearchPanel 
                 handleOnMouseLeave={handleOnMouseLeave} 
                 handleOnMouseEnter={handleOnMouseEnter} 
-                selectedButton={selectedTabName} 
+
+                // 날짜, 인원, 숙소타입, 가격, 즉시예약, 필터추가
+                selectedTabName={selectedTabName} 
+
                 passSelectedTab={setSelectedTab}
             />
             <Sections />

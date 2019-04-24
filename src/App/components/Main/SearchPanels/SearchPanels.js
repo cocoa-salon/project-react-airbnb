@@ -36,8 +36,12 @@ function SearchPanel(props) {
                 <SearchTabs
                     handleOnMouseLeave={handleOnMouseLeave}
                     handleOnMouseEnter={handleOnMouseEnter}
+                    
                     passSelectedTab={passSelectedTab}
-                    selectedButton={props.selectedButton}
+
+                    // 날짜, 인원, 숙소타입, 가격, 즉시예약, 필터추가
+                    selectedTabName={props.selectedTabName}
+
                     match={match}
                 />
             )} />
@@ -56,6 +60,7 @@ const StyledDiv = styled.div`
 function SearchTabs(props) {
     const [selectedButton, setSelectedButton] = useState(0);
 
+    // 날짜, 인원, 숙소타입, 가격, 즉시예약, 필터추가
     const [selectedTabName, setSelectedTabName] = useState('');
 
     const [adultNum, setAdultNum] = useState(0);
@@ -122,7 +127,6 @@ function SearchTabs(props) {
             setToddlerNum(toddlerNum - 1);
         }
         setSelectedButton(buttonName);
-
     }
 
     const switchButtonStateAdult = () => {
@@ -153,12 +157,18 @@ function SearchTabs(props) {
     }
 
     useEffect(() => {
-        if (selectedButton === "addAdult" || selectedButton === "removeAdult") 
+        if (selectedButton === "addAdult" || selectedButton === "removeAdult") {
             switchButtonStateAdult(); 
-        else if (selectedButton === "addChildren" || selectedButton === "removeChildren") 
+            console.log("어른 변동");
+        }
+        else if (selectedButton === "addChildren" || selectedButton === "removeChildren") {
             switchButtonStateChild(); 
-        else if (selectedButton === "addToddler" || selectedButton === "removeToddler") 
+            console.log("어린이 변동");
+        }
+        else if (selectedButton === "addToddler" || selectedButton === "removeToddler") {
             switchButtonStateToddler();
+            console.log("유아 변동");
+        }
     }, [adultNum, childNum, toddlerNum, guestNum]);
 
 
@@ -177,7 +187,7 @@ function SearchTabs(props) {
     };
 
     const SearchOptionPanel = ({ ...rest }) => {
-        switch (props.selectedButton) {
+        switch (props.selectedTabName) {
             case "date":
                 return <Calendar {...rest} />;
             case "guest":

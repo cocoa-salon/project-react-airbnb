@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { SearchTabStyle } from './SearchTabStyle'
-import { SearchTabs } from './SearchOptions/SearchTabs'
-const { DateSetTab, GuestSetTab } = SearchTabs;
+import { SearchOptionTabs } from './SearchOptions/SearchOptionTabs'
+const { DateSetTab, GuestSetTab } = SearchOptionTabs;
 
 
 function AllSearchTab(props) {

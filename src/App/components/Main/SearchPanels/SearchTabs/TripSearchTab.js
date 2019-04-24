@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { SearchTabStyle } from './SearchTabStyle'
-import { SearchTabs } from './SearchOptions/SearchTabs'
-const { DateSetTab, GuestSetTab, PriceSetTab, TimeSetTab  } = SearchTabs;
+import { SearchOptionTabs } from './SearchOptions/SearchOptionTabs'
+const { DateSetTab, GuestSetTab, PriceSetTab, TimeSetTab  } = SearchOptionTabs;
 
 function TripSearchTab(props) {
     const passButtonClick = event => props.passButtonClick(event); 

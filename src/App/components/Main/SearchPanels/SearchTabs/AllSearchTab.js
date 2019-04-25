@@ -1,18 +1,21 @@
 import React from 'react';
 
 import { SearchTabStyle } from './SearchTabStyle'
-import { SearchOptionTabs } from './SearchOptions/SearchOptionTabs'
+import { SearchOptionTabs } from './SearchOptionTabs/SearchOptionTabs'
 const { DateSetTab, GuestSetTab } = SearchOptionTabs;
 
 
 function AllSearchTab(props) {
-    const passButtonClick = event => props.passButtonClick(event); 
-    const GuestSetTabProps = { guestNum : props.guestNum, toddlerNum: props.toddlerNum}
+    const passButtonClick = event => props.passButtonClick(event);
+    const passTabUrl = (optionTabUrl) => props.passTabUrl(optionTabUrl);
+    const guestSetTabProps = { guestNum: props.guestNum, toddlerNum: props.toddlerNum }
+    const passInfo = { match: props.match, passTabUrl: passTabUrl, passButtonClick: passButtonClick }
+
     return (
         <SearchTabStyle >
             <h4>AllSearchPanel</h4>
-            <DateSetTab passButtonClick={passButtonClick}  />
-            <GuestSetTab passButtonClick={passButtonClick} {...GuestSetTabProps}/>
+            <DateSetTab {...passInfo} />
+            <GuestSetTab {...passInfo} {...guestSetTabProps} />
         </SearchTabStyle>
     )
 }

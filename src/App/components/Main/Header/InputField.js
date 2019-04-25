@@ -55,7 +55,6 @@ function InputPanel({ className, children }) {
     )
 }
 
-
 function InputField(props) {
     const [inProp, setInProp] = useState(false);
     const [inputValue, setInputValue] = useState('');

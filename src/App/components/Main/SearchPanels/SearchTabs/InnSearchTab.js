@@ -1,22 +1,24 @@
 import React from 'react';
 
 import { SearchTabStyle } from './SearchTabStyle'
-import { SearchOptionTabs } from './SearchOptions/SearchOptionTabs'
+import { SearchOptionTabs } from './SearchOptionTabs/SearchOptionTabs'
 const { DateSetTab, GuestSetTab, InnTypeSetTab, PriceSetTab, InstantBookSetTab, FilterAddTab } = SearchOptionTabs;
 
 function InnSearchTab(props) {
-    const passButtonClick = event => props.passButtonClick(event); 
-    const GuestSetTabProps = { guestNum : props.guestNum, toddlerNum: props.toddlerNum}
+    const passButtonClick = event => props.passButtonClick(event);
+    const passTabUrl = (optionTabUrl) => props.passTabUrl(optionTabUrl);
+    const guestSetTabProps = { guestNum: props.guestNum, toddlerNum: props.toddlerNum }
+    const passInfo = { match: props.match, passTabUrl: passTabUrl, passButtonClick: passButtonClick }
 
     return (
         <SearchTabStyle>
             <h4>InnSearchPanel</h4>
-            <DateSetTab passButtonClick={passButtonClick} />
-            <GuestSetTab passButtonClick={passButtonClick} {...GuestSetTabProps} />
-            <InnTypeSetTab passButtonClick={passButtonClick} />
-            <PriceSetTab passButtonClick={passButtonClick} />
-            <InstantBookSetTab passButtonClick={passButtonClick} />
-            <FilterAddTab passButtonClick={passButtonClick} />
+            <DateSetTab {...passInfo} />
+            <GuestSetTab {...passInfo} {...guestSetTabProps} />
+            <InnTypeSetTab {...passInfo} />
+            <PriceSetTab {...passInfo} />
+            <InstantBookSetTab {...passInfo} />
+            <FilterAddTab {...passInfo} />
         </SearchTabStyle>
     )
 }

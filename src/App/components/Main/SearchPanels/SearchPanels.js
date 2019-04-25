@@ -7,13 +7,13 @@ import { InnSearchTab } from './SearchTabs/InnSearchTab';
 import { RestaurantSearchTab } from './SearchTabs/RestaurantSearchTab';
 import { TripSearchTab } from './SearchTabs/TripSearchTab';
 
-import { Calendar } from './SearchTabs/SearchOptions/Calendar'
-import { Guest } from './SearchTabs/SearchOptions/Guest'
-import { InnType } from './SearchTabs/SearchOptions/InnType'
-import { InstantBook } from './SearchTabs/SearchOptions/InstantBook'
-import { Price } from './SearchTabs/SearchOptions/Price'
-import { Time } from './SearchTabs/SearchOptions/Time'
-import { AddFilters } from './SearchTabs/SearchOptions/AddFilters'
+import { Calendar } from './SearchTabs/SearchOptionTabs/Calendar'
+import { Guest } from './SearchTabs/SearchOptionTabs/Guest'
+import { InnType } from './SearchTabs/SearchOptionTabs/InnType'
+import { InstantBook } from './SearchTabs/SearchOptionTabs/InstantBook'
+import { Price } from './SearchTabs/SearchOptionTabs/Price'
+import { Time } from './SearchTabs/SearchOptionTabs/Time'
+import { AddFilters } from './SearchTabs/SearchOptionTabs/AddFilters'
 
 function SearchPanel(props) {
 
@@ -36,7 +36,7 @@ function SearchPanel(props) {
                 <SearchTabs
                     handleOnMouseLeave={handleOnMouseLeave}
                     handleOnMouseEnter={handleOnMouseEnter}
-                    
+
                     passSelectedTab={passSelectedTab}
 
                     // 날짜, 인원, 숙소타입, 가격, 즉시예약, 필터추가
@@ -61,7 +61,7 @@ function SearchTabs(props) {
     const [selectedButton, setSelectedButton] = useState(0);
 
     // 날짜, 인원, 숙소타입, 가격, 즉시예약, 필터추가
-    const [selectedTabName, setSelectedTabName] = useState('');
+    const [selectedTabName, setSelectedTabName] = useState('none');
 
     const [adultNum, setAdultNum] = useState(0);
     const [childNum, setChildNum] = useState(0);
@@ -130,50 +130,47 @@ function SearchTabs(props) {
     }
 
     const switchButtonStateAdult = () => {
-        if (adultNum <= guestNumLimit.minAdultNum)  
+        if (adultNum <= guestNumLimit.minAdultNum)
             setIsButtonActivated({ ...isButtonActivated, minAdult: false });
-        else if (adultNum >= guestNumLimit.maxAdultNum) 
+        else if (adultNum >= guestNumLimit.maxAdultNum)
             setIsButtonActivated({ ...isButtonActivated, maxAdult: false });
-        else if (adultNum > guestNumLimit.minAdultNum && adultNum < guestNumLimit.maxAdultNum) 
+        else if (adultNum > guestNumLimit.minAdultNum && adultNum < guestNumLimit.maxAdultNum)
             setIsButtonActivated({ ...isButtonActivated, minAdult: true, maxAdult: true });
     }
 
     const switchButtonStateChild = () => {
-        if (childNum === guestNumLimit.minChildNum) 
+        if (childNum === guestNumLimit.minChildNum)
             setIsButtonActivated({ ...isButtonActivated, minChild: false });
-        else if (childNum >= guestNumLimit.maxChildNum) 
+        else if (childNum >= guestNumLimit.maxChildNum)
             setIsButtonActivated({ ...isButtonActivated, maxChild: false });
-        else if (childNum > guestNumLimit.minChildNum && childNum < guestNumLimit.maxChildNum) 
+        else if (childNum > guestNumLimit.minChildNum && childNum < guestNumLimit.maxChildNum)
             setIsButtonActivated({ ...isButtonActivated, minChild: true, maxChild: true });
     }
 
     const switchButtonStateToddler = () => {
-        if (toddlerNum === guestNumLimit.minToddlerNum) 
+        if (toddlerNum === guestNumLimit.minToddlerNum)
             setIsButtonActivated({ ...isButtonActivated, minToddler: false });
-        else if (toddlerNum >= guestNumLimit.maxToddlerNum) 
+        else if (toddlerNum >= guestNumLimit.maxToddlerNum)
             setIsButtonActivated({ ...isButtonActivated, maxToddler: false });
-        else if (toddlerNum > guestNumLimit.minToddlerNum && toddlerNum < guestNumLimit.maxToddlerNum) 
+        else if (toddlerNum > guestNumLimit.minToddlerNum && toddlerNum < guestNumLimit.maxToddlerNum)
             setIsButtonActivated({ ...isButtonActivated, minToddler: true, maxToddler: true });
     }
 
     useEffect(() => {
         if (selectedButton === "addAdult" || selectedButton === "removeAdult") {
-            switchButtonStateAdult(); 
-            console.log("어른 변동");
+            switchButtonStateAdult();
         }
         else if (selectedButton === "addChildren" || selectedButton === "removeChildren") {
-            switchButtonStateChild(); 
-            console.log("어린이 변동");
+            switchButtonStateChild();
         }
         else if (selectedButton === "addToddler" || selectedButton === "removeToddler") {
             switchButtonStateToddler();
-            console.log("유아 변동");
         }
     }, [adultNum, childNum, toddlerNum, guestNum]);
 
 
     const setTabName = (event) => {
-        const tabName = event.target.name
+        const tabName = event.target.name;
         setSelectedTabName(tabName);
         props.passSelectedTab(tabName);
     };
@@ -186,28 +183,58 @@ function SearchTabs(props) {
         props.handleOnMouseEnter();
     };
 
-    const SearchOptionPanel = ({ ...rest }) => {
-        switch (props.selectedTabName) {
-            case "date":
-                return <Calendar {...rest} />;
-            case "guest":
-                return <Guest {...rest} isButtonActivated={isButtonActivated} calculateGuestNum={calculateGuestNum} adultNum={adultNum} childNum={childNum} toddlerNum={toddlerNum} />;
-            case "innType":
-                return <InnType {...rest} />;
-            case "instantBook":
-                return <InstantBook {...rest} />;
-            case "price":
-                return <Price {...rest} />;
-            case "time":
-                return <Time {...rest} />;
-            case "filterAdd":
-                return <AddFilters {...rest} />;
-            case "none":
-                return null;
-        }
+    const [optionTabUrl, setOptionTabUrl] = useState('');
+
+    const passTabUrl = (optionTabUrl) => {
+        setOptionTabUrl(optionTabUrl);
+    }
+
+    const SearchOptionTabs = (props) => {
+        const handleOnMouseLeave = () => {
+            props.handleOnMouseLeave();
+        };
+        const handleOnMouseEnter = () => {
+            props.handleOnMouseEnter();
+        };
+
+        return (
+            <div>
+                <Route path={`${optionTabUrl}/:id`} render={(props) =>
+                    <SelectedSearchOptionTab
+                        handleOnMouseLeave={handleOnMouseLeave}
+                        handleOnMouseEnter={handleOnMouseEnter}
+                        selectedTabName={props.selectedTabName}
+                        match={props.match} />
+                }
+                />
+            </div>
+        )
+    }
+
+    const SelectedSearchOptionTab = ({ match, ...rest }) => {
+        const tabName = props.selectedTabName;
+        const id = match.params.id;
+        return (
+            <div>
+                {tabName === 'none' ? null :
+                    id === 'date' ? <Calendar {...rest} /> :
+                        id === 'guest' ? <Guest {...rest} isButtonActivated={isButtonActivated} calculateGuestNum={calculateGuestNum} adultNum={adultNum} childNum={childNum} toddlerNum={toddlerNum} /> :
+                            id === 'innType' ? <InnType {...rest} /> :
+                                id === 'instantBook' ? <InstantBook {...rest} /> :
+                                    id === 'price' ? <Price {...rest} /> :
+                                        id === 'time' ? <Time {...rest} /> :
+                                            id === 'filterAdd' ? <AddFilters {...rest} /> : null
+
+                }
+            </div>
+        )
+
     };
 
-    const SearchTabProps = { guestNum: guestNum, toddlerNum: toddlerNum, passButtonClick: setTabName };
+
+
+
+    const SearchTabProps = { guestNum: guestNum, toddlerNum: toddlerNum, passButtonClick: setTabName, match: props.match, passTabUrl: passTabUrl };
 
     return (
         <div>
@@ -216,7 +243,7 @@ function SearchTabs(props) {
                     props.match.params.id === "trip" ? <TripSearchTab {...SearchTabProps} /> :
                         props.match.params.id === "restaurant" ? <RestaurantSearchTab {...SearchTabProps} /> : null
             }
-            <SearchOptionPanel handleOnMouseLeave={handleOnMouseLeave} handleOnMouseEnter={handleOnMouseEnter} />
+            <SearchOptionTabs handleOnMouseLeave={handleOnMouseLeave} handleOnMouseEnter={handleOnMouseEnter} selectedTabName={selectedTabName} />
         </div>
     )
 }

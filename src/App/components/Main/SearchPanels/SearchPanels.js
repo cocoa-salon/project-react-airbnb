@@ -57,6 +57,8 @@ const StyledDiv = styled.div`
     background: #CADBE9; 
 `
 
+
+
 function SearchTabs(props) {
     const [selectedButton, setSelectedButton] = useState(0);
 
@@ -83,6 +85,16 @@ function SearchTabs(props) {
         minToddler: false,
         maxToddler: true,
     });
+
+    const [optionTabUrl, setOptionTabUrl] = useState('');
+
+    const resetGuestNum = (name) => {
+        setAdultNum(guestNumLimit.minAdultNum);
+        setChildNum(0);
+        setToddlerNum(0);
+        setGuestNum(1);
+        setSelectedButton(name);
+    }
 
     const calculateGuestNum = (buttonName) => {
         if (buttonName === "addAdult" || buttonName === "addChildren" || buttonName === "addToddler") increaseGuestNum(buttonName);
@@ -157,6 +169,9 @@ function SearchTabs(props) {
     }
 
     useEffect(() => {
+        console.log('called!')
+        if (selectedButton === "reset" ) setIsButtonActivated({
+                minAdult : false, maxAdult : true, minChild : false, maxChild : true, minToddler : false, maxToddler : true });
         if (selectedButton === "addAdult" || selectedButton === "removeAdult") {
             switchButtonStateAdult();
         }
@@ -181,9 +196,7 @@ function SearchTabs(props) {
 
     const handleOnMouseEnter = () => {
         props.handleOnMouseEnter();
-    };
-
-    const [optionTabUrl, setOptionTabUrl] = useState('');
+    }; 
 
     const passTabUrl = (optionTabUrl) => {
         setOptionTabUrl(optionTabUrl);
@@ -211,6 +224,15 @@ function SearchTabs(props) {
         )
     }
 
+    const guestTabProps = { 
+        isButtonActivated : isButtonActivated, 
+        calculateGuestNum:calculateGuestNum, 
+        adultNum : adultNum, 
+        childNum : childNum, 
+        toddlerNum : toddlerNum, 
+        resetGuestNum: resetGuestNum
+    }
+
     const SelectedSearchOptionTab = ({ match, ...rest }) => {
         const tabName = props.selectedTabName;
         const id = match.params.id;
@@ -218,7 +240,7 @@ function SearchTabs(props) {
             <div>
                 {tabName === 'none' ? null :
                     id === 'date' ? <Calendar {...rest} /> :
-                        id === 'guest' ? <Guest {...rest} isButtonActivated={isButtonActivated} calculateGuestNum={calculateGuestNum} adultNum={adultNum} childNum={childNum} toddlerNum={toddlerNum} /> :
+                        id === 'guest' ? <Guest {...rest} {...guestTabProps}  /> :
                             id === 'innType' ? <InnType {...rest} /> :
                                 id === 'instantBook' ? <InstantBook {...rest} /> :
                                     id === 'price' ? <Price {...rest} /> :

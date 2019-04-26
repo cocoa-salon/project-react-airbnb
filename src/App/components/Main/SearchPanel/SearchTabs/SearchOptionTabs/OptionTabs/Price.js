@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SearchOptionStyle } from './SearchOptionStyle';
+import { OptionTabStyle } from './OptionTabStyle';
 
 function Price(props) {
 
@@ -8,9 +8,9 @@ function Price(props) {
     const handleOnMouseEnter = () => props.handleOnMouseEnter();
 
     return (
-        <SearchOptionStyle onMouseLeave={handleOnMouseLeave} onMouseEnter={handleOnMouseEnter}>
+        <OptionTabStyle onMouseLeave={handleOnMouseLeave} onMouseEnter={handleOnMouseEnter}>
             가격대를 설정하는 옵션 패널
-        </SearchOptionStyle>
+        </OptionTabStyle>
     )
 }
 

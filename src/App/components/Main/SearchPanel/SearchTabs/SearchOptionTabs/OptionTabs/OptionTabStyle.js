@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const SearchOptionStyle = styled.div`
+const OptionTabStyle = styled.div`
     position: relative; 
     z-index: 30;
     width: 400px;
@@ -8,4 +8,4 @@ const SearchOptionStyle = styled.div`
     background: #f4f7f7; 
 `
 
-export { SearchOptionStyle };
+export { OptionTabStyle };

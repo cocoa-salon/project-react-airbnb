@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { StyledOptionButton } from './OptionButtonStyle'
+import { OptionTabButtonStyle } from './OptionTabButtonStyle'
 
-const SearchOptionTabs = {
+const OptionTabButtons = {
 
     DateSetTab: (props) => {
         function passButtonClick(event) {
@@ -12,9 +12,9 @@ const SearchOptionTabs = {
         }
         return (
             <Link to={`${props.match.url}/date`} onClick={passButtonClick}>
-                <StyledOptionButton name="date">
+                <OptionTabButtonStyle name="date">
                     날짜
-                </StyledOptionButton>
+                </OptionTabButtonStyle>
             </Link>
         )
     },
@@ -28,12 +28,12 @@ const SearchOptionTabs = {
 
         return (
             <Link to={`${props.match.url}/guest`} onClick={passButtonClick}>
-                <StyledOptionButton name="guest" >
+                <OptionTabButtonStyle name="guest" >
                     {props.guestNum === 0 ? "인원" :
                         props.guestNum > 0 ? `게스트 ${props.guestNum}` : ''
                     }
                     {props.toddlerNum > 0 ? `유아 ${[props.toddlerNum]}` : ''}
-                </StyledOptionButton>
+                </OptionTabButtonStyle>
             </Link>
         )
     },
@@ -47,9 +47,9 @@ const SearchOptionTabs = {
         }
         return (
             <Link to={`${props.match.url}/innType`} onClick={passButtonClick}>
-                <StyledOptionButton name="innType" >
+                <OptionTabButtonStyle name="innType" >
                     숙소타입
-                </StyledOptionButton>
+                </OptionTabButtonStyle>
             </Link>
         )
     },
@@ -63,9 +63,9 @@ const SearchOptionTabs = {
         }
         return (
             <Link to={`${props.match.url}/instantBook`} onClick={passButtonClick}>
-                <StyledOptionButton name="instantBook" >
+                <OptionTabButtonStyle name="instantBook" >
                     즉시예약
-            </StyledOptionButton>
+                </OptionTabButtonStyle>
             </Link>
         )
     },
@@ -79,9 +79,9 @@ const SearchOptionTabs = {
         }
         return (
             <Link to={`${props.match.url}/price`} onClick={passButtonClick}>
-                <StyledOptionButton name="price" >
+                <OptionTabButtonStyle name="price" >
                     가격
-            </StyledOptionButton>
+                </OptionTabButtonStyle>
             </Link>
         )
     },
@@ -95,9 +95,9 @@ const SearchOptionTabs = {
         }
         return (
             <Link to={`${props.match.url}/time`} onClick={passButtonClick}>
-                <StyledOptionButton name="time" >
+                <OptionTabButtonStyle name="time" >
                     시간
-                </StyledOptionButton>
+                </OptionTabButtonStyle>
             </Link>
         )
     },
@@ -111,12 +111,12 @@ const SearchOptionTabs = {
         }
         return (
             <Link to={`${props.match.url}/filterAdd`} onClick={passButtonClick}>
-                <StyledOptionButton name="filterAdd" >
+                <OptionTabButtonStyle name="filterAdd" >
                     필터추가
-            </StyledOptionButton>
+                </OptionTabButtonStyle>
             </Link>
         )
     }
 }
 
-export { SearchOptionTabs }
+export { OptionTabButtons }

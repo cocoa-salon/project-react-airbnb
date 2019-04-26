@@ -1,70 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { Route } from 'react-router-dom';
 
-import { AllSearchTab } from './SearchTabs/AllSearchTab';
-import { InnSearchTab } from './SearchTabs/InnSearchTab';
-import { RestaurantSearchTab } from './SearchTabs/RestaurantSearchTab';
-import { TripSearchTab } from './SearchTabs/TripSearchTab';
-
-import { Calendar } from './SearchTabs/SearchOptionTabs/Calendar'
-import { Guest } from './SearchTabs/SearchOptionTabs/Guest'
-import { InnType } from './SearchTabs/SearchOptionTabs/InnType'
-import { InstantBook } from './SearchTabs/SearchOptionTabs/InstantBook'
-import { Price } from './SearchTabs/SearchOptionTabs/Price'
-import { Time } from './SearchTabs/SearchOptionTabs/Time'
-import { AddFilters } from './SearchTabs/SearchOptionTabs/AddFilters'
-
-function SearchPanel(props) {
-
-    const handleOnMouseLeave = () => {
-        props.handleOnMouseLeave();
-    }
-
-    const handleOnMouseEnter = () => {
-        props.handleOnMouseEnter();
-    }
-
-    const passSelectedTab = (tabName) => {
-        props.passSelectedTab(tabName)
-    }
-
-    return (
-        <StyledDiv>
-            <h3>this is search panel area</h3>
-            <Route path="/search/:id" render={({ match }) => (
-                <SearchTabs
-                    handleOnMouseLeave={handleOnMouseLeave}
-                    handleOnMouseEnter={handleOnMouseEnter}
-
-                    passSelectedTab={passSelectedTab}
-
-                    // 날짜, 인원, 숙소타입, 가격, 즉시예약, 필터추가
-                    selectedTabName={props.selectedTabName}
-
-                    match={match}
-                />
-            )} />
-        </StyledDiv>
-    )
-}
-
-const StyledDiv = styled.div`
-    position: relative; 
-    width: 100%;
-    height: 150px;
-    border: 2px solid grey;
-    background: #CADBE9; 
-`
+import { AllSearchTab } from './AllSearchTab';
+import { InnSearchTab } from './InnSearchTab';
+import { RestaurantSearchTab } from './RestaurantSearchTab';
+import { TripSearchTab } from './TripSearchTab';
 
 
+import { SearchOptionTabs } from './SearchOptionTabs/SearchOptionTabs';
 
 function SearchTabs(props) {
     const [selectedButton, setSelectedButton] = useState(0);
-
-    // 날짜, 인원, 숙소타입, 가격, 즉시예약, 필터추가
     const [selectedTabName, setSelectedTabName] = useState('none');
-
     const [adultNum, setAdultNum] = useState(0);
     const [childNum, setChildNum] = useState(0);
     const [toddlerNum, setToddlerNum] = useState(0);
@@ -170,8 +116,9 @@ function SearchTabs(props) {
 
     useEffect(() => {
         console.log('called!')
-        if (selectedButton === "reset" ) setIsButtonActivated({
-                minAdult : false, maxAdult : true, minChild : false, maxChild : true, minToddler : false, maxToddler : true });
+        if (selectedButton === "reset") setIsButtonActivated({
+            minAdult: false, maxAdult: true, minChild: false, maxChild: true, minToddler: false, maxToddler: true
+        });
         if (selectedButton === "addAdult" || selectedButton === "removeAdult") {
             switchButtonStateAdult();
         }
@@ -196,67 +143,28 @@ function SearchTabs(props) {
 
     const handleOnMouseEnter = () => {
         props.handleOnMouseEnter();
-    }; 
+    };
 
     const passTabUrl = (optionTabUrl) => {
         setOptionTabUrl(optionTabUrl);
     }
 
-    const SearchOptionTabs = (props) => {
-        const handleOnMouseLeave = () => {
-            props.handleOnMouseLeave();
-        };
-        const handleOnMouseEnter = () => {
-            props.handleOnMouseEnter();
-        };
-
-        return (
-            <div>
-                <Route path={`${optionTabUrl}/:id`} render={(props) =>
-                    <SelectedSearchOptionTab
-                        handleOnMouseLeave={handleOnMouseLeave}
-                        handleOnMouseEnter={handleOnMouseEnter}
-                        selectedTabName={props.selectedTabName}
-                        match={props.match} />
-                }
-                />
-            </div>
-        )
-    }
-
-    const guestTabProps = { 
-        isButtonActivated : isButtonActivated, 
-        calculateGuestNum:calculateGuestNum, 
-        adultNum : adultNum, 
-        childNum : childNum, 
-        toddlerNum : toddlerNum, 
-        resetGuestNum: resetGuestNum
-    }
-
-    const SelectedSearchOptionTab = ({ match, ...rest }) => {
-        const tabName = props.selectedTabName;
-        const id = match.params.id;
-        return (
-            <div>
-                {tabName === 'none' ? null :
-                    id === 'date' ? <Calendar {...rest} /> :
-                        id === 'guest' ? <Guest {...rest} {...guestTabProps}  /> :
-                            id === 'innType' ? <InnType {...rest} /> :
-                                id === 'instantBook' ? <InstantBook {...rest} /> :
-                                    id === 'price' ? <Price {...rest} /> :
-                                        id === 'time' ? <Time {...rest} /> :
-                                            id === 'filterAdd' ? <AddFilters {...rest} /> : null
-
-                }
-            </div>
-        )
-
+    const SearchTabProps = {
+        guestNum: guestNum,
+        toddlerNum: toddlerNum,
+        passButtonClick: setTabName,
+        match: props.match,
+        passTabUrl: passTabUrl
     };
 
-
-
-
-    const SearchTabProps = { guestNum: guestNum, toddlerNum: toddlerNum, passButtonClick: setTabName, match: props.match, passTabUrl: passTabUrl };
+    const SearchOptionGuestTab = {
+        isButtonActivated: isButtonActivated,
+        calculateGuestNum: calculateGuestNum,
+        adultNum: adultNum,
+        childNum: childNum,
+        toddlerNum: toddlerNum,
+        resetGuestNum: resetGuestNum
+    }
 
     return (
         <div>
@@ -265,9 +173,9 @@ function SearchTabs(props) {
                     props.match.params.id === "trip" ? <TripSearchTab {...SearchTabProps} /> :
                         props.match.params.id === "restaurant" ? <RestaurantSearchTab {...SearchTabProps} /> : null
             }
-            <SearchOptionTabs handleOnMouseLeave={handleOnMouseLeave} handleOnMouseEnter={handleOnMouseEnter} selectedTabName={selectedTabName} />
+            <SearchOptionTabs {...SearchOptionGuestTab} optionTabUrl={optionTabUrl} handleOnMouseLeave={handleOnMouseLeave} handleOnMouseEnter={handleOnMouseEnter} selectedTabName={props.selectedTabName} />
         </div>
     )
 }
 
-export { SearchPanel };
+export { SearchTabs };

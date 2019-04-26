@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledOptionButton = styled.button`
+const OptionTabButtonStyle = styled.button`
     display: inline-block;
     width: 80px; 
     height: 40px;  
@@ -19,4 +19,4 @@ const StyledOptionButton = styled.button`
     }
 `
 
-export { StyledOptionButton };
+export { OptionTabButtonStyle };

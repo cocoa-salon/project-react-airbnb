@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { SearchOptionStyle } from './SearchOptionStyle';
+import { OptionTabStyle } from './OptionTabStyle';
 
 function Guest(props) {
 
@@ -18,7 +18,7 @@ function Guest(props) {
     }
 
     return (
-        <SearchOptionStyle onMouseLeave={handleOnMouseLeave} onMouseEnter={handleOnMouseEnter} onClick={calculateGuestNum} >
+        <OptionTabStyle onMouseLeave={handleOnMouseLeave} onMouseEnter={handleOnMouseEnter} onClick={calculateGuestNum} >
             <StyledDiv>
                 <StyledP>성인</StyledP>
                 <StyledButtonDiv>
@@ -46,7 +46,7 @@ function Guest(props) {
             <StyledDiv>
                 <StyleResetButton name="reset" style={{cursor: 'pointer'}} onClick={resetGuestNum}>삭제</StyleResetButton>
             </StyledDiv>
-        </SearchOptionStyle>
+        </OptionTabStyle>
     )
 }
 

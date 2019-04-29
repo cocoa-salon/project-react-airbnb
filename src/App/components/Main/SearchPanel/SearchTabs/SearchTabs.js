@@ -166,14 +166,24 @@ function SearchTabs(props) {
         resetGuestNum: resetGuestNum
     }
 
+    const SearchOptionTabProps = {
+        optionTabUrl: optionTabUrl,
+        handleOnMouseLeave: handleOnMouseLeave,
+        handleOnMouseEnter: handleOnMouseEnter,
+        selectedTabName: props.selectedTabName
+    }
+
+    const routerPathId = props.match.params.id;
+    
     return (
         <div>
-            {props.match.params.id === "all" ? <AllSearchTab {...SearchTabProps} /> :
-                props.match.params.id === "inn" ? <InnSearchTab {...SearchTabProps} /> :
-                    props.match.params.id === "trip" ? <TripSearchTab {...SearchTabProps} /> :
-                        props.match.params.id === "restaurant" ? <RestaurantSearchTab {...SearchTabProps} /> : null
+            {
+                (routerPathId === "all" && <AllSearchTab {...SearchTabProps} />) ||
+                (routerPathId === "inn" && <InnSearchTab {...SearchTabProps} />) ||
+                (routerPathId === "trip" && <TripSearchTab {...SearchTabProps} />) ||
+                (routerPathId === "restaurant" && <RestaurantSearchTab {...SearchTabProps} />)
             }
-            <SearchOptionTabs {...SearchOptionGuestTab} optionTabUrl={optionTabUrl} handleOnMouseLeave={handleOnMouseLeave} handleOnMouseEnter={handleOnMouseEnter} selectedTabName={props.selectedTabName} />
+            <SearchOptionTabs {...SearchOptionGuestTab} {...SearchOptionTabProps} />
         </div>
     )
 }

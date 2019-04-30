@@ -116,7 +116,6 @@ function SearchTabs(props) {
     }
 
     useEffect(() => {
-        console.log('called!')
         if (selectedButton === "reset") setIsButtonActivated({
             minAdult: false, maxAdult: true, minChild: false, maxChild: true, minToddler: false, maxToddler: true
         });
@@ -165,19 +164,29 @@ function SearchTabs(props) {
         privateRoom: false,
         hotelRoom: false,
         publicRoom: false
-    });    
-    
+    });
+
     const handleInputChange = (event) => {
         const name = event.target.name;
-        const isChecked = event.target.checked; 
-        setInnTypesChecked({...innTypes, [name]: isChecked});
+        const isChecked = event.target.checked;
+        setInnTypesChecked({ ...innTypes, [name]: isChecked });
     }
-    
+
+    const resetInnTypeCheck = () => {
+        setInnTypesChecked({
+            allhouse: false,
+            privateRoom: false,
+            hotelRoom: false,
+            publicRoom: false
+        })
+    }
+
     const SearchOptionInnTypeTab = {
         handleInputChange: handleInputChange,
-        innTypes : innTypes
+        innTypes: innTypes,
+        resetInnTypeCheck: resetInnTypeCheck
     }
-    
+
     // All, Inn, Trip, Restaurant 탭
     const SearchTabProps = {
         passButtonClick: setTabName,

@@ -17,12 +17,15 @@ const SearchOptionPanels = (props) => {
 
     const innTypeTabProps = {
         handleInputChange : props.handleInputChange,
-        innTypes : props.innTypes
+        innTypes : props.innTypes,
+        resetInnTypeCheck : props.resetInnTypeCheck
+        
     }
 
     const handleOnMouseLeave = () => {
         props.handleOnMouseLeave();
     };
+    
     const handleOnMouseEnter = () => {
         props.handleOnMouseEnter();
     };

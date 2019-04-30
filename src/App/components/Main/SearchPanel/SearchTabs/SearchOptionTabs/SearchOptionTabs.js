@@ -1,6 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SearchOptionTabStyle } from './SearchOptionTabStyle'
+import { SearchOptionTabStyle } from './SearchOptionTabStyle';
+
+import { DateTapDisplay } from './OptionTabDisplay/DateTapDisplay';
+import { GuestTapDisplay } from './OptionTabDisplay/GuestTapDisplay';
+import { InnTypeTapDisplay } from './OptionTabDisplay/InnTypeTapDisplay';
+import { InstantBookTapDisplay } from './OptionTabDisplay/InstantBookTapDisplay';
+import { PriceTapDisplay } from './OptionTabDisplay/PriceTapDisplay';
+import { TimeTapDisplay } from './OptionTabDisplay/TimeTapDisplay';
+import { FilterAddTapDisplay } from './OptionTabDisplay/FilterAddTapDisplay';
+
 
 const SearchOptionTabs = (props) => {
 
@@ -13,40 +22,18 @@ const SearchOptionTabs = (props) => {
     return (
         <Link to={`${props.match.url}/${props.type}`} onClick={passButtonClick}>
             <SearchOptionTabStyle name={props.type}> {
-                (props.type === 'date' && <DateOptionTap {...props} />) ||
-                (props.type === 'guest' && <GuestOptionTap {...props} />) ||
-                (props.type === 'innType' && <InnTypeOptionTap {...props} />) ||
-                (props.type === 'instantBook' && <InstantBookOptionTap {...props} />) ||
-                (props.type === 'price' && <PriceOptionTap {...props} />) ||
-                (props.type === 'time' && <TimeOptionTap {...props} />) ||
-                (props.type === 'filterAdd' && <FilterAddOptionTap {...props} />)
+                (props.type === 'date' && <DateTapDisplay {...props} />) ||
+                (props.type === 'guest' && <GuestTapDisplay {...props} />) ||
+                (props.type === 'innType' && <InnTypeTapDisplay {...props} />) ||
+                (props.type === 'instantBook' && <InstantBookTapDisplay {...props} />) ||
+                (props.type === 'price' && <PriceTapDisplay {...props} />) ||
+                (props.type === 'time' && <TimeTapDisplay {...props} />) ||
+                (props.type === 'filterAdd' && <FilterAddTapDisplay {...props} />)
             }
             </SearchOptionTabStyle>
         </Link>
     )
 }
-
-const DateOptionTap = (props) => <span>날짜</span>;
-
-const GuestOptionTap = (props) => 
-    <div>
-        {props.guestNum === 0 ? '인원' : props.guestNum > 0 ? `게스트 ${props.guestNum}` : ''}
-        {props.toddlerNum > 0 ? `유아 ${props.toddlerNum}` : ''}
-    </div>
-
-
-const InnTypeOptionTap = (props) => 
-    <div>
-        {props.innTypes.allhouse === false && props.innTypes.privateRoom === false && props.innTypes.hotelRoom === false && props.innTypes.publicRoom === false ? "숙소 타입" :
-            props.innTypes.allhouse === true ? "집 전체" : 'test'}
-    </div>
-
-
-const InstantBookOptionTap = (props) => <span>즉시 예약</span>;
-const PriceOptionTap = (props) => <span>가격</span>;
-const TimeOptionTap = (props) => <span>시간</span>;
-const FilterAddOptionTap = (props) => <span>필터 추가</span>;
-
 
 export { SearchOptionTabs }
 

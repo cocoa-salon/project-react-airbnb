@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { SearchTabStyle } from './SearchTabStyle'
-import { OptionTabButtons } from './SearchOptionTabs/OptionTabs/OptionTabButtons/OptionTabButtons';
-const { DateSetTab, GuestSetTab } = OptionTabButtons;
+import { SearchOptionTabs } from './SearchOptionTabs/SearchOptionTabs';
 
 function RestaurantSearchTab(props) {
     const passButtonClick = event => props.passButtonClick(event); 
@@ -13,8 +12,8 @@ function RestaurantSearchTab(props) {
     return (
         <SearchTabStyle>
             <h4>RestaurantSearchPanel</h4>
-            <DateSetTab {...passInfo} />
-            <GuestSetTab {...passInfo} {...guestSetTabProps} />
+            <SearchOptionTabs {...passInfo} type='date' />
+            <SearchOptionTabs {...passInfo} {...guestSetTabProps} type='guest' />
         </SearchTabStyle>
     )
 }

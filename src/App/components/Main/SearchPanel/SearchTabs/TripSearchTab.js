@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { SearchTabStyle } from './SearchTabStyle'
-import { OptionTabButtons } from './SearchOptionTabs/OptionTabs/OptionTabButtons/OptionTabButtons';
-const { DateSetTab, GuestSetTab, PriceSetTab, TimeSetTab } = OptionTabButtons;
+import { SearchOptionTabs } from './SearchOptionTabs/SearchOptionTabs';
 
 function TripSearchTab(props) {
     const passButtonClick = event => props.passButtonClick(event);
@@ -13,10 +12,10 @@ function TripSearchTab(props) {
     return (
         <SearchTabStyle>
             <h4>TripSearchPanel</h4>
-            <DateSetTab {...passInfo} />
-            <GuestSetTab {...passInfo} {...guestSetTabProps} />
-            <PriceSetTab {...passInfo} />
-            <TimeSetTab {...passInfo} />
+            <SearchOptionTabs {...passInfo} type='date' />
+            <SearchOptionTabs {...passInfo} {...guestSetTabProps} type='guest' />
+            <SearchOptionTabs {...passInfo} type='price' />
+            <SearchOptionTabs {...passInfo} type='time' />
         </SearchTabStyle>
     )
 }

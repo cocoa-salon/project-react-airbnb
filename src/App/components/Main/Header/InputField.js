@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { style } from './inputFieldStyle';
 
 const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
@@ -55,7 +55,6 @@ function InputPanel({ className, children }) {
     )
 }
 
-
 function InputField(props) {
     const [inProp, setInProp] = useState(false);
     const [inputValue, setInputValue] = useState('');
@@ -105,6 +104,7 @@ function InputField(props) {
 }
 
 const AdditionalButtons = function (props) {
+
     const StyledDiv = styled.div`
         position: relative; 
         z-index: 30;

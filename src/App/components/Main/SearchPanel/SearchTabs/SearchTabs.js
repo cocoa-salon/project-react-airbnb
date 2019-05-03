@@ -5,8 +5,14 @@ import { InnSearchTab } from './InnSearchTab';
 import { RestaurantSearchTab } from './RestaurantSearchTab';
 import { TripSearchTab } from './TripSearchTab';
 
-
 import { SearchOptionPanels } from './SearchOptionPanels/SearchOptionPanels';
+
+const SearchOptionPanelContext = React.createContext();
+const { Provider: SearchOptionPanelProvider, Consumer: SearchOptionPanelConsumer } = SearchOptionPanelContext;
+
+const SearchTabContext = React.createContext();
+const { Provider: SearchTabProvider, Consumer: SearchTabConsumer } = SearchTabContext;
+
 
 function SearchTabs(props) {
     const [optionTabUrl, setOptionTabUrl] = useState('');
@@ -43,7 +49,8 @@ function SearchTabs(props) {
         setSelectedButton(name);
     }
 
-    const calculateGuestNum = (buttonName) => {
+    const calculateGuestNum = (event) => {
+        const buttonName = event.target.name;
         if (buttonName === "addAdult" || buttonName === "addChildren" || buttonName === "addToddler") increaseGuestNum(buttonName);
         else if (buttonName === "removeAdult" || buttonName === "removeChildren" || buttonName === "removeToddler") decreaseGuestNum(buttonName);
     };
@@ -131,9 +138,10 @@ function SearchTabs(props) {
     }, [adultNum, childNum, toddlerNum, guestNum]);
 
 
-    const setTabName = (event) => {
+    const setTabName = (event, url) => {
         const tabName = event.target.name;
-        // setSelectedTabName(tabName);
+        const optionTabUrl = url; 
+        passTabUrl(optionTabUrl)
         props.passSelectedTab(tabName);
     };
 
@@ -194,7 +202,8 @@ function SearchTabs(props) {
         toddlerNum: toddlerNum,
         innTypes: innTypes,
         match: props.match,
-        passTabUrl: passTabUrl
+        passTabUrl: passTabUrl,
+        testText: 'banana'
     };
 
     const SearchOptionTabProps = {
@@ -208,15 +217,21 @@ function SearchTabs(props) {
 
     return (
         <div>
-            {
-                (routerPathId === "all" && <AllSearchTab {...SearchTabProps} />) ||
-                (routerPathId === "inn" && <InnSearchTab {...SearchTabProps} />) ||
-                (routerPathId === "trip" && <TripSearchTab {...SearchTabProps} />) ||
-                (routerPathId === "restaurant" && <RestaurantSearchTab {...SearchTabProps} />)
+            <SearchTabProvider value={{...SearchTabProps}}> {
+                (routerPathId === "all" && <AllSearchTab />) ||
+                (routerPathId === "inn" && <InnSearchTab />) ||
+                (routerPathId === "trip" && <TripSearchTab />) ||
+                (routerPathId === "restaurant" && <RestaurantSearchTab />)
             }
-            <SearchOptionPanels {...SearchOptionGuestTab} {...SearchOptionTabProps} {...SearchOptionInnTypeTab} />
+            </SearchTabProvider>
+
+            <SearchOptionPanelProvider value={{ ...SearchOptionInnTypeTab, ...SearchOptionTabProps, ...SearchOptionGuestTab }} >
+                <SearchOptionPanels />
+            </SearchOptionPanelProvider>
         </div>
     )
 }
 
 export { SearchTabs };
+export { SearchTabConsumer };
+export { SearchOptionPanelConsumer };

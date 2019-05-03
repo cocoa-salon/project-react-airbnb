@@ -3,17 +3,9 @@ import styled from 'styled-components';
 
 import { OptionTabStyle } from './OptionTabStyle';
 
+import { SearchOptionPanelConsumer } from '../SearchTabs';
 
 function InnType(props) {
-    
-    const handleOnMouseLeave = () => props.handleOnMouseLeave();
-    const handleOnMouseEnter = () => props.handleOnMouseEnter();
-
-    const handleInputChange = (event) => {
-        props.handleInputChange(event)
-    }
-
-    const innTypes = props.innTypes;
 
     const InnTypeCheck = (props) => {
         return (
@@ -21,30 +13,33 @@ function InnType(props) {
         )
     }
 
-    const resetInnTypeCheck = () => {
-        props.resetInnTypeCheck();
-    }
-
     return (
-        <OptionTabStyle onMouseLeave={handleOnMouseLeave} onMouseEnter={handleOnMouseEnter}>
-            숙소 타입을 설정하는 옵션 패널
-            <div>
-                <InnTypeCheck name='allhouse' innTypes={innTypes.allhouse} handleInputChange={handleInputChange} />집 전체
-            </div>
-            <div>
-                <InnTypeCheck name='privateRoom' innTypes={innTypes.privateRoom} handleInputChange={handleInputChange} />개인실
-            </div>
-            <div>
-                <InnTypeCheck name='hotelRoom' innTypes={innTypes.hotelRoom} handleInputChange={handleInputChange} />호텔 객실
-            </div>
-            <div>
-                <InnTypeCheck name='publicRoom' innTypes={innTypes.publicRoom} handleInputChange={props.handleInputChange} />다인실
-            </div>
-            <StyledResetButton name="reset" style={{cursor: 'pointer'}} onClick={resetInnTypeCheck}>
-                삭제
-            </StyledResetButton>
-
-        </OptionTabStyle>
+        <SearchOptionPanelConsumer>
+            {
+                (value) => {
+                    return (
+                        <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter}>
+                            숙소 타입을 설정하는 옵션 패널
+                            <div>
+                                <InnTypeCheck name='allhouse' innTypes={value.innTypes.allhouse} handleInputChange={value.handleInputChange} />집 전체
+                            </div>
+                            <div>
+                                <InnTypeCheck name='privateRoom' innTypes={value.innTypes.privateRoom} handleInputChange={value.handleInputChange} />개인실
+                            </div>
+                            <div>
+                                <InnTypeCheck name='hotelRoom' innTypes={value.innTypes.hotelRoom} handleInputChange={value.handleInputChange} />호텔 객실
+                            </div>
+                            <div>
+                                <InnTypeCheck name='publicRoom' innTypes={value.innTypes.publicRoom} handleInputChange={value.handleInputChange} />다인실
+                            </div>
+                            <StyledResetButton name="reset" style={{ cursor: 'pointer' }} onClick={value.resetInnTypeCheck}>
+                                삭제
+                            </StyledResetButton>
+                        </OptionTabStyle>
+                    )
+                }
+            }
+        </SearchOptionPanelConsumer>
     )
 }
 

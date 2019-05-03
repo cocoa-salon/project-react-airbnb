@@ -1,4 +1,5 @@
-import React from 'react'; 
+import React from 'react';
+// import { SearchTabConsumer } from '../../SearchTabs';
 
 const innTypeModel = {
     allhouse: '집 전체',
@@ -25,9 +26,9 @@ const InnTypeTapDisplay = (props) => {
     }, []);
 
     return (
-        checkedInnType.length === 0 ? "숙소 타입" :
+            checkedInnType.length === 0 ? "숙소 타입" :
             checkedInnType.length >= 2 ? `숙소 종류 ${checkedList.length}` :
-                checkedInnType.length === 1 ? `${checkedInnType[0]}` : null
+            checkedInnType.length === 1 ? `${checkedInnType[0]}` : null
     );
 }
 

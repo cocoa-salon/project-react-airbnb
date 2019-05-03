@@ -1,5 +1,12 @@
 import React from 'react';
+import { SearchTabConsumer } from '../../SearchTabs';
 
-const TimeTapDisplay = (props) => <span>시간</span>;
+
+const TimeTapDisplay = (props) => 
+    <SearchTabConsumer>
+        {(value) =>
+            <span>시간Ï</span>
+        }
+    </SearchTabConsumer>
 
 export { TimeTapDisplay };

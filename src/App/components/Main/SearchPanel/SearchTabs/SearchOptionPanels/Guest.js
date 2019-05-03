@@ -2,43 +2,51 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { OptionTabStyle } from './OptionTabStyle';
-
 import { SearchOptionPanelConsumer } from '../SearchTabs';
+
+
+const SetGuestNumButton = (props) => {
+    return (
+        <StyledDiv>
+            <StyledP>{props.guestType}</StyledP>
+            <StyledButtonDiv>
+                {props.render()}
+            </StyledButtonDiv>
+        </StyledDiv>
+    )
+}
 
 function Guest(props) {
 
     return (
-        <SearchOptionPanelConsumer> 
-            {  
+        <SearchOptionPanelConsumer>
+            {
                 (value) => (
-                    <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter} onClick={value.calculateGuestNum} > 
-                        <StyledDiv>
-                            <StyledP>성인</StyledP>
-                            <StyledButtonDiv>
+                    <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter} onClick={value.calculateGuestNum} >
+                        <SetGuestNumButton guestType="성인" render={() => (
+                            <span>
                                 <RemoveAdultButton isButtonActivated={value.isButtonActivated} name="removeAdult">-</RemoveAdultButton>
                                 <StyledNumDiv>{value.adultNum} +</StyledNumDiv>
                                 <AddAdultButton isButtonActivated={value.isButtonActivated} name="addAdult">+</AddAdultButton>
-                            </StyledButtonDiv>
-                        </StyledDiv>
-                        <StyledDiv>
-                            <StyledP>어린이</StyledP>
-                            <StyledButtonDiv>
+                            </span>
+                        )} />
+                        <SetGuestNumButton guestType="어린이" render={() => (
+                            <span>
                                 <RemoveChildButton isButtonActivated={value.isButtonActivated} name="removeChildren">-</RemoveChildButton>
                                 <StyledNumDiv>{value.childNum} +</StyledNumDiv>
                                 <AddChildButton isButtonActivated={value.isButtonActivated} name="addChildren">+</AddChildButton>
-                            </StyledButtonDiv>
-                        </StyledDiv>
-                        <StyledDiv>
-                            <StyledP>유아</StyledP>
-                            <StyledButtonDiv>
+                            </span>
+                        )} />
+                        <SetGuestNumButton guestType="유아" render={() => (
+                            <span>
                                 <RemoveToddlerButton isButtonActivated={value.isButtonActivated} name="removeToddler">-</RemoveToddlerButton>
                                 <StyledNumDiv>{value.toddlerNum} +</StyledNumDiv>
                                 <AddToddlerButton isButtonActivated={value.isButtonActivated} name="addToddler">+</AddToddlerButton>
-                            </StyledButtonDiv>
-                        </StyledDiv>
+                            </span>
+                        )} />
                         <StyledDiv>
                             <StyleResetButton name="reset" style={{ cursor: 'pointer' }} onClick={value.resetGuestNum}>삭제</StyleResetButton>
-                        </StyledDiv> 
+                        </StyledDiv>
                     </OptionTabStyle>
                 )
             }

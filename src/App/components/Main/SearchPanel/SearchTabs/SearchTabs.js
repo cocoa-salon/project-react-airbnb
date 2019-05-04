@@ -41,7 +41,8 @@ function SearchTabs(props) {
         maxToddler: true,
     });
 
-    const resetGuestNum = (name) => {
+    const resetGuestNum = (event) => {
+        const name = event.target.name; 
         setAdultNum(guestNumLimit.minAdultNum);
         setChildNum(0);
         setToddlerNum(0);
@@ -123,7 +124,8 @@ function SearchTabs(props) {
     }
 
     useEffect(() => {
-        if (selectedButton === "reset") setIsButtonActivated({
+        if (selectedButton === "reset") 
+            setIsButtonActivated({
             minAdult: false, maxAdult: true, minChild: false, maxChild: true, minToddler: false, maxToddler: true
         });
         if (selectedButton === "addAdult" || selectedButton === "removeAdult") {

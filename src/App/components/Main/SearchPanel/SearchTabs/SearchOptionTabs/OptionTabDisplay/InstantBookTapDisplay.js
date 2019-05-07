@@ -1,12 +1,14 @@
-import React from 'react';
-import { SearchTabConsumer } from '../../SearchTabs';
+import React, { useContext } from 'react';
+import { SearchTabContext } from '../../SearchTabs';
 
+const InstantBookTapDisplay = (props) => {
 
-const InstantBookTapDisplay = (props) =>
-    <SearchTabConsumer>
-        {(value) =>
-            <span>즉시예약</span>
-        }
-    </SearchTabConsumer>
+    const value = useContext(SearchTabContext);
+
+    return (
+        <span>즉시예약</span>
+    );
+
+}
 
 export { InstantBookTapDisplay };

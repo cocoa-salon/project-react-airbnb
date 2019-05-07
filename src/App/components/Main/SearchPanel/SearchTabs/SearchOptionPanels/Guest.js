@@ -1,8 +1,8 @@
-import React, { forwardRef, createRef } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-
 import { OptionTabStyle } from './OptionTabStyle';
-import { SearchOptionPanelConsumer } from '../SearchTabs';
+import { SearchOptionPanelContext } from '../SearchTabs';
+
 
 const StyledButton = styled.button`
     display: inline-block;
@@ -26,19 +26,19 @@ const MinusPlusButton = (props) => {
         color: "#c6e5d9"
     }
 
-    const checkButtonIsActivated = () => {        
-            if (
+    const checkButtonIsActivated = () => {
+        if (
             (props.name === "removeAdult" && props.isButtonActivated.minAdult === false) ||
-            (props.name === "removeChildren" && props.isButtonActivated.minChild === false ) ||
+            (props.name === "removeChildren" && props.isButtonActivated.minChild === false) ||
             (props.name === "removeToddler" && props.isButtonActivated.minToddler === false) ||
             (props.name === "addAdult" && props.isButtonActivated.maxAdult === false) ||
-            (props.name === "addChildren" && props.isButtonActivated.maxChild === false)||
+            (props.name === "addChildren" && props.isButtonActivated.maxChild === false) ||
             (props.name === "addToddler" && props.isButtonActivated.maxToddler === false)
-            ) { 
-                return buttonInactivatedStyle;
-            } else {
-                return buttonActivatedStyle;
-            }
+        ) {
+            return buttonInactivatedStyle;
+        } else {
+            return buttonActivatedStyle;
+        }
     }
 
     return (
@@ -50,7 +50,7 @@ const MinusPlusButton = (props) => {
 };
 
 const GuestNumSetButton = (props) => {
-    
+
     return (
         <StyledDiv>
             <StyledP>{props.guestType}</StyledP>
@@ -64,22 +64,17 @@ const GuestNumSetButton = (props) => {
 };
 
 function Guest(props) {
+    const value = useContext(SearchOptionPanelContext);
 
     return (
-        <SearchOptionPanelConsumer>
-            {
-                (value) => (
-                    <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter} onClick={value.calculateGuestNum} >
-                        <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={value.adultNum} isButtonActivated={value.isButtonActivated} />
-                        <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={value.childNum} isButtonActivated={value.isButtonActivated} />
-                        <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={value.toddlerNum} isButtonActivated={value.isButtonActivated} />
-                        <StyledDiv>
-                            <StyleResetButton name="reset" style={{ cursor: 'pointer' }} onClick={value.resetGuestNum}>삭제</StyleResetButton>
-                        </StyledDiv>
-                    </OptionTabStyle>
-                )
-            }
-        </SearchOptionPanelConsumer>
+        <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter} onClick={value.calculateGuestNum} >
+            <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={value.adultNum} isButtonActivated={value.isButtonActivated} />
+            <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={value.childNum} isButtonActivated={value.isButtonActivated} />
+            <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={value.toddlerNum} isButtonActivated={value.isButtonActivated} />
+            <StyledDiv>
+                <StyleResetButton name="reset" style={{ cursor: 'pointer' }} onClick={value.resetGuestNum}>삭제</StyleResetButton>
+            </StyledDiv>
+        </OptionTabStyle>
     )
 }
 

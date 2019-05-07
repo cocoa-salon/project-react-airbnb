@@ -1,20 +1,15 @@
-import React from 'react';
-
-import { OptionTabStyle } from './OptionTabStyle';
-
-import { SearchOptionPanelConsumer } from '../SearchTabs';
-
+import React, {useContext} from 'react';
+import { SearchOptionPanelContext } from '../SearchTabs';
+import { OptionTabStyle } from './OptionTabStyle';;
 
 function InstantBook(props) {
+    
+    const value = useContext(SearchOptionPanelContext);
 
     return (
-        <SearchOptionPanelConsumer>
-            { (value) => 
-            <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter}>
+        <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter}>
             즉시예약을 설정하는 옵션 패널
-            </OptionTabStyle>
-            }
-        </SearchOptionPanelConsumer>
+        </OptionTabStyle>
     )
 }
 

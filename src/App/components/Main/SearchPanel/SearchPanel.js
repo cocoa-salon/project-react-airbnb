@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 
-import { SearchTabs } from './SearchTabs/SearchTabs';
+import SearchTabs from './SearchTabs/SearchTabs';
 
 function SearchPanel(props) {
 

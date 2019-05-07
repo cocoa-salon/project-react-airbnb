@@ -1,11 +1,12 @@
-import React from 'react';
-import { SearchTabConsumer } from '../../SearchTabs';
+import React, { useContext } from 'react';
+import { SearchTabContext } from '../../SearchTabs';
 
-const DateTapDisplay = (props) =>
-    <SearchTabConsumer>
-        {(value) =>
-            <span>날짜</span>
-        }
-    </SearchTabConsumer>
+const DateTapDisplay = (props) => {
+    const value = useContext(SearchTabContext);
+
+    return (
+        <span>날짜</span>
+    )
+}
 
 export { DateTapDisplay }; 

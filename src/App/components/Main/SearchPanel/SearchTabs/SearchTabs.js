@@ -7,17 +7,15 @@ import { TripSearchTab } from './TripSearchTab';
 
 import { SearchOptionPanels } from './SearchOptionPanels/SearchOptionPanels';
 
-const SearchOptionPanelContext = React.createContext();
-const { Provider: SearchOptionPanelProvider, Consumer: SearchOptionPanelConsumer } = SearchOptionPanelContext;
+export const SearchOptionPanelContext = React.createContext();
+const { Provider: SearchOptionPanelProvider } = SearchOptionPanelContext;
 
-const SearchTabContext = React.createContext();
-const { Provider: SearchTabProvider, Consumer: SearchTabConsumer } = SearchTabContext;
-
+export const SearchTabContext = React.createContext();
+const { Provider: SearchTabProvider } = SearchTabContext;
 
 function SearchTabs(props) {
     const [optionTabUrl, setOptionTabUrl] = useState('');
     const [selectedButton, setSelectedButton] = useState(0);
-    const [selectedTabName, setSelectedTabName] = useState('none');
     const [adultNum, setAdultNum] = useState(0);
     const [childNum, setChildNum] = useState(0);
     const [toddlerNum, setToddlerNum] = useState(0);
@@ -234,6 +232,4 @@ function SearchTabs(props) {
     )
 }
 
-export { SearchTabs };
-export { SearchTabConsumer };
-export { SearchOptionPanelConsumer };
+export default SearchTabs; 

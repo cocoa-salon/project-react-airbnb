@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import { Calendar } from './Calendar'
 import { Guest } from './Guest'
@@ -8,25 +8,20 @@ import { Price } from './Price'
 import { Time } from './Time'
 import { AddFilters } from './AddFilters'
 
-import { SearchOptionPanelConsumer } from '../SearchTabs';
+import { SearchOptionPanelContext } from '../SearchTabs';
 
 const SelectedSearchOptionPanels = ({ match}) => {
+    const value = useContext(SearchOptionPanelContext);
     const id = match.params.id;
     return (
-        <SearchOptionPanelConsumer>
-            {(value) => {
-                return (
-                    (value.selectedTabName === "none" && <div>{null}</div>) ||
-                    (id === "date" && <Calendar />) ||
-                    (id === "guest" && <Guest />) ||
-                    (id === "innType" && <InnType />) ||
-                    (id === "instantBook" && <InstantBook />) ||
-                    (id === "price" && <Price />) ||
-                    (id === "time" && <Time />) ||
-                    (id === "filterAdd" && <AddFilters />)
-                )
-            }}
-        </SearchOptionPanelConsumer>
+            (value.selectedTabName === "none" && <div>{null}</div>) ||
+            (id === "date" && <Calendar />) ||
+            (id === "guest" && <Guest />) ||
+            (id === "innType" && <InnType />) ||
+            (id === "instantBook" && <InstantBook />) ||
+            (id === "price" && <Price />) ||
+            (id === "time" && <Time />) ||
+            (id === "filterAdd" && <AddFilters />)
     )
 };
 

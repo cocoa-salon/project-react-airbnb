@@ -1,12 +1,13 @@
-import React from 'react';
-import { SearchTabConsumer } from '../../SearchTabs';
+import React, { useContext } from 'react';
+import { SearchTabContext } from '../../SearchTabs';
 
+const PriceTapDisplay = (props) => {
 
-const PriceTapDisplay = (props) =>
-    <SearchTabConsumer>
-        {(value) =>
-            <span>가격</span>
-        }
-    </SearchTabConsumer>
+    const value = useContext(SearchTabContext);
+
+    return (
+        <span>가격</span>
+    );
+}
 
 export { PriceTapDisplay };

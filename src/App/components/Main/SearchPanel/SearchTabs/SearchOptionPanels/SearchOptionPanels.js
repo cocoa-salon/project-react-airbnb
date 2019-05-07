@@ -1,23 +1,20 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { Route } from 'react-router-dom';
+import { SearchOptionPanelContext } from '../SearchTabs';
 import { SelectedSearchOptionPanels } from './SelectedSearchOptionPanels';
-
-import { SearchOptionPanelConsumer } from '../SearchTabs';
 
 
 const SearchOptionPanels = (props) => {
 
+    const value = useContext(SearchOptionPanelContext);
+
     return (
-        <SearchOptionPanelConsumer>
-            {(value) =>
-                <div>
-                    <Route path={`${value.optionTabUrl}/:id`} render={(props) =>
-                        <SelectedSearchOptionPanels match={props.match} />
-                    }
-                    />
-                </div>
+        <div>
+            <Route path={`${value.optionTabUrl}/:id`} render={(props) =>
+                <SelectedSearchOptionPanels match={props.match} />
             }
-        </SearchOptionPanelConsumer>
+            />
+        </div>
     )
 }
 

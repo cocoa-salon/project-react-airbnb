@@ -1,6 +1,3 @@
-import React from 'react';
-// import { SearchTabConsumer } from '../../SearchTabs';
-
 const innTypeModel = {
     allhouse: '집 전체',
     privateRoom: '개인실',

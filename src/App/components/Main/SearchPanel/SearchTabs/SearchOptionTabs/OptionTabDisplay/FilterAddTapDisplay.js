@@ -1,12 +1,14 @@
-import React from 'react';
-import { SearchTabConsumer } from '../../SearchTabs';
+import React, { useContext } from 'react';
+import { SearchTabContext } from '../../SearchTabs';
 
 
-const FilterAddTapDisplay = (props) =>
-    <SearchTabConsumer>
-        {(value) =>
-            <span>필터 추가</span>
-        }
-    </SearchTabConsumer>
+const FilterAddTapDisplay = (props) => {
+
+    const value = useContext(SearchTabContext);
+
+    return (
+        <span>필터 추가</span>
+    )
+}
 
 export { FilterAddTapDisplay };

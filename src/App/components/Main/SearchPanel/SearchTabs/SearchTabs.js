@@ -18,12 +18,32 @@ const { Provider: SearchTabProvider } = SearchTabContext;
 function SearchTabs(props) {
     const [optionTabUrl, setOptionTabUrl] = useState('');
     const [selectedButton, setSelectedButton] = useState(0);
+
+
     const [guestNum, setGuestNum] = useState({
         adultNum: 0,
         childNum: 0,
         toddlerNum: 0,
         totalNum: 0
-    })
+    });
+
+
+    // const [guestNum, dispatch2] = useReducer(checkGuestNumReducer, {
+    //     adultNum: 0,
+    //     childNum: 0,
+    //     toddlerNum: 0,
+    //     totalNum: 0
+    // });
+
+
+    // const checkGuestNumReducer = (guestNum, {type, payload}) => {
+    //     switch(type) {
+    //         case 'cal' :
+    //             console.log('cal');
+    //         case 'reset' :
+    //             console.log('reset');
+    //     }
+    // };
 
     const guestNumLimit = {
         minAdultNum: 1,
@@ -47,7 +67,6 @@ function SearchTabs(props) {
         const name = event.target.name;
         setGuestNum({adultNum: guestNumLimit.minAdultNum, childNum: 0, toddlerNum: 0, totalNum: 1 })
         setSelectedButton(name);
-
     }
 
     const calculateGuestNum = (event) => {

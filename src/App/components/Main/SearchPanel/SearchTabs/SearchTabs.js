@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
+import { innTypeCheckReducer } from './stateReducers/innTypeCheckReducer';
+
 import { AllSearchTab } from './AllSearchTab';
 import { InnSearchTab } from './InnSearchTab';
 import { RestaurantSearchTab } from './RestaurantSearchTab';
@@ -12,22 +14,6 @@ const { Provider: SearchOptionPanelProvider } = SearchOptionPanelContext;
 
 export const SearchTabContext = React.createContext();
 const { Provider: SearchTabProvider } = SearchTabContext;
-
-const innTypeCheckReducer = (innTypes, { type, payload }) => {
-    switch (type) {
-        case 'check':
-            const name = payload.name;
-            const isChecked = payload.isChecked;
-            return { ...innTypes, [name]: isChecked };
-        case 'reset':
-            return {
-                allhouse: false,
-                privateRoom: false,
-                hotelRoom: false,
-                publicRoom: false
-            }
-    }
-}
 
 function SearchTabs(props) {
     const [optionTabUrl, setOptionTabUrl] = useState('');

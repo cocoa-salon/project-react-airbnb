@@ -4,10 +4,6 @@ import { SearchTabStyle } from './SearchTabStyle'
 import { SearchOptionTabs } from './SearchOptionTabs/SearchOptionTabs';
 
 function TripSearchTab(props) {
-    // const passButtonClick = event => props.passButtonClick(event);
-    // const passTabUrl = (optionTabUrl) => props.passTabUrl(optionTabUrl);
-    // const guestSetTabProps = { guestNum: props.guestNum, toddlerNum: props.toddlerNum, match: props.match, passTabUrl: passTabUrl }
-    // const passInfo = { match: props.match, passTabUrl: passTabUrl, passButtonClick: passButtonClick }
 
     return (
         <SearchTabStyle>

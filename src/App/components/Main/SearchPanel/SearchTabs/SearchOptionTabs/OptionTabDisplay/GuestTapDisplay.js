@@ -8,7 +8,7 @@ const GuestTapDisplay = () => {
 
     return (
         <div>
-            {value.guestNum === 0 ? '인원' : value.guestNum > 0 ? `게스트 ${value.guestNum}` : ''}
+            {value.totalNum === 0 ? '인원' : value.totalNum > 0 ? `게스트 ${value.totalNum}` : ''}
             {value.toddlerNum > 0 ? `유아 ${value.toddlerNum}` : ''}
         </div>
     )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 
 import { AllSearchTab } from './AllSearchTab';
 import { InnSearchTab } from './InnSearchTab';
@@ -12,6 +12,22 @@ const { Provider: SearchOptionPanelProvider } = SearchOptionPanelContext;
 
 export const SearchTabContext = React.createContext();
 const { Provider: SearchTabProvider } = SearchTabContext;
+
+const innTypeCheckReducer = (innTypes, { type, payload }) => {
+    switch (type) {
+        case 'check':
+            const name = payload.name;
+            const isChecked = payload.isChecked;
+            return { ...innTypes, [name]: isChecked };
+        case 'reset':
+            return {
+                allhouse: false,
+                privateRoom: false,
+                hotelRoom: false,
+                publicRoom: false
+            }
+    }
+}
 
 function SearchTabs(props) {
     const [optionTabUrl, setOptionTabUrl] = useState('');
@@ -40,7 +56,7 @@ function SearchTabs(props) {
     });
 
     const resetGuestNum = (event) => {
-        const name = event.target.name; 
+        const name = event.target.name;
         setAdultNum(guestNumLimit.minAdultNum);
         setChildNum(0);
         setToddlerNum(0);
@@ -122,10 +138,10 @@ function SearchTabs(props) {
     }
 
     useEffect(() => {
-        if (selectedButton === "reset") 
+        if (selectedButton === "reset")
             setIsButtonActivated({
-            minAdult: false, maxAdult: true, minChild: false, maxChild: true, minToddler: false, maxToddler: true
-        });
+                minAdult: false, maxAdult: true, minChild: false, maxChild: true, minToddler: false, maxToddler: true
+            });
         if (selectedButton === "addAdult" || selectedButton === "removeAdult") {
             switchButtonStateAdult();
         }
@@ -140,7 +156,7 @@ function SearchTabs(props) {
 
     const setTabName = (event, url) => {
         const tabName = event.target.name;
-        const optionTabUrl = url; 
+        const optionTabUrl = url;
         passTabUrl(optionTabUrl)
         props.passSelectedTab(tabName);
     };
@@ -166,33 +182,16 @@ function SearchTabs(props) {
         resetGuestNum: resetGuestNum
     }
 
-    // InnType 탭
-    const [innTypes, setInnTypesChecked] = useState({
+    const [innTypes, dispatch] = useReducer(innTypeCheckReducer, {
         allhouse: false,
         privateRoom: false,
         hotelRoom: false,
         publicRoom: false
     });
 
-    const handleInputChange = (event) => {
-        const name = event.target.name;
-        const isChecked = event.target.checked;
-        setInnTypesChecked({ ...innTypes, [name]: isChecked });
-    }
-
-    const resetInnTypeCheck = () => {
-        setInnTypesChecked({
-            allhouse: false,
-            privateRoom: false,
-            hotelRoom: false,
-            publicRoom: false
-        })
-    }
-
     const SearchOptionInnTypeTab = {
-        handleInputChange: handleInputChange,
+        dispatch: dispatch,
         innTypes: innTypes,
-        resetInnTypeCheck: resetInnTypeCheck
     }
 
     // All, Inn, Trip, Restaurant 탭
@@ -217,7 +216,7 @@ function SearchTabs(props) {
 
     return (
         <div>
-            <SearchTabProvider value={{...SearchTabProps}}> {
+            <SearchTabProvider value={{ ...SearchTabProps }}> {
                 (routerPathId === "all" && <AllSearchTab />) ||
                 (routerPathId === "inn" && <InnSearchTab />) ||
                 (routerPathId === "trip" && <TripSearchTab />) ||

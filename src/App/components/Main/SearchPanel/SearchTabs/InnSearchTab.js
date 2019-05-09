@@ -7,7 +7,6 @@ function InnSearchTab(props) {
     
     return (
         <SearchTabStyle>
-            <h4>InnSearchPanel</h4>
             <SearchOptionTabs  type='date' />
             <SearchOptionTabs  type='guest' />
             <SearchOptionTabs  type='innType' />

@@ -2,20 +2,23 @@ import styled from 'styled-components';
 
 const SearchOptionTabStyle = styled.button`
     display: inline-block;
-    width: 80px; 
-    height: 40px;  
+    width: auto;
+    height: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     background: white;
+    border: rgb(230,230,230) solid 1px; 
     border-radius: 4px; 
-    font-size: 16px; 
-    margin-left: 10px; 
+    font-size: 14px; 
+    font-weight: thin;
+    margin-left: 10px;
+    color: rgb(60,60,60); 
     &:hover {
-        background: #d9e1e8; 
-        color: white;
-        font-weight: bold; 
+        background: rgb(230,230,230); 
         border-radius: none; 
-    }
-    &:active {
-        background: red; 
+        outline: 0; 
     }
 `
 

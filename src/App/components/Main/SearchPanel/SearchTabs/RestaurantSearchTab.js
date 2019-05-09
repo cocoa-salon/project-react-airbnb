@@ -7,7 +7,6 @@ function RestaurantSearchTab(props) {
 
     return (
         <SearchTabStyle>
-            <h4>RestaurantSearchPanel</h4>
             <SearchOptionTabs type='date' />
             <SearchOptionTabs type='guest' />
         </SearchTabStyle>

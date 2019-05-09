@@ -1,7 +1,7 @@
 import React, { useState  } from 'react';
-import { Header } from './Header/Header'
-import { Sections } from './Sections/Sections';
-import { SearchPanel } from './SearchPanel/SearchPanel';
+import Header from './Header/Header'
+import Sections from './Sections/Sections';
+import SearchPanel from './SearchPanel/SearchPanel';
 
 function Main() {
     const [isMouseLeaved, setMouseLeaved] = useState(true);

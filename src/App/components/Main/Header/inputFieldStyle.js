@@ -18,13 +18,13 @@ export const style = {
     StyledInputFiled: styled.input`
         display: inline-block; 
         margin-left: 20px; 
-        margin-top: 6px;
+        margin-top: 2px;
         width: 300px;
         height: 30px;
         border : none;
         outline: none;
         color: grey;
-        background: #f7f7f7; 
+        background: white; 
         font-size: 18px; 
     
         &.input-field-enter {
@@ -55,14 +55,18 @@ export const style = {
     `,
 
     StyledResultWindow: styled.div`
+        position: relative;
+        top:40px;
+        left:30px;
+        z-index: 100; 
         width: 350px;
         margin-left: 10px; 
         margin-bottom: 30px; 
+        border: 1px solid rgb(234,234,234);
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
         background: white;
-        box-shadow: 1px 1px 3px;
-        opacity: 0;
+        box-shadow: 0px 0px 30px 10px rgb(240,240,240); 
 
         &.result-window-enter {
             width: 350px;

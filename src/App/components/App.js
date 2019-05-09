@@ -6,10 +6,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
-          <h3>this is App area</h3>
           <Main />
-        </div>
       </Router>
     );
   }

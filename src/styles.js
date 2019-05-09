@@ -6,5 +6,4 @@ const StyeldDiv = styled.div`
     background: light-salmon; 
 
 `
-
 export { StyeldDiv }

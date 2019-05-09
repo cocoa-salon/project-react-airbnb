@@ -8,16 +8,19 @@ const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
 
 const StyledInputPanel = styled(InputPanel)`
     width: 350px;
-    height: 40px;
-    position: relative;
+    height: auto;
+    position: absolute;
+    top: 14px;
+    left: 40px;
     margin-left: 10px; 
-    background: #f7f7f7;
+    background: white;
     border-radius: 4px;
-    box-shadow: 1px 1px 3px;
-    transition: box-shadow 0.2s; 
-    z-index: 100; 
-    &:hover {
-        box-shadow: 1px 1px 10px;     
+    border: rgb(230,230,230) solid 1px; 
+    box-shadow: 1px 1px 1px 1px rgba(240,240,240,1); 
+    transition: box-shadow 0.4s; 
+    z-index: 90; 
+    &:hover {    
+        box-shadow: 1px 0px 10px 10px rgba(240,240,240,1); 
     };
 
     &.input-panel-enter {
@@ -78,9 +81,7 @@ function InputField(props) {
     const closeResultWindow = () => setInProp(false);
 
     return (
-        <div onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-        >
+        <InputFieldDiv onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
             <CSSTransition in={inProp} timeout={200} classNames="input-field" classNames="input-panel">
                 <StyledInputPanel >
                     <StyledInputFiled
@@ -99,9 +100,14 @@ function InputField(props) {
                     {inProp === true ? <AdditionalButtons /> : null}
                 </StyledResultWindow>
             </CSSTransition>
-        </div>
+        </InputFieldDiv>
     )
 }
+
+const InputFieldDiv = styled.div`
+    width: auto;
+    height: 50px;
+`
 
 const AdditionalButtons = function (props) {
 
@@ -114,20 +120,30 @@ const AdditionalButtons = function (props) {
         background: white;
     `
     const StyledButton = styled.button`
-        width: 70px; 
-        height: 60px; 
+        width: auto;
+        height: auto;
+        padding: 13px 16px 13px 16px;
         border-radius: 4px; 
-        box-shadow: 1px 1px 3px;
-        margin: 20px 0 50px 20px;
+        border: rgb(230,230,230) solid 1px; 
+        margin: 10px 0 50px 20px;
         font-size: 14px; 
-        background: rgb(0,121,126);
+        background: white;
+        color: rgb(60,60,60);
         &:hover {
-            color: white; 
+            box-shadow: 0px 0px 1px 1px rgba(240,240,240,1);
         }
     `
+    const ExploreTestStyle = styled.p`
+        color: rgb(60,60,60);
+        font-size: 12px;
+        font-weight: bold;
+        padding-left: 20px;
+        margin: 0px;
+    `   
+
     return (
         <StyledDiv>
-            에어비엔비 둘러보기<br />
+            <ExploreTestStyle>에어비엔비 둘러보기</ExploreTestStyle>
             <Link to="/search/all">
                 <StyledButton>모두</StyledButton>
             </Link>
@@ -140,7 +156,7 @@ const AdditionalButtons = function (props) {
             <Link to="/search/restaurant">
                 <StyledButton>레스토랑</StyledButton>
             </Link>
-        </StyledDiv >
+        </StyledDiv>
     )
 }
 

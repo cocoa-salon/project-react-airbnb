@@ -19,14 +19,12 @@ function SearchTabs(props) {
     const [optionTabUrl, setOptionTabUrl] = useState('');
     const [selectedButton, setSelectedButton] = useState(0);
 
-
     const [guestNum, setGuestNum] = useState({
         adultNum: 0,
         childNum: 0,
         toddlerNum: 0,
         totalNum: 0
     });
-
 
     // const [guestNum, dispatch2] = useReducer(checkGuestNumReducer, {
     //     adultNum: 0,

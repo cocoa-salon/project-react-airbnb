@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom';
 function Sections(props) {
     return (
         <StyledDiv>
-            <h3>this is sections area.</h3>
             <Route path="/all" component={AllSection} />
             <Route path="/inn" component={InnSection} />
             <Route path="/trip" component={TripSection} />
@@ -15,11 +14,12 @@ function Sections(props) {
 }
 
 const StyledDiv = styled.div`
+    padding: 1rem;
     position: relative; 
     width: 100%;
     height: 1000px;
-    border: 2px solid grey;
-    background: #F0E5DE; 
+    border: 1px solid rgb(230,230,230);
+    background: white; 
 `
 
 function AllSection({match}) {
@@ -48,4 +48,4 @@ function RestaurentSection({match}) {
     )
 }
 
-export { Sections };
+export default Sections;

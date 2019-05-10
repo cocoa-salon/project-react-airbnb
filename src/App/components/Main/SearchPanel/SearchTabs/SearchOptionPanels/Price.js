@@ -1,14 +1,13 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
 import { OptionTabStyle } from './OptionTabStyle';
+import { SearchOptionPanelContext } from '../SearchTabs';
 
 function Price(props) {
 
-    const handleOnMouseLeave = () => props.handleOnMouseLeave();
-    const handleOnMouseEnter = () => props.handleOnMouseEnter();
+    const value = useContext(SearchOptionPanelContext);
 
     return (
-        <OptionTabStyle onMouseLeave={handleOnMouseLeave} onMouseEnter={handleOnMouseEnter}>
+        <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter}>
             가격대를 설정하는 옵션 패널
         </OptionTabStyle>
     )

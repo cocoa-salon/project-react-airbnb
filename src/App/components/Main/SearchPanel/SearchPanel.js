@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 
-import { SearchTabs } from './SearchTabs/SearchTabs';
+import SearchTabs from './SearchTabs/SearchTabs';
 
 function SearchPanel(props) {
 
@@ -19,8 +19,7 @@ function SearchPanel(props) {
     }
 
     return (
-        <StyledDiv>
-            <h3>this is search panel area</h3>
+        <SearchPanleDiv>
             <Route path="/search/:id" render={({ match }) => (
                 <SearchTabs
                     handleOnMouseLeave={handleOnMouseLeave}
@@ -30,15 +29,16 @@ function SearchPanel(props) {
                     match={match}
                 />
             )} />
-        </StyledDiv>
+        </SearchPanleDiv>
     )
 }
 
-const StyledDiv = styled.div`
+const SearchPanleDiv = styled.div`
+    padding: 1rem; 
     position: relative; 
     width: 100%;
-    height: 150px;
-    border: 2px solid grey;
-    background: #CADBE9; 
+    height: 36px;
+    border: 1px solid rgb(230,230,230);
+    background: white; 
 `
-export { SearchPanel };
+export default SearchPanel;

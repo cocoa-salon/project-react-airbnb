@@ -1,23 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Searchbar } from './Searchbar';
+import Searchbar from './Searchbar';
 
 function Header(props) {
 
     return (
         <StyeldHeader>
-            <h3>this is Header area.</h3>
             <Searchbar />
         </StyeldHeader>
     )
 }
 
 const StyeldHeader = styled.header`
+    padding: 10px; 
     position: relative; 
-    width: 100%;
-    height: 150px; 
-    background: #f7f7f7; 
-    border: solid 2px grey; 
+    width: auto;
+    height: 50px; 
+    background: white; 
+    border: solid 1px rgb(230,230,230);
 `
 
-export { Header };
+export default Header; 

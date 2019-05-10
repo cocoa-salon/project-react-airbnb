@@ -1,54 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-
 import { OptionTabStyle } from './OptionTabStyle';
-
-function Guest(props) {
-
-    const handleOnMouseLeave = () => props.handleOnMouseLeave();
-    const handleOnMouseEnter = () => props.handleOnMouseEnter();
-    const resetGuestNum = (event) => {
-        const buttonName = event.target.name;
-        props.resetGuestNum(buttonName);
-    }
-
-    const calculateGuestNum = (event) => {
-        const buttonName = event.target.name;
-        props.calculateGuestNum(buttonName);
-    }
-
-    return (
-        <OptionTabStyle onMouseLeave={handleOnMouseLeave} onMouseEnter={handleOnMouseEnter} onClick={calculateGuestNum} >
-            <StyledDiv>
-                <StyledP>성인</StyledP>
-                <StyledButtonDiv>
-                    <RemoveAdultButton isButtonActivated={props.isButtonActivated} name="removeAdult">-</RemoveAdultButton>
-                    <StyledNumDiv>{props.adultNum} +</StyledNumDiv>
-                    <AddAdultButton isButtonActivated={props.isButtonActivated} name="addAdult">+</AddAdultButton>
-                </StyledButtonDiv>
-            </StyledDiv>
-            <StyledDiv>
-                <StyledP>어린이</StyledP>
-                <StyledButtonDiv>
-                    <RemoveChildButton isButtonActivated={props.isButtonActivated} name="removeChildren">-</RemoveChildButton>
-                    <StyledNumDiv>{props.childNum} +</StyledNumDiv>
-                    <AddChildButton isButtonActivated={props.isButtonActivated} name="addChildren">+</AddChildButton>
-                </StyledButtonDiv>
-            </StyledDiv>
-            <StyledDiv>
-                <StyledP>유아</StyledP>
-                <StyledButtonDiv>
-                    <RemoveToddlerButton isButtonActivated={props.isButtonActivated} name="removeToddler">-</RemoveToddlerButton>
-                    <StyledNumDiv>{props.toddlerNum} +</StyledNumDiv>
-                    <AddToddlerButton isButtonActivated={props.isButtonActivated} name="addToddler">+</AddToddlerButton>
-                </StyledButtonDiv>
-            </StyledDiv>
-            <StyledDiv>
-                <StyleResetButton name="reset" style={{cursor: 'pointer'}} onClick={resetGuestNum}>삭제</StyleResetButton>
-            </StyledDiv>
-        </OptionTabStyle>
-    )
-}
+import { SearchOptionPanelContext } from '../SearchTabs';
 
 
 const StyledButton = styled.button`
@@ -60,6 +13,70 @@ const StyledButton = styled.button`
     outline: none;
     font-size: 16px; 
 `
+
+const MinusPlusButton = (props) => {
+
+    const buttonActivatedStyle = {
+        borderColor: "#008c9e",
+        color: "#008c9e"
+    }
+
+    const buttonInactivatedStyle = {
+        borderColor: "#c6e5d9",
+        color: "#c6e5d9"
+    }
+
+    const checkButtonIsActivated = () => {
+        if (
+            (props.name === "removeAdult" && props.isButtonActivated.minAdult === false) ||
+            (props.name === "removeChildren" && props.isButtonActivated.minChild === false) ||
+            (props.name === "removeToddler" && props.isButtonActivated.minToddler === false) ||
+            (props.name === "addAdult" && props.isButtonActivated.maxAdult === false) ||
+            (props.name === "addChildren" && props.isButtonActivated.maxChild === false) ||
+            (props.name === "addToddler" && props.isButtonActivated.maxToddler === false)
+        ) {
+            return buttonInactivatedStyle;
+        } else {
+            return buttonActivatedStyle;
+        }
+    }
+
+    return (
+        <StyledButton
+            style={checkButtonIsActivated()} name={props.name} isButtonActivated={props.isButtonActivated} >
+            {props.children}
+        </StyledButton>
+    )
+};
+
+const GuestNumSetButton = (props) => {
+
+    return (
+        <StyledDiv>
+            <StyledP>{props.guestType}</StyledP>
+            <StyledButtonDiv>
+                <MinusPlusButton isButtonActivated={props.isButtonActivated} name={props.rightButton}>-</MinusPlusButton>
+                <StyledNumDiv>{props.numbers} +</StyledNumDiv>
+                <MinusPlusButton isButtonActivated={props.isButtonActivated} name={props.leftButton}>+</MinusPlusButton>
+            </StyledButtonDiv>
+        </StyledDiv>
+    )
+};
+
+function Guest(props) {
+    const value = useContext(SearchOptionPanelContext);
+
+    return (
+        <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter} onClick={value.calculateGuestNum} >
+            <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={value.adultNum} isButtonActivated={value.isButtonActivated} />
+            <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={value.childNum} isButtonActivated={value.isButtonActivated} />
+            <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={value.toddlerNum} isButtonActivated={value.isButtonActivated} />
+            <StyledDiv>
+                <StyleResetButton name="reset" style={{ cursor: 'pointer' }} onClick={value.resetGuestNum}>삭제</StyleResetButton>
+            </StyledDiv>
+        </OptionTabStyle>
+    )
+}
 
 const StyleResetButton = styled(StyledButton)`
     border-radius: 0%; 
@@ -73,31 +90,6 @@ const StyledButtonDiv = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-`
-
-const AddAdultButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonActivated.maxAdult ? "#008c9e" : "#c6e5d9"};
-    color : ${ props => props.isButtonActivated.maxAdult ? "#008c9e" : "#c6e5d9"};
-`
-const RemoveAdultButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonActivated.minAdult ? "#008c9e" : "#c6e5d9"};
-    color : ${ props => props.isButtonActivated.minAdult ? "#008c9e" : "#c6e5d9"};
-`
-const AddChildButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonActivated.maxChild ? "#008c9e" : "#c6e5d9"};
-    color : ${ props => props.isButtonActivated.maxChild ? "#008c9e" : "#c6e5d9"};
-`
-const RemoveChildButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonActivated.minChild ? "#008c9e" : "#c6e5d9"};
-    color : ${ props => props.isButtonActivated.minChild ? "#008c9e" : "#c6e5d9"};
-`
-const AddToddlerButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonActivated.maxToddler ? "#008c9e" : "#c6e5d9"};
-    color : ${ props => props.isButtonActivated.maxToddler ? "#008c9e" : "#c6e5d9"};
-`
-const RemoveToddlerButton = styled(StyledButton)`
-    border-color: ${ props => props.isButtonActivated.minToddler ? "#008c9e" : "#c6e5d9"};
-    color : ${ props => props.isButtonActivated.minToddler ? "#008c9e" : "#c6e5d9"};
 `
 
 const StyledDiv = styled.div`

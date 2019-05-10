@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const OptionTabStyle = styled.div`
+    font-size: 14px;
     position: relative; 
+    padding: 1rem; 
     z-index: 30;
     width: 400px;
     height: auto;

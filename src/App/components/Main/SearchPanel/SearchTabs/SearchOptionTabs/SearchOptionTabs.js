@@ -17,9 +17,28 @@ const SearchOptionTabs = (props) => {
 
     const value = useContext(SearchTabContext);
 
+
+    const highlightStyle = {
+        background: "rgb(15,114,118)",
+        color: "white"
+    }
+
+    const disableHighlightStyle = {
+        background: "white",
+        color: "black"
+    }
+
+    const highlightTab = (name) => {
+        console.log(value.isTabActivated.name);
+        
+        if(name !== value.isTabActivated.name) return; 
+        if(value.isTabActivated.checked) return highlightStyle;
+        else return disableHighlightStyle;
+    }
+    
     return (
         <Link to={`${value.match.url}/${props.type}`} onClick={(event) => value.passButtonClick(event, value.match.url)}>
-            <SearchOptionTabStyle name={props.type}> {
+            <SearchOptionTabStyle style={highlightTab(props.type)} name={props.type}> {
                 (props.type === 'date' && <DateTapDisplay />) ||
                 (props.type === 'guest' && <GuestTapDisplay />) ||
                 (props.type === 'innType' && <InnTypeTapDisplay innTypes={value.innTypes} />) ||
@@ -32,6 +51,8 @@ const SearchOptionTabs = (props) => {
         </Link>
     )
 }
+
+
 
 export { SearchOptionTabs }
 

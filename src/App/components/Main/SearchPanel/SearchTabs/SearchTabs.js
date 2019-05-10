@@ -193,19 +193,32 @@ function SearchTabs(props) {
     };
 
     // 즉시 예약 state
-    const [instantBookOnOff, setInstantBookOnOff] = useState({isOn: false});
+    const [instantBookOnOff, setInstantBookOnOff] = useState({isOn: false, name: ''});
 
-    const ToggleInstantBookOnOff = () => {
-        setInstantBookOnOff({isOn : !instantBookOnOff.isOn}); 
+    const ToggleInstantBookOnOff = (name) => {
+        setInstantBookOnOff({isOn : !instantBookOnOff.isOn, name: name}); 
     }
 
     const SearchOptionInstantBookTab = {
-        instantBookOnOff: instantBookOnOff,
-        ToggleInstantBookOnOff: ToggleInstantBookOnOff
+        // instantBookOnOff: instantBookOnOff,
+        // ToggleInstantBookOnOff: ToggleInstantBookOnOff
+        toggleTabOnOff : toggleTabOnOff
+
+
     };
+
+    const [isTabActivated, SetIsTabActivated] = useState({isActivated: false, name: ''}); 
+
+    const toggleTabOnOff = (name, checked) => {
+        SetIsTabActivated({isActivated: checked, name: name})
+    }
+
 
     // All, Inn, Trip, Restaurant 탭
     const SearchTabProps = {
+        
+        isTabActivated : isTabActivated,
+
         passButtonClick: setTabName,
         totalNum: guestNum.totalNum,
         toddlerNum: guestNum.toddlerNum,

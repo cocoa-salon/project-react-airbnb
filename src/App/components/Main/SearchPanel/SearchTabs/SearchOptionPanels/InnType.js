@@ -16,7 +16,8 @@ function InnType(props) {
     const value = useContext(SearchOptionPanelContext);
 
     const checkboxStyle = {
-        color : "#519D9E"
+        color : "#519D9E",
+        padding: "5px 10px 5px 5px"
     }
 
     const checkInnType = (event) => {
@@ -39,19 +40,19 @@ function InnType(props) {
         <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter}>
             <InnTypeDiv>
                 <InnTypeCheck name='allhouse' innTypes={value.innTypes.allhouse} checkInnType={checkInnType} />집 전체<br />
-                {innDesc.allhouse}
+                <InnTypeDescStyle>{innDesc.allhouse}</InnTypeDescStyle>
             </InnTypeDiv>
             <InnTypeDiv>
                 <InnTypeCheck name='privateRoom' innTypes={value.innTypes.privateRoom} checkInnType={checkInnType} />개인실<br />
-                {innDesc.privateRoom}
+                <InnTypeDescStyle>{innDesc.privateRoom}</InnTypeDescStyle>
             </InnTypeDiv>
             <InnTypeDiv>
                 <InnTypeCheck name='hotelRoom' innTypes={value.innTypes.hotelRoom} checkInnType={checkInnType} />호텔 객실<br />
-                {innDesc.hotelRoom}
+                <InnTypeDescStyle>{innDesc.hotelRoom}</InnTypeDescStyle>
             </InnTypeDiv>
             <InnTypeDiv>
                 <InnTypeCheck name='publicRoom' innTypes={value.innTypes.publicRoom} checkInnType={checkInnType} />다인실<br />
-                {innDesc.publicRoom}
+                <InnTypeDescStyle>{innDesc.publicRoom}</InnTypeDescStyle>
             </InnTypeDiv>
             <StyledResetButton name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
                 삭제
@@ -60,8 +61,13 @@ function InnType(props) {
     )
 }
 
+const InnTypeDescStyle = styled.p`
+    padding-left: 39px; 
+    margin: 0px; 
+`
+
 const InnTypeDiv = styled.div`
-    margin: 20px; 
+    margin: 10px; 
 `
 
 const StyledResetButton = styled.button`

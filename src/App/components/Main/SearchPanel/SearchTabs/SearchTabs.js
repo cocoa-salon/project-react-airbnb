@@ -179,6 +179,7 @@ function SearchTabs(props) {
         resetGuestNum: resetGuestNum
     }
 
+    // 숙소타입 state
     const [innTypes, dispatch] = useReducer(innTypeCheckReducer, {
         allhouse: false,
         privateRoom: false,
@@ -189,7 +190,19 @@ function SearchTabs(props) {
     const SearchOptionInnTypeTab = {
         dispatch: dispatch,
         innTypes: innTypes,
+    };
+
+    // 즉시 예약 state
+    const [instantBookOnOff, setInstantBookOnOff] = useState({isOn: false});
+
+    const ToggleInstantBookOnOff = () => {
+        setInstantBookOnOff({isOn : !instantBookOnOff.isOn}); 
     }
+
+    const SearchOptionInstantBookTab = {
+        instantBookOnOff: instantBookOnOff,
+        ToggleInstantBookOnOff: ToggleInstantBookOnOff
+    };
 
     // All, Inn, Trip, Restaurant 탭
     const SearchTabProps = {
@@ -199,7 +212,6 @@ function SearchTabs(props) {
         innTypes: innTypes,
         match: props.match,
         passTabUrl: passTabUrl,
-        testText: 'banana'
     };
 
     const SearchOptionTabProps = {
@@ -221,7 +233,7 @@ function SearchTabs(props) {
             }
             </SearchTabProvider>
 
-            <SearchOptionPanelProvider value={{ ...SearchOptionInnTypeTab, ...SearchOptionTabProps, ...SearchOptionGuestTab }} >
+            <SearchOptionPanelProvider value={{ ...SearchOptionInnTypeTab, ...SearchOptionTabProps, ...SearchOptionGuestTab, ...SearchOptionInstantBookTab }} >
                 <SearchOptionPanels />
             </SearchOptionPanelProvider>
         </div>

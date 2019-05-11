@@ -16,6 +16,8 @@ const StyledButton = styled.button`
 
 const MinusPlusButton = (props) => {
 
+    const value = useContext(SearchOptionPanelContext);
+
     const buttonActivatedStyle = {
         borderColor: "#008c9e",
         color: "#008c9e"
@@ -28,12 +30,12 @@ const MinusPlusButton = (props) => {
 
     const checkButtonIsActivated = () => {
         if (
-            (props.name === "removeAdult" && props.isButtonActivated.minAdult === false) ||
-            (props.name === "removeChildren" && props.isButtonActivated.minChild === false) ||
-            (props.name === "removeToddler" && props.isButtonActivated.minToddler === false) ||
-            (props.name === "addAdult" && props.isButtonActivated.maxAdult === false) ||
-            (props.name === "addChildren" && props.isButtonActivated.maxChild === false) ||
-            (props.name === "addToddler" && props.isButtonActivated.maxToddler === false)
+            (props.name === "removeAdult" && value.guestNum.removeAdult === false) ||
+            (props.name === "removeChildren" && value.guestNum.removeChildren === false) ||
+            (props.name === "removeToddler" && value.guestNum.removeToddler === false) ||
+            (props.name === "addAdult" && value.guestNum.addAdult === false) ||
+            (props.name === "addChildren" && value.guestNum.addChildren === false) ||
+            (props.name === "addToddler" && value.guestNum.addToddler === false)
         ) {
             return buttonInactivatedStyle;
         } else {
@@ -43,7 +45,7 @@ const MinusPlusButton = (props) => {
 
     return (
         <StyledButton
-            style={checkButtonIsActivated()} name={props.name} isButtonActivated={props.isButtonActivated} >
+            style={checkButtonIsActivated()} name={props.name} >
             {props.children}
         </StyledButton>
     )
@@ -55,9 +57,9 @@ const GuestNumSetButton = (props) => {
         <StyledDiv>
             <StyledP>{props.guestType}</StyledP>
             <StyledButtonDiv>
-                <MinusPlusButton isButtonActivated={props.isButtonActivated} name={props.rightButton}>-</MinusPlusButton>
+                <MinusPlusButton name={props.rightButton}>-</MinusPlusButton>
                 <StyledNumDiv>{props.numbers} +</StyledNumDiv>
-                <MinusPlusButton isButtonActivated={props.isButtonActivated} name={props.leftButton}>+</MinusPlusButton>
+                <MinusPlusButton name={props.leftButton}>+</MinusPlusButton>
             </StyledButtonDiv>
         </StyledDiv>
     )
@@ -66,11 +68,19 @@ const GuestNumSetButton = (props) => {
 function Guest(props) {
     const value = useContext(SearchOptionPanelContext);
 
+    const isCheckOne = (event) => {
+        const name = event.target.name;
+        if(name === "addAdult" || name === "addChildren" || name === "addToddler") {
+            value.toggleTabOnOff('guest', true); 
+        }
+        value.calculateGuestNum(name);
+    }
+
     return (
-        <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter} onClick={value.calculateGuestNum} >
-            <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={value.adultNum} isButtonActivated={value.isButtonActivated} />
-            <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={value.childNum} isButtonActivated={value.isButtonActivated} />
-            <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={value.toddlerNum} isButtonActivated={value.isButtonActivated} />
+        <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter} onClick={isCheckOne} >
+            <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={value.guestNum.adultNum} />
+            <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={value.guestNum.childNum} />
+            <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={value.guestNum.toddlerNum} />
             <StyledDiv>
                 <StyleResetButton name="reset" style={{ cursor: 'pointer' }} onClick={value.resetGuestNum}>삭제</StyleResetButton>
             </StyledDiv>

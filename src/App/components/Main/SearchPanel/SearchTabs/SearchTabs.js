@@ -23,25 +23,14 @@ function SearchTabs(props) {
         adultNum: 0,
         childNum: 0,
         toddlerNum: 0,
-        totalNum: 0
+        totalNum: 0,
+        removeAdult: false,
+        addAdult: true,
+        removeChildren: false,
+        addChildren: true,
+        removeToddler: false,
+        addToddler: true,
     });
-
-    // const [guestNum, dispatch2] = useReducer(checkGuestNumReducer, {
-    //     adultNum: 0,
-    //     childNum: 0,
-    //     toddlerNum: 0,
-    //     totalNum: 0
-    // });
-
-
-    // const checkGuestNumReducer = (guestNum, {type, payload}) => {
-    //     switch(type) {
-    //         case 'cal' :
-    //             console.log('cal');
-    //         case 'reset' :
-    //             console.log('reset');
-    //     }
-    // };
 
     const guestNumLimit = {
         minAdultNum: 1,
@@ -52,104 +41,132 @@ function SearchTabs(props) {
         maxToddlerNum: 5
     };
 
-    const [isButtonActivated, setIsButtonActivated] = useState({
-        minAdult: false,
-        maxAdult: true,
-        minChild: false,
-        maxChild: true,
-        minToddler: false,
-        maxToddler: true,
-    });
-
     const resetGuestNum = (event) => {
         const name = event.target.name;
-        setGuestNum({adultNum: guestNumLimit.minAdultNum, childNum: 0, toddlerNum: 0, totalNum: 1 })
+        setGuestNum({
+            adultNum: guestNumLimit.minAdultNum,
+            childNum: 0,
+            toddlerNum: 0,
+            totalNum: 1,
+            removeAdult: false,
+            addAdult: true,
+            removeChildren: false,
+            addChildren: true,
+            removeToddler: false,
+            addToddler: true
+        })
         setSelectedButton(name);
     }
 
-    const calculateGuestNum = (event) => {
-        const buttonName = event.target.name;
+    const calculateGuestNum = (buttonName) => {
         if (buttonName === "addAdult" || buttonName === "addChildren" || buttonName === "addToddler") increaseGuestNum(buttonName);
         else if (buttonName === "removeAdult" || buttonName === "removeChildren" || buttonName === "removeToddler") decreaseGuestNum(buttonName);
-    };
-
-    const increaseGuestNum = (buttonName) => {
-        if (buttonName === "addAdult" && guestNum.adultNum < guestNumLimit.maxAdultNum) {
-            setGuestNum({...guestNum, adultNum: guestNum.adultNum + 1, totalNum: guestNum.totalNum + 1});
-        } if (guestNum.adultNum === 0 && buttonName !== "addAdult") {
-            addEssentialAdult(buttonName);
-        } if (guestNum.adultNum > 0 && buttonName === "addChildren" && guestNum.childNum < guestNumLimit.maxChildNum) {
-            setGuestNum({...guestNum, childNum: guestNum.childNum + 1, totalNum: guestNum.totalNum + 1});
-        } if (guestNum.adultNum > 0 && buttonName === "addToddler" && guestNum.toddlerNum < guestNumLimit.maxToddlerNum) {
-            setGuestNum({...guestNum, toddlerNum: guestNum.toddlerNum + 1});
-        }
         setSelectedButton(buttonName);
     };
 
+    const increaseGuestNum = (buttonName) => {
+        if (buttonName === "addAdult") {
+            addAdult();
+        } else if (guestNum.adultNum === 0 && buttonName !== "addAdult") {
+            addEssentialAdult(buttonName);
+        } else if (buttonName === "addChildren") {
+            addChild();
+        } else if (buttonName === "addToddler") {
+            addToddler();
+        }
+    };
+
     const addEssentialAdult = (buttonName) => {
-        setGuestNum({...guestNum, adultNum: guestNum.adultNum + guestNumLimit.minAdultNum  });
         if (buttonName === "addChildren") {
-            setGuestNum({...guestNum, childNum: guestNum.childNum + 1, totalNum: 2});
+            setGuestNum({ ...guestNum, adultNum: guestNum.adultNum + guestNumLimit.minAdultNum, childNum: guestNum.childNum + 1, totalNum: 2, removeChildren: true, addChildren: true });
         } if (buttonName === "addToddler") {
-            setGuestNum({...guestNum, toddlerNum: 1, totalNum: 1});
+            setGuestNum({ ...guestNum, adultNum: guestNum.adultNum + guestNumLimit.minAdultNum, toddlerNum: 1, totalNum: 1, removeToddler: true, addToddler: true });
         }
     };
 
     const decreaseGuestNum = (buttonName) => {
-        if (buttonName === "removeAdult" && guestNum.adultNum === guestNumLimit.minAdultNum) return;
-        if (buttonName === "removeAdult" && guestNum.adultNum > guestNumLimit.minAdultNum) {
-            setGuestNum({...guestNum, adultNum: guestNum.adultNum -1, totalNum: guestNum.totalNum - 1});
-        } if (buttonName === "removeChildren" && guestNum.childNum > 0) {
-            setGuestNum({...guestNum, childNum: guestNum.childNum - 1, totalNum: guestNum.totalNum - 1});
-        } if (buttonName === "removeToddler" && guestNum.toddlerNum > 0) {
-            setGuestNum({...guestNum, toddlerNum: guestNum.toddlerNum - 1 });
+        if (buttonName === "removeAdult") {
+            removeAdult();
+        } else if (buttonName === "removeChildren") {
+            removeChild();
+        } else if (buttonName === "removeToddler") {
+            removeToddler();
         }
-        setSelectedButton(buttonName);
     }
 
-    const switchButtonStateAdult = () => {
-        if (guestNum.adultNum <= guestNumLimit.minAdultNum)
-            setIsButtonActivated({ ...isButtonActivated, minAdult: false });
-        else if (guestNum.adultNum >= guestNumLimit.maxAdultNum)
-            setIsButtonActivated({ ...isButtonActivated, maxAdult: false });
-        else if (guestNum.adultNum > guestNumLimit.minAdultNum && guestNum.adultNum < guestNumLimit.maxAdultNum)
-            setIsButtonActivated({ ...isButtonActivated, minAdult: true, maxAdult: true });
+    const addAdult = () => {
+        if (guestNum.adultNum === 15) {
+            setGuestNum({ ...guestNum, adultNum: guestNum.adultNum + 1, totalNum: guestNum.totalNum + 1, removeAdult: true, addAdult: false });
+        }
+        else if (guestNum.adultNum < guestNumLimit.maxAdultNum && guestNum.adultNum > guestNumLimit.minAdultNum) {
+            setGuestNum({ ...guestNum, adultNum: guestNum.adultNum + 1, totalNum: guestNum.totalNum + 1, removeAdult: true, addAdult: true });
+        }
+        else if (guestNum.adultNum <= guestNumLimit.minAdultNum) {
+            setGuestNum({ ...guestNum, adultNum: guestNum.adultNum + 1, totalNum: guestNum.totalNum + 1, removeAdult: true, addAdult: true });
+            // 최대 도달(추가 불가)
+        } else if (guestNum.adultNum >= guestNumLimit.maxAdultNum) {
+            setGuestNum({ ...guestNum, removeAdult: true, addAdult: false });
+        }
+
     }
 
-    const switchButtonStateChild = () => {
-        if (guestNum.childNum === guestNumLimit.minChildNum)
-            setIsButtonActivated({ ...isButtonActivated, minChild: false });
-        else if (guestNum.childNum >= guestNumLimit.maxChildNum)
-            setIsButtonActivated({ ...isButtonActivated, maxChild: false });
-        else if (guestNum.childNum > guestNumLimit.minChildNum && guestNum.childNum < guestNumLimit.maxChildNum)
-            setIsButtonActivated({ ...isButtonActivated, minChild: true, maxChild: true });
+    const addChild = () => {
+        if (guestNum.childNum === 4) {
+            setGuestNum({ ...guestNum, childNum: guestNum.childNum + 1, totalNum: guestNum.totalNum + 1, removeChildren: true, addChildren: false });
+        } else if (guestNum.adultNum > 0 && guestNum.childNum < guestNumLimit.maxChildNum && guestNum.childNum > guestNumLimit.minChildNum) {
+            setGuestNum({ ...guestNum, childNum: guestNum.childNum + 1, totalNum: guestNum.totalNum + 1, removeChildren: true, addChildren: true });
+        } else if (guestNum.adultNum > 0 && guestNum.childNum <= guestNumLimit.minChildNum) {
+            setGuestNum({ ...guestNum, childNum: guestNum.childNum + 1, totalNum: guestNum.totalNum + 1, removeChildren: true, addChildren: true });
+        } else if (guestNum.adultNum > 0 && guestNum.childNum >= guestNumLimit.maxChildNum) {
+            setGuestNum({ ...guestNum, removeChildren: true, addChildren: false });
+        }
+
     }
 
-    const switchButtonStateToddler = () => {
-        if (guestNum.toddlerNum === guestNumLimit.minToddlerNum)
-            setIsButtonActivated({ ...isButtonActivated, minToddler: false });
-        else if (guestNum.toddlerNum >= guestNumLimit.maxToddlerNum)
-            setIsButtonActivated({ ...isButtonActivated, maxToddler: false });
-        else if (guestNum.toddlerNum > guestNumLimit.minToddlerNum && guestNum.toddlerNum < guestNumLimit.maxToddlerNum)
-            setIsButtonActivated({ ...isButtonActivated, minToddler: true, maxToddler: true });
+    const addToddler = () => {
+        if (guestNum.toddlerNum === 4) {
+            setGuestNum({ ...guestNum, toddlerNum: guestNum.toddlerNum + 1, removeToddler: true, addToddler: false });
+        } else if (guestNum.adultNum > 0 && guestNum.toddlerNum < guestNumLimit.maxToddlerNum && guestNum.toddlerNum > guestNumLimit.minToddlerNum) {
+            setGuestNum({ ...guestNum, toddlerNum: guestNum.toddlerNum + 1, removeToddler: true, addToddler: true });
+        } else if (guestNum.adultNum > 0 && guestNum.toddlerNum <= guestNumLimit.minToddlerNum) {
+            setGuestNum({ ...guestNum, toddlerNum: guestNum.toddlerNum + 1, removeToddler: true, addToddler: true });
+        } else if (guestNum.adultNum > 0 && guestNum.toddlerNum >= guestNumLimit.maxToddlerNum) {
+            setGuestNum({ ...guestNum, removeToddler: true, addToddler: false });
+        }
+
     }
 
-    useEffect(() => {
-        if (selectedButton === "reset")
-            setIsButtonActivated({
-                minAdult: false, maxAdult: true, minChild: false, maxChild: true, minToddler: false, maxToddler: true
-            });
-        if (selectedButton === "addAdult" || selectedButton === "removeAdult") {
-            switchButtonStateAdult();
+    const removeAdult = () => {
+        if (guestNum.adultNum <= guestNumLimit.minAdultNum) {
+            setGuestNum({ ...guestNum, removeAdult: false, addAdult: true });
+        } else if (guestNum.adultNum === 2) {
+            setGuestNum({ ...guestNum, adultNum: guestNum.adultNum - 1, totalNum: guestNum.totalNum - 1, removeAdult: false, addAdult: true });
+        } else if (guestNum.adultNum > guestNumLimit.minAdultNum && guestNum.adultNum <= guestNumLimit.maxAdultNum) {
+            setGuestNum({ ...guestNum, adultNum: guestNum.adultNum - 1, totalNum: guestNum.totalNum - 1, removeAdult: true, addAdult: true });
         }
-        else if (selectedButton === "addChildren" || selectedButton === "removeChildren") {
-            switchButtonStateChild();
-        }
-        else if (selectedButton === "addToddler" || selectedButton === "removeToddler") {
-            switchButtonStateToddler();
-        }
-    }, [guestNum.adultNum, guestNum.childNum, guestNum.toddlerNum, guestNum.guestNum]);
 
+    }
+
+    const removeChild = () => {
+        if (guestNum.childNum <= guestNumLimit.minChildNum) {
+            setGuestNum({ ...guestNum, removeChildren: false, addChildren: true });
+        } else if (guestNum.childNum === 1) {
+            setGuestNum({ ...guestNum, childNum: guestNum.childNum - 1, totalNum: guestNum.totalNum - 1, removeChildren: false, addChildren: true });
+        } else if (guestNum.childNum > guestNumLimit.minChildNum && guestNum.childNum <= guestNumLimit.maxChildNum) {
+            setGuestNum({ ...guestNum, childNum: guestNum.childNum - 1, totalNum: guestNum.totalNum - 1, removeChildren: true, addChildren: true });
+        }
+    }
+
+    const removeToddler = () => {
+        if (guestNum.toddlerNum <= guestNumLimit.minToddlerNum) {
+            setGuestNum({ ...guestNum, removeToddler: false, addToddler: true });
+        } else if (guestNum.toddlerNum === 1) {
+            setGuestNum({ ...guestNum, toddlerNum: guestNum.toddlerNum - 1, removeToddler: false, addToddler: true });
+        } else if (guestNum.toddlerNum > guestNumLimit.minToddlerNum && guestNum.toddlerNum <= guestNumLimit.maxToddlerNum) {
+            setGuestNum({ ...guestNum, toddlerNum: guestNum.toddlerNum - 1, removeToddler: true, addToddler: true });
+        }
+
+    }
 
     const setTabName = (event, url) => {
         const tabName = event.target.name;
@@ -171,7 +188,7 @@ function SearchTabs(props) {
     }
 
     const SearchOptionGuestTab = {
-        isButtonActivated: isButtonActivated,
+        guestNum: guestNum,
         calculateGuestNum: calculateGuestNum,
         adultNum: guestNum.adultNum,
         childNum: guestNum.childNum,
@@ -179,7 +196,7 @@ function SearchTabs(props) {
         resetGuestNum: resetGuestNum
     }
 
-    // 숙소타입 state
+    // 숙소타입 상태
     const [innTypes, dispatch] = useReducer(innTypeCheckReducer, {
         allhouse: false,
         privateRoom: false,
@@ -192,32 +209,38 @@ function SearchTabs(props) {
         innTypes: innTypes,
     };
 
-    // 즉시 예약 state
-    const [instantBookOnOff, setInstantBookOnOff] = useState({isOn: false, name: ''});
+    // 즉시예약 여부 상태
+    const [isInstantBookChecked, setIsInstantBookChecked] = useState({ isChecked: false });
 
-    const ToggleInstantBookOnOff = (name) => {
-        setInstantBookOnOff({isOn : !instantBookOnOff.isOn, name: name}); 
+    const toggleInstantBookChecked = () => {
+        setIsInstantBookChecked({ isChecked: !isInstantBookChecked.isChecked })
     }
 
     const SearchOptionInstantBookTab = {
-        // instantBookOnOff: instantBookOnOff,
-        // ToggleInstantBookOnOff: ToggleInstantBookOnOff
-        toggleTabOnOff : toggleTabOnOff
-
-
-    };
-
-    const [isTabActivated, SetIsTabActivated] = useState({isActivated: false, name: ''}); 
-
-    const toggleTabOnOff = (name, checked) => {
-        SetIsTabActivated({isActivated: checked, name: name})
+        isInstantBookChecked: isInstantBookChecked,
+        toggleInstantBookChecked: toggleInstantBookChecked
     }
 
+    // 검색 옵션 탭 활성화 여부    
+    const [isTabActivated, SetIsTabActivated] = useState({
+        date: false,
+        guest: false,
+        innType: false,
+        instantBook: false,
+        price: false,
+        time: false,
+        filterAdd: false
+    });
+
+    const toggleTabOnOff = (name, isActivated) => {
+        SetIsTabActivated({ ...isTabActivated, [name]: isActivated });
+    }
 
     // All, Inn, Trip, Restaurant 탭
     const SearchTabProps = {
-        
-        isTabActivated : isTabActivated,
+
+        isTabActivated: isTabActivated,
+
 
         passButtonClick: setTabName,
         totalNum: guestNum.totalNum,
@@ -228,6 +251,7 @@ function SearchTabs(props) {
     };
 
     const SearchOptionTabProps = {
+        toggleTabOnOff: toggleTabOnOff,
         optionTabUrl: optionTabUrl,
         handleOnMouseLeave: handleOnMouseLeave,
         handleOnMouseEnter: handleOnMouseEnter,

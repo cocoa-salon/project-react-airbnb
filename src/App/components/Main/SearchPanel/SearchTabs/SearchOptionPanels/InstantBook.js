@@ -10,19 +10,17 @@ function InstantBook(props) {
 
     const instantBookDesc = "호스트 승인을 기다릴 필요 없이 예약할 수 있는 숙소";
 
-    const checked = false;
-    
-    const onOff = (event) => {
-        checked = !checked;
-        const name = event.target.value;        
-        value.toggleTabOnOff(name, checked);
+    const toggleOnOff = (event) => {
+        const isActivated = event.target.checked;
+        value.toggleInstantBookChecked(); 
+        value.toggleTabOnOff('instantBook', isActivated);
     }
 
     return (
         <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter}>
             <InsStyle>
                 <div>즉시예약</div>
-                <Switch style={OnOffSwitchStyle} onChange={onOff} value="instantBook" ></Switch>
+                <Switch style={OnOffSwitchStyle} checked={value.isInstantBookChecked.isChecked} onChange={toggleOnOff}/ >
             </InsStyle>
             <DescStyle>
                 {instantBookDesc}

@@ -11,6 +11,19 @@ const innDesc = {
     publicRoom: "사적 공간 없이, 침실이나 욕실 등을 호스트나 다른 게스트와 함께 이용합니다."
 }
 
+const innTypeStates = {
+    allhouse: false,
+    privateRoom: false,
+    hotelRoom: false,
+    publicRoom: false
+}
+
+const checkInnTypeStates = (isChecked, name) => {
+    innTypeStates[name] = isChecked; 
+    if(Object.values(innTypeStates).includes(true)) return true; 
+    else return false; 
+}
+
 function InnType(props) {
 
     const value = useContext(SearchOptionPanelContext);
@@ -24,10 +37,12 @@ function InnType(props) {
         const name = event.target.name;
         const isChecked = event.target.checked;
         value.dispatch({type: 'check', payload: {name : name, isChecked: isChecked} });
+        value.toggleTabOnOff('innType', checkInnTypeStates(isChecked, name)); 
     }
 
     const resetChecked = () => {
         value.dispatch({type: 'reset'})
+        value.toggleTabOnOff('innType', false); 
     }
 
     const InnTypeCheck = (props) => {

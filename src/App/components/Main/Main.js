@@ -7,47 +7,35 @@ export const ClosePanelContext = React.createContext();
 
 function Main() {
     const [isMouseLeaved, setMouseLeaved] = useState(false);
-    const [isMouseLeavedTab, setMouseLeavedTab] = useState(false);
     const [selectedTabName, setSelectedTabName] = useState('none');
 
-
     // 포인터가 바깥에 있는 상태
-    const isCursorOnTab = false;
-    const isCursorOnPanel = false; 
+    let isCursorOffPanel = true; 
+    let isCursorOffTab = true;
 
     const setSelectedTab = (tabName) => {
         setSelectedTabName(tabName);
     }
 
-    // 마우스 커서와 패널
-    function handleOnMouseLeave() {
-        setMouseLeaved(true);
-    }
-
-    function handleOnMouseEnter() {
-        setMouseLeaved(false);
-    }
-
     // 마우스 커서와 탭
-    function handleOnMouseLeaveTab() {
-        setMouseLeavedTab(true);
+    function handleIsOnMouseLeaveTab(cursorOff) {
+        isCursorOffTab = cursorOff;
     }
 
-    function handleOnMouseEnterTab() {
-        setMouseLeavedTab(false);
+    // 마우스 커서와 패널
+    function handleIsOnMouseLeavePanel(cursorOff) {
+        isCursorOffPanel = cursorOff;
     }
 
     const closeSearchOptionPanel = () => {
-        if (isMouseLeaved === true && isMouseLeavedTab === true) {
+        if (isCursorOffTab === true && isCursorOffPanel === true) {
             setSelectedTabName("none");
         }
     }
 
     const closePanelProps = {
-        handleOnMouseLeave: handleOnMouseLeave,
-        handleOnMouseEnter: handleOnMouseEnter,
-        handleOnMouseLeaveTab: handleOnMouseLeaveTab,
-        handleOnMouseEnterTab: handleOnMouseEnterTab
+        handleIsOnMouseLeavePanel: handleIsOnMouseLeavePanel,
+        handleIsOnMouseLeaveTab: handleIsOnMouseLeaveTab
     }
 
     return (
@@ -55,10 +43,6 @@ function Main() {
             <div onClick={closeSearchOptionPanel}>
                 <Header />
                 <SearchPanel
-                    handleOnMouseLeave={handleOnMouseLeave}
-                    handleOnMouseEnter={handleOnMouseEnter}
-                    handleOnMouseLeaveTab={handleOnMouseLeaveTab}
-                    handleOnMouseEnterTab={handleOnMouseEnterTab}
                     selectedTabName={selectedTabName}
                     passSelectedTab={setSelectedTab}
                 />

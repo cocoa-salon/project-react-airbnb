@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { OptionTabStyle } from './OptionTabStyle';
 import { SearchOptionPanelContext } from '../SearchTabs';
-import { ClosePanelContext } from '../../../Main.js';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const innDesc = {
@@ -28,10 +27,6 @@ const checkInnTypeStates = (isChecked, name) => {
 function InnType(props) {
 
     const value = useContext(SearchOptionPanelContext);
-    const value2 = useContext(ClosePanelContext);
-
-
-
 
     const checkboxStyle = {
         color : "#519D9E",
@@ -57,7 +52,7 @@ function InnType(props) {
     }
 
     return (
-        <OptionTabStyle onMouseLeave={value2.handleOnMouseLeave} onMouseEnter={value2.handleOnMouseEnter}>
+        <OptionTabStyle>
             <InnTypeDiv>
                 <InnTypeCheck name='allhouse' innTypes={value.innTypes.allhouse} checkInnType={checkInnType} />집 전체<br />
                 <InnTypeDescStyle>{innDesc.allhouse}</InnTypeDescStyle>

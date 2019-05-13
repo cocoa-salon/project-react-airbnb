@@ -1,6 +1,5 @@
 import React, {useContext} from 'react';
 import { SearchOptionPanelContext } from '../SearchTabs';
-import { ClosePanelContext } from '../../../Main.js';
 import { OptionTabStyle } from './OptionTabStyle';
 import styled from 'styled-components';
 import Switch from '@material-ui/core/Switch';
@@ -8,7 +7,6 @@ import Switch from '@material-ui/core/Switch';
 function InstantBook(props) {
     
     const value = useContext(SearchOptionPanelContext);
-    const value2 = useContext(ClosePanelContext);
 
     const instantBookDesc = "호스트 승인을 기다릴 필요 없이 예약할 수 있는 숙소";
 
@@ -19,7 +17,7 @@ function InstantBook(props) {
     }
 
     return (
-        <OptionTabStyle onMouseLeave={value2.handleOnMouseLeave} onMouseEnter={value2.handleOnMouseEnter}>
+        <OptionTabStyle>
             <InsStyle>
                 <div>즉시예약</div>
                 <Switch style={OnOffSwitchStyle} checked={value.isInstantBookChecked.isChecked} onChange={toggleOnOff}/ >

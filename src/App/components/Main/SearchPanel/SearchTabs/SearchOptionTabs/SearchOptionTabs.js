@@ -17,8 +17,8 @@ import { ClosePanelContext } from '../../../Main.js';
 
 const SearchOptionTabs = (props) => {
 
-    const value = useContext(SearchTabContext);
-    const value2 = useContext(ClosePanelContext)
+    const searchTabContextValue = useContext(SearchTabContext);
+    const mouseLeaveContextValue = useContext(ClosePanelContext);
 
     const SearchOptionTabStyle = styled.button`
     display: inline-block;
@@ -35,35 +35,42 @@ const SearchOptionTabs = (props) => {
     font-weight: thin;
     margin-left: 10px;
     color: rgb(60,60,60); 
-    background: ${props => value.isTabActivated[props.name] ? "rgb(15,114,118)" : "white"};
-    color: ${props => value.isTabActivated[props.name] ? "white" : "black"};
+    background: ${props => searchTabContextValue.isTabActivated[props.name] ? "rgb(15,114,118)" : "white"};
+    color: ${props => searchTabContextValue.isTabActivated[props.name] ? "white" : "black"};
     &:hover {
-        ${props => value.isTabActivated[props.name] ? `background: rgb(30,90,93)`  : `background: rgb(230,230,230)`};
+        ${props => searchTabContextValue.isTabActivated[props.name] ? `background: rgb(30,90,93)`  : `background: rgb(230,230,230)`};
         border-radius: none; 
         outline: 0; ;
     }
     cursor: pointer;
 `    
 
-return (
-    <Link to={`${value.match.url}/${props.type}`} 
-        name={props.type} 
-        onClick={(event) => value.passButtonClick(event, value.match.url)}
-        onMouseLeave={value2.handleOnMouseLeaveTab} 
-        onMouseEnter={value2.handleOnMouseEnterTab}
-    >
-        <SearchOptionTabStyle name={props.type}> {
-            (props.type === 'date' && <DateTapDisplay />) ||
-            (props.type === 'guest' && <GuestTapDisplay />) ||
-            (props.type === 'innType' && <InnTypeTapDisplay innTypes={value.innTypes} />) ||
-            (props.type === 'instantBook' && <InstantBookTapDisplay />) ||
-            (props.type === 'price' && <PriceTapDisplay />) ||
-            (props.type === 'time' && <TimeTapDisplay />) ||
-            (props.type === 'filterAdd' && <FilterAddTapDisplay />)
-        }
-        </SearchOptionTabStyle>
-    </Link>
-)
+    const handleIsOnMouseLeaveTab = (event) => {
+        let cursorOff = event.target.dataset.cursorOff;
+        event.type === "mouseleave" ?  cursorOff = true : cursorOff = false; 
+        mouseLeaveContextValue.handleIsOnMouseLeaveTab(cursorOff);
+    }
+
+    return (
+        <Link to={`${searchTabContextValue.match.url}/${props.type}`} 
+            name={props.type} 
+            onClick={(event) => searchTabContextValue.passButtonClick(event, searchTabContextValue.match.url)}
+            data-cursoroff={true}
+            onMouseLeave={handleIsOnMouseLeaveTab} 
+            onMouseEnter={handleIsOnMouseLeaveTab}
+        >
+            <SearchOptionTabStyle name={props.type}> {
+                (props.type === 'date' && <DateTapDisplay />) ||
+                (props.type === 'guest' && <GuestTapDisplay />) ||
+                (props.type === 'innType' && <InnTypeTapDisplay innTypes={searchTabContextValue.innTypes} />) ||
+                (props.type === 'instantBook' && <InstantBookTapDisplay />) ||
+                (props.type === 'price' && <PriceTapDisplay />) ||
+                (props.type === 'time' && <TimeTapDisplay />) ||
+                (props.type === 'filterAdd' && <FilterAddTapDisplay />)
+            }
+            </SearchOptionTabStyle>
+        </Link>
+    )
 
 }
 

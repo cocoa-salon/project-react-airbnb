@@ -12,10 +12,13 @@ import { TimeTapDisplay } from './OptionTabDisplay/TimeTapDisplay';
 import { FilterAddTapDisplay } from './OptionTabDisplay/FilterAddTapDisplay';
 
 import { SearchTabContext } from '../SearchTabs';
+import { ClosePanelContext } from '../../../Main.js';
+
 
 const SearchOptionTabs = (props) => {
 
     const value = useContext(SearchTabContext);
+    const value2 = useContext(ClosePanelContext)
 
     const SearchOptionTabStyle = styled.button`
     display: inline-block;
@@ -39,10 +42,16 @@ const SearchOptionTabs = (props) => {
         border-radius: none; 
         outline: 0; ;
     }
+    cursor: pointer;
 `    
 
 return (
-    <Link to={`${value.match.url}/${props.type}`} onClick={(event) => value.passButtonClick(event, value.match.url)}>
+    <Link to={`${value.match.url}/${props.type}`} 
+        name={props.type} 
+        onClick={(event) => value.passButtonClick(event, value.match.url)}
+        onMouseLeave={value2.handleOnMouseLeaveTab} 
+        onMouseEnter={value2.handleOnMouseEnterTab}
+    >
         <SearchOptionTabStyle name={props.type}> {
             (props.type === 'date' && <DateTapDisplay />) ||
             (props.type === 'guest' && <GuestTapDisplay />) ||

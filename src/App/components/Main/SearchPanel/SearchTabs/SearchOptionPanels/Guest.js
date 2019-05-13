@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { OptionTabStyle } from './OptionTabStyle';
 import { SearchOptionPanelContext } from '../SearchTabs';
+import { ClosePanelContext } from '../../../Main.js';
+
 
 
 const StyledButton = styled.button`
@@ -67,6 +69,7 @@ const GuestNumSetButton = (props) => {
 
 function Guest(props) {
     const value = useContext(SearchOptionPanelContext);
+    const value2 = useContext(ClosePanelContext);
 
     const isCheckOne = (event) => {
         const name = event.target.name;
@@ -77,7 +80,7 @@ function Guest(props) {
     }
 
     return (
-        <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter} onClick={isCheckOne} >
+        <OptionTabStyle onMouseLeave={value2.handleOnMouseLeave} onMouseEnter={value2.handleOnMouseEnter} onClick={isCheckOne} >
             <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={value.guestNum.adultNum} />
             <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={value.guestNum.childNum} />
             <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={value.guestNum.toddlerNum} />

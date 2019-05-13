@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 import { OptionTabStyle } from './OptionTabStyle';
-import { SearchOptionPanelContext } from '../SearchTabs';
+import { ClosePanelContext } from '../../../Main.js';
 
 function AddFilters(props) {
 
-    const value = useContext(SearchOptionPanelContext);
+    const value = useContext(ClosePanelContext);
 
     return (
         <OptionTabStyle onMouseLeave={value.handleOnMouseLeave} onMouseEnter={value.handleOnMouseEnter}>

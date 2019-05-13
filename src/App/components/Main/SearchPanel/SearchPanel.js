@@ -6,14 +6,6 @@ import SearchTabs from './SearchTabs/SearchTabs';
 
 function SearchPanel(props) {
 
-    const handleOnMouseLeave = () => {
-        props.handleOnMouseLeave();
-    }
-
-    const handleOnMouseEnter = () => {
-        props.handleOnMouseEnter();
-    }
-
     const passSelectedTab = (tabName) => {
         props.passSelectedTab(tabName)
     }
@@ -22,8 +14,6 @@ function SearchPanel(props) {
         <SearchPanleDiv>
             <Route path="/search/:id" render={({ match }) => (
                 <SearchTabs
-                    handleOnMouseLeave={handleOnMouseLeave}
-                    handleOnMouseEnter={handleOnMouseEnter}
                     passSelectedTab={passSelectedTab}
                     selectedTabName={props.selectedTabName}
                     match={match}

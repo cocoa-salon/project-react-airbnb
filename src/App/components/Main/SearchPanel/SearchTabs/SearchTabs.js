@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 
 import { innTypeCheckReducer } from './stateReducers/innTypeCheckReducer';
 
@@ -169,18 +169,10 @@ function SearchTabs(props) {
     }
 
     const setTabName = (event, url) => {
-        const tabName = event.target.name;
+        const tabName = event.currentTarget.name;
         const optionTabUrl = url;
         passTabUrl(optionTabUrl)
         props.passSelectedTab(tabName);
-    };
-
-    const handleOnMouseLeave = () => {
-        props.handleOnMouseLeave();
-    };
-
-    const handleOnMouseEnter = () => {
-        props.handleOnMouseEnter();
     };
 
     const passTabUrl = (optionTabUrl) => {
@@ -238,10 +230,7 @@ function SearchTabs(props) {
 
     // All, Inn, Trip, Restaurant 탭
     const SearchTabProps = {
-
         isTabActivated: isTabActivated,
-
-
         passButtonClick: setTabName,
         totalNum: guestNum.totalNum,
         toddlerNum: guestNum.toddlerNum,
@@ -253,8 +242,6 @@ function SearchTabs(props) {
     const SearchOptionTabProps = {
         toggleTabOnOff: toggleTabOnOff,
         optionTabUrl: optionTabUrl,
-        handleOnMouseLeave: handleOnMouseLeave,
-        handleOnMouseEnter: handleOnMouseEnter,
         selectedTabName: props.selectedTabName
     }
 

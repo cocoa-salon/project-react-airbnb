@@ -6,16 +6,10 @@ import SearchTabs from './SearchTabs/SearchTabs';
 
 function SearchPanel(props) {
 
-    const passSelectedTab = (tabName) => {
-        props.passSelectedTab(tabName)
-    }
-
     return (
         <SearchPanleDiv>
             <Route path="/search/:id" render={({ match }) => (
                 <SearchTabs
-                    passSelectedTab={passSelectedTab}
-                    selectedTabName={props.selectedTabName}
                     match={match}
                 />
             )} />

@@ -6,16 +6,12 @@ import SearchPanel from './SearchPanel/SearchPanel';
 export const ClosePanelContext = React.createContext();
 
 function Main() {
-    const [isMouseLeaved, setMouseLeaved] = useState(false);
     const [selectedTabName, setSelectedTabName] = useState('none');
+    const [optionTabUrl, setOptionTabUrl] = useState('');
 
     // 포인터가 바깥에 있는 상태
     let isCursorOffPanel = true; 
     let isCursorOffTab = true;
-
-    const setSelectedTab = (tabName) => {
-        setSelectedTabName(tabName);
-    }
 
     // 마우스 커서와 탭
     function handleIsOnMouseLeaveTab(cursorOff) {
@@ -29,23 +25,35 @@ function Main() {
 
     const closeSearchOptionPanel = () => {
         if (isCursorOffTab === true && isCursorOffPanel === true) {
+            console.log('??')
             setSelectedTabName("none");
         }
+    };
+
+    const setSelectedTab = (event, url) => {
+        const tabName = event.currentTarget.name;
+        const optionTabUrl = url;
+        passTabUrl(optionTabUrl);
+        setSelectedTabName(tabName)
+    };
+
+    const passTabUrl = (optionTabUrl) => {
+        setOptionTabUrl(optionTabUrl);
     }
 
-    const closePanelProps = {
+    const showPanelProps = {
         handleIsOnMouseLeavePanel: handleIsOnMouseLeavePanel,
-        handleIsOnMouseLeaveTab: handleIsOnMouseLeaveTab
+        handleIsOnMouseLeaveTab: handleIsOnMouseLeaveTab,
+        passSelectedTab: setSelectedTab,
+        selectedTabName: selectedTabName,
+        optionTabUrl: optionTabUrl,
     }
 
     return (
-        <ClosePanelContext.Provider value={{...closePanelProps}}>
+        <ClosePanelContext.Provider value={{...showPanelProps}}>
             <div onClick={closeSearchOptionPanel}>
                 <Header />
-                <SearchPanel
-                    selectedTabName={selectedTabName}
-                    passSelectedTab={setSelectedTab}
-                />
+                <SearchPanel/>
                 <Sections />
             </div>
         </ClosePanelContext.Provider>

@@ -8,13 +8,13 @@ import { Price } from './Price'
 import { Time } from './Time'
 import { AddFilters } from './AddFilters'
 
-import { SearchOptionPanelContext } from '../SearchTabs';
+import { ClosePanelContext } from '../../../Main.js';
 
 const SelectedSearchOptionPanels = ({ match}) => {
-    const value = useContext(SearchOptionPanelContext);
+    const mouseLeaveContextValue = useContext(ClosePanelContext);
     const id = match.params.id;
     return (
-            (value.selectedTabName === "none" && <div>{null}</div>) ||
+            (mouseLeaveContextValue.selectedTabName === "none" && <div>{null}</div>) ||
             (id === "date" && <Calendar />) ||
             (id === "guest" && <Guest />) ||
             (id === "innType" && <InnType />) ||

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-// import { SearchOptionTabStyle } from './SearchOptionTabStyle';
 
 import { DateTapDisplay } from './OptionTabDisplay/DateTapDisplay';
 import { GuestTapDisplay } from './OptionTabDisplay/GuestTapDisplay';
@@ -54,7 +53,7 @@ const SearchOptionTabs = (props) => {
     return (
         <Link to={`${searchTabContextValue.match.url}/${props.type}`} 
             name={props.type} 
-            onClick={(event) => searchTabContextValue.passButtonClick(event, searchTabContextValue.match.url)}
+            onClick={(event) => mouseLeaveContextValue.passSelectedTab(event, searchTabContextValue.match.url)}
             data-cursoroff={true}
             onMouseLeave={handleIsOnMouseLeaveTab} 
             onMouseEnter={handleIsOnMouseLeaveTab}

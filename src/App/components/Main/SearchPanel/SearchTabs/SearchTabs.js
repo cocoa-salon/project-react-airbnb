@@ -16,8 +16,6 @@ export const SearchTabContext = React.createContext();
 const { Provider: SearchTabProvider } = SearchTabContext;
 
 function SearchTabs(props) {
-    const [optionTabUrl, setOptionTabUrl] = useState('');
-    const [selectedButton, setSelectedButton] = useState(0);
 
     const [guestNum, setGuestNum] = useState({
         adultNum: 0,
@@ -41,8 +39,7 @@ function SearchTabs(props) {
         maxToddlerNum: 5
     };
 
-    const resetGuestNum = (event) => {
-        const name = event.target.name;
+    const resetGuestNum = () => {
         setGuestNum({
             adultNum: guestNumLimit.minAdultNum,
             childNum: 0,
@@ -55,13 +52,11 @@ function SearchTabs(props) {
             removeToddler: false,
             addToddler: true
         })
-        setSelectedButton(name);
     }
 
     const calculateGuestNum = (buttonName) => {
         if (buttonName === "addAdult" || buttonName === "addChildren" || buttonName === "addToddler") increaseGuestNum(buttonName);
         else if (buttonName === "removeAdult" || buttonName === "removeChildren" || buttonName === "removeToddler") decreaseGuestNum(buttonName);
-        setSelectedButton(buttonName);
     };
 
     const increaseGuestNum = (buttonName) => {
@@ -168,17 +163,6 @@ function SearchTabs(props) {
 
     }
 
-    const setTabName = (event, url) => {
-        const tabName = event.currentTarget.name;
-        const optionTabUrl = url;
-        passTabUrl(optionTabUrl)
-        props.passSelectedTab(tabName);
-    };
-
-    const passTabUrl = (optionTabUrl) => {
-        setOptionTabUrl(optionTabUrl);
-    }
-
     const SearchOptionGuestTab = {
         guestNum: guestNum,
         calculateGuestNum: calculateGuestNum,
@@ -231,17 +215,14 @@ function SearchTabs(props) {
     // All, Inn, Trip, Restaurant 탭
     const SearchTabProps = {
         isTabActivated: isTabActivated,
-        passButtonClick: setTabName,
         totalNum: guestNum.totalNum,
         toddlerNum: guestNum.toddlerNum,
         innTypes: innTypes,
-        match: props.match,
-        passTabUrl: passTabUrl,
+        match: props.match
     };
 
     const SearchOptionTabProps = {
         toggleTabOnOff: toggleTabOnOff,
-        optionTabUrl: optionTabUrl,
         selectedTabName: props.selectedTabName
     }
 

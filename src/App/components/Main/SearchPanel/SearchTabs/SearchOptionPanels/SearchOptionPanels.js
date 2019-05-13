@@ -18,7 +18,7 @@ const SearchOptionPanels = (props) => {
 
     return (
         <div data-cursoroff={true} onMouseLeave={handleIsOnMouseLeavePanel} onMouseEnter={handleIsOnMouseLeavePanel}>
-            <Route path={`${searchOptionPanelContextValue.optionTabUrl}/:id`} render={(props) =>
+            <Route path={`${mouseLeaveContextValue.optionTabUrl}/:id`} render={(props) =>
                 <SelectedSearchOptionPanels match={props.match} />
             }
             />

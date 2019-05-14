@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
-import { SearchOptionPanelContext } from '../SearchTabs';
+import { OptionSetContext } from '../../../Header';
 import { OptionTabStyle } from './OptionTabStyle';
 import styled from 'styled-components';
 import Switch from '@material-ui/core/Switch';
 
 function InstantBook(props) {
     
-    const value = useContext(SearchOptionPanelContext);
+    const value = useContext(OptionSetContext);
 
     const instantBookDesc = "호스트 승인을 기다릴 필요 없이 예약할 수 있는 숙소";
 

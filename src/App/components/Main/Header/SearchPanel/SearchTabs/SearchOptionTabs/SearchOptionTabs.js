@@ -11,12 +11,14 @@ import { TimeTapDisplay } from './OptionTabDisplay/TimeTapDisplay';
 import { FilterAddTapDisplay } from './OptionTabDisplay/FilterAddTapDisplay';
 
 import { SearchTabContext } from '../SearchTabs';
-import { ClosePanelContext } from '../../../Main.js';
+import { OptionSetContext } from '../../../Header';
+import { ClosePanelContext } from '../../../../Main';
 
 
 const SearchOptionTabs = (props) => {
 
-    const searchTabContextValue = useContext(SearchTabContext);
+    const matchContextValue = useContext(SearchTabContext);
+    const searchTabContextValue = useContext(OptionSetContext);
     const mouseLeaveContextValue = useContext(ClosePanelContext);
 
     const SearchOptionTabStyle = styled.button`
@@ -51,9 +53,9 @@ const SearchOptionTabs = (props) => {
     }
 
     return (
-        <Link to={`${searchTabContextValue.match.url}/${props.type}`} 
+        <Link to={`${matchContextValue.match.url}/${props.type}`} 
             name={props.type} 
-            onClick={(event) => mouseLeaveContextValue.passSelectedTab(event, searchTabContextValue.match.url)}
+            onClick={(event) => mouseLeaveContextValue.passSelectedTab(event, matchContextValue.match.url)}
             data-cursoroff={true}
             onMouseLeave={handleIsOnMouseLeaveTab} 
             onMouseEnter={handleIsOnMouseLeaveTab}

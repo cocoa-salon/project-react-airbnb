@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { SearchTabContext } from '../../SearchTabs';
+import { OptionSetContext } from '../../../../Header';
 
 
 const TimeTapDisplay = (props) => {
 
-    const value = useContext(SearchTabContext);
+    // const value = useContext(OptionSetContext);
 
     return (
         <span>시간</span>

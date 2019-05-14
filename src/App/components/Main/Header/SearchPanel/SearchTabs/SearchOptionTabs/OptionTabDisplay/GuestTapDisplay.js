@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
-import { SearchTabContext } from '../../SearchTabs';
+import { OptionSetContext } from '../../../../Header';
 
 
 const GuestTapDisplay = () => {
     
-    const value = useContext(SearchTabContext);
+    const value = useContext(OptionSetContext);
 
     return (
         <div>

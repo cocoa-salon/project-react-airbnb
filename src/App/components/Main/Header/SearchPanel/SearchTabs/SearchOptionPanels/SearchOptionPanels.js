@@ -1,14 +1,12 @@
 import React,{useContext} from 'react';
 import { Route } from 'react-router-dom';
-import { SearchOptionPanelContext } from '../SearchTabs';
-import { ClosePanelContext } from '../../../Main.js';
+import { ClosePanelContext } from '../../../../Main';
 import { SelectedSearchOptionPanels } from './SelectedSearchOptionPanels';
+
 
 const SearchOptionPanels = (props) => {
 
-    const searchOptionPanelContextValue = useContext(SearchOptionPanelContext);
     const mouseLeaveContextValue = useContext(ClosePanelContext);
-    
 
     const handleIsOnMouseLeavePanel = (event) => {
         let cursorOff = event.target.dataset.cursorOff;

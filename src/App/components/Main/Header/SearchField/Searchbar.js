@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { InputField } from './InputField';
-import airbnb_logo from '../../../../img/airbnb_logo.png';
+import airbnb_logo from '../../../../../img/airbnb_logo.png';
 
 function Searchbar(props) {
 

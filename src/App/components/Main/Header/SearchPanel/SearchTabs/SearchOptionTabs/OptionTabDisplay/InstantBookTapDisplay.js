@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { SearchTabContext } from '../../SearchTabs';
+import { OptionSetContext } from '../../../../Header';
 
 const InstantBookTapDisplay = (props) => {
 
-    const value = useContext(SearchTabContext);
+    // const value = useContext(OptionSetContext);
 
     return (
         <span>즉시예약</span>

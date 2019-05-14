@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { OptionTabStyle } from './OptionTabStyle';
-import { SearchOptionPanelContext } from '../SearchTabs';
+import { OptionSetContext } from '../../../Header';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const innDesc = {
@@ -26,7 +26,7 @@ const checkInnTypeStates = (isChecked, name) => {
 
 function InnType(props) {
 
-    const value = useContext(SearchOptionPanelContext);
+    const value = useContext(OptionSetContext);
 
     const checkboxStyle = {
         color : "#519D9E",
@@ -36,12 +36,12 @@ function InnType(props) {
     const checkInnType = (event) => {
         const name = event.target.name;
         const isChecked = event.target.checked;
-        value.dispatch({type: 'check', payload: {name : name, isChecked: isChecked} });
+        value.dispatchInnTypes({type: 'check', payload: {name : name, isChecked: isChecked} });
         value.toggleTabOnOff('innType', checkInnTypeStates(isChecked, name)); 
     }
 
     const resetChecked = () => {
-        value.dispatch({type: 'reset'})
+        value.dispatchInnTypes({type: 'reset'})
         value.toggleTabOnOff('innType', false); 
     }
 

@@ -8,7 +8,7 @@ import { Price } from './Price'
 import { Time } from './Time'
 import { AddFilters } from './AddFilters'
 
-import { ClosePanelContext } from '../../../Main.js';
+import { ClosePanelContext } from '../../../../Main';
 
 const SelectedSearchOptionPanels = ({ match}) => {
     const mouseLeaveContextValue = useContext(ClosePanelContext);

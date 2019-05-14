@@ -1,23 +1,110 @@
-import React from 'react';
-import styled from 'styled-components';
-import Searchbar from './Searchbar';
+import React, { useState, useReducer } from 'react';
+import SearchField from './SearchField/SearchField';
+import SearchPanel from './SearchPanel/SearchPanel';
+import { checkGuestNumReducer } from './SearchPanel/SearchTabs/stateReducers/checkGuestNumReducer'
+import { innTypeCheckReducer } from './SearchPanel/SearchTabs/stateReducers/innTypeCheckReducer';
 
-function Header(props) {
+export const ResetContext = React.createContext();
+export const OptionSetContext = React.createContext();
+
+function Header() {
+
+    // 인원 state
+    const [guestNum, dispatchGuestNum] = useReducer(checkGuestNumReducer, {
+        adultNum: 0,
+        childNum: 0,
+        toddlerNum: 0,
+        totalNum: 0,
+        removeAdult: false,
+        addAdult: true,
+        removeChildren: false,
+        addChildren: true,
+        removeToddler: false,
+        addToddler: true,
+    });
+
+    // 숙소타입 state
+     const [innTypes, dispatchInnTypes] = useReducer(innTypeCheckReducer, {
+        allhouse: false,
+        privateRoom: false,
+        hotelRoom: false,
+        publicRoom: false
+    });
+
+    // 즉시예약 state
+    const [isInstantBookChecked, setIsInstantBookChecked] = useState({ isChecked: false });
+    const toggleInstantBookChecked = () => {
+        setIsInstantBookChecked({ isChecked: !isInstantBookChecked.isChecked });
+        console.log(isInstantBookChecked);
+        
+    }
+
+    // 검색 옵션 탭 활성화 state    
+    const [isTabActivated, SetIsTabActivated] = useState({
+        date: false,
+        guest: false,
+        innType: false,
+        instantBook: false,
+        price: false,
+        time: false,
+        filterAdd: false
+    });
+
+    // 검색 옵션 탭 하이라이트 토글
+    const toggleTabOnOff = (name, isActivated) => {
+        SetIsTabActivated({ ...isTabActivated, [name]: isActivated });
+    }
+
+    // 패널 설정 일괄 초기화
+    const resetAll = () => {
+        SetIsTabActivated({
+            date: false,
+            guest: false,
+            innType: false,
+            instantBook: false,
+            price: false,
+            time: false,
+            filterAdd: false
+        });
+        dispatchGuestNum({type: 'resetAll'});
+        dispatchInnTypes({type: 'reset'});        
+        setIsInstantBookChecked({isChecked : false});
+    }
+
+    const SearchOptionGuestTab = {
+        guestNum: guestNum,
+        dispatchGuestNum : dispatchGuestNum,
+        adultNum: guestNum.adultNum,
+        childNum: guestNum.childNum,
+        toddlerNum: guestNum.toddlerNum,
+    }
+
+    const SearchOptionInstantBookTab = {
+        isInstantBookChecked: isInstantBookChecked,
+        toggleInstantBookChecked: toggleInstantBookChecked
+    }
+
+    const SearchOptionInnTypeTab = {
+        dispatchInnTypes: dispatchInnTypes,
+        innTypes: innTypes,
+    };
 
     return (
-        <StyeldHeader>
-            <Searchbar />
-        </StyeldHeader>
+        <ResetContext.Provider value={{ resetAll: resetAll, toggleTabOnOff: toggleTabOnOff }}>
+            <OptionSetContext.Provider value={{ 
+                ...SearchOptionGuestTab, 
+                ...SearchOptionInnTypeTab, 
+                ...SearchOptionInstantBookTab,
+                toggleTabOnOff: toggleTabOnOff,
+                isTabActivated: isTabActivated, 
+                totalNum: guestNum.totalNum,
+                toddlerNum: guestNum.toddlerNum 
+            }}>
+                <SearchField />
+                <SearchPanel />
+            </OptionSetContext.Provider>
+        </ResetContext.Provider>
     )
 }
-
-const StyeldHeader = styled.header`
-    padding: 10px; 
-    position: relative; 
-    width: auto;
-    height: 50px; 
-    background: white; 
-    border: solid 1px rgb(230,230,230);
-`
 
 export default Header; 

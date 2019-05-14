@@ -1,10 +1,7 @@
 import React, { useContext } from 'react';
 import { OptionTabStyle } from './OptionTabStyle';
-import { SearchOptionPanelContext } from '../SearchTabs';
 
 function Time(props) {
-
-    const value = useContext(SearchOptionPanelContext);
 
     return (
         <OptionTabStyle>

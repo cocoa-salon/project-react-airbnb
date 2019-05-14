@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import Header from './Header/Header'
+import Header from './Header/Header';
 import Sections from './Sections/Sections';
-import SearchPanel from './SearchPanel/SearchPanel';
-
 export const ClosePanelContext = React.createContext();
 
 function Main() {
+
     const [selectedTabName, setSelectedTabName] = useState('none');
     const [optionTabUrl, setOptionTabUrl] = useState('');
 
     // 포인터가 바깥에 있는 상태
-    let isCursorOffPanel = true; 
+    let isCursorOffPanel = true;
     let isCursorOffTab = true;
 
     // 마우스 커서와 탭
@@ -25,7 +24,6 @@ function Main() {
 
     const closeSearchOptionPanel = () => {
         if (isCursorOffTab === true && isCursorOffPanel === true) {
-            console.log('??')
             setSelectedTabName("none");
         }
     };
@@ -50,14 +48,13 @@ function Main() {
     }
 
     return (
-        <ClosePanelContext.Provider value={{...showPanelProps}}>
+        <ClosePanelContext.Provider value={{ ...showPanelProps }}>
             <div onClick={closeSearchOptionPanel}>
                 <Header />
-                <SearchPanel/>
                 <Sections />
             </div>
         </ClosePanelContext.Provider>
     )
 }
 
-export { Main }; 
+export default Main;

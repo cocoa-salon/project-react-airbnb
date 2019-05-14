@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { OptionTabStyle } from './OptionTabStyle';
-import { SearchOptionPanelContext } from '../SearchTabs';
+import { OptionSetContext } from '../../../Header';
 
 const StyledButton = styled.button`
     display: inline-block;
@@ -15,7 +15,7 @@ const StyledButton = styled.button`
 
 const MinusPlusButton = (props) => {
 
-    const value = useContext(SearchOptionPanelContext);
+    const value = useContext(OptionSetContext);
 
     const buttonActivatedStyle = {
         borderColor: "#008c9e",
@@ -52,6 +52,8 @@ const MinusPlusButton = (props) => {
 
 const GuestNumSetButton = (props) => {
 
+    const value = useContext(OptionSetContext);
+
     return (
         <StyledDiv>
             <StyledP>{props.guestType}</StyledP>
@@ -65,24 +67,29 @@ const GuestNumSetButton = (props) => {
 };
 
 function Guest(props) {
-    const value = useContext(SearchOptionPanelContext);
+    const value = useContext(OptionSetContext);
 
-    const isCheckOne = (event) => {
+    const setGuestNum = (event) => {
         const name = event.target.name;
+        if(event.target.tagName !== 'BUTTON') return;
         if(name === "addAdult" || name === "addChildren" || name === "addToddler") {
             value.toggleTabOnOff('guest', true); 
         }
-        value.calculateGuestNum(name);
+        value.dispatchGuestNum({type: name });
+    }
+
+    const resetGuestNum = (event) => {
+        value.dispatchGuestNum({type: 'reset'});
     }
 
     return (
-        <OptionTabStyle onClick={isCheckOne} >
+        <OptionTabStyle onClick={setGuestNum} >
             <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={value.guestNum.adultNum} />
             <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={value.guestNum.childNum} />
             <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={value.guestNum.toddlerNum} />
             <StyledDiv>
-                <StyleResetButton name="reset" style={{ cursor: 'pointer' }} onClick={value.resetGuestNum}>삭제</StyleResetButton>
-            </StyledDiv>
+                <StyleResetButton name="reset" style={{ cursor: 'pointer' }} onClick={resetGuestNum}>삭제</StyleResetButton>
+            </StyledDiv> 
         </OptionTabStyle>
     )
 }

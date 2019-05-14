@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import { style } from './inputFieldStyle';
+
+import { ResetContext } from '../Header';
 
 const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
 
@@ -111,6 +113,14 @@ const InputFieldDiv = styled.div`
 
 const AdditionalButtons = function (props) {
 
+    const triggerResetValue = useContext(ResetContext);
+
+    const triggerReset = (event) => {
+        if(event.target.tagName === 'BUTTON') {
+            triggerResetValue.resetAll();
+        }
+    }
+
     const StyledDiv = styled.div`
         position: relative; 
         z-index: 30;
@@ -142,7 +152,7 @@ const AdditionalButtons = function (props) {
     `   
 
     return (
-        <StyledDiv>
+        <StyledDiv onClick={triggerReset}>
             <ExploreTestStyle>에어비엔비 둘러보기</ExploreTestStyle>
             <Link to="/search/all">
                 <StyledButton>모두</StyledButton>

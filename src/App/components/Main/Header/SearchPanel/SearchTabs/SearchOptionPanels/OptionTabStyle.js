@@ -14,4 +14,4 @@ const OptionTabStyle = styled.div`
     box-shadow: 0px 0px 30px 10px rgba(240,240,240,1); 
 `
 
-export { OptionTabStyle };
+export default OptionTabStyle;

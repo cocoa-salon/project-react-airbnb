@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { SearchTabStyle } from './SearchTabStyle'
-import { SearchOptionTabs } from './SearchOptionTabs/SearchOptionTabs';
+import SearchTabStyle from './SearchTabStyle'
+import SearchOptionTabs from './SearchOptionTabs/SearchOptionTabs';
 
 function TripSearchTab(props) {
 
@@ -14,4 +14,4 @@ function TripSearchTab(props) {
         </SearchTabStyle>
     )
 }
-export { TripSearchTab };
+export default TripSearchTab;

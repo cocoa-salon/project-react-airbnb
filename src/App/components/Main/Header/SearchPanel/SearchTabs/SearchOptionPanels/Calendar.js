@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { OptionTabStyle } from './OptionTabStyle';
+import React from 'react';
+import OptionTabStyle from './OptionTabStyle';
 
 function Calendar(props) {
 
@@ -10,4 +10,4 @@ function Calendar(props) {
     )
 }
 
-export { Calendar };
+export default Calendar;

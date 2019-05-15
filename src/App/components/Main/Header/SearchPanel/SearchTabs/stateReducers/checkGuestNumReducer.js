@@ -46,23 +46,6 @@ const reseGuestNum = () => {
     })
 }
 
-// const calculateGuestNum = (buttonName, guestNum) => {
-//     if (buttonName === "addAdult" || buttonName === "addChildren" || buttonName === "addToddler") increaseGuestNum(buttonName, guestNum);
-//     else if (buttonName === "removeAdult" || buttonName === "removeChildren" || buttonName === "removeToddler") decreaseGuestNum(buttonName, guestNum);
-// };
-
-// const increaseGuestNum = (buttonName, guestNum) => {
-//     if (buttonName === "addAdult") {
-//         addAdult(guestNum);
-//     } else if (guestNum.adultNum === 0 && buttonName !== "addAdult") {
-//         addEssentialAdult(buttonName, guestNum);
-//     } else if (buttonName === "addChildren") {
-//         addChild(guestNum);
-//     } else if (buttonName === "addToddler") {
-//         addToddler(guestNum);
-//     }
-// };
-
 const addEssentialAdult = (buttonName, guestNum) => {
     if (buttonName === "addChildren") {
         return { ...guestNum, adultNum: guestNum.adultNum + guestNumLimit.minAdultNum, childNum: guestNum.childNum + 1, totalNum: 2, removeChildren: true, addChildren: true };
@@ -71,26 +54,12 @@ const addEssentialAdult = (buttonName, guestNum) => {
     }
 };
 
-// const decreaseGuestNum = (buttonName, guestNum) => {
-//     if (buttonName === "removeAdult") {
-//         removeAdult(guestNum);
-//     } else if (buttonName === "removeChildren") {
-//         removeChild(guestNum);
-//     } else if (buttonName === "removeToddler") {
-//         removeToddler(guestNum);
-//     }
-// }
-
 const addAdult = (guestNum) => {
     if (guestNum.adultNum === 15) {
         return { ...guestNum, adultNum: guestNum.adultNum + 1, totalNum: guestNum.totalNum + 1, removeAdult: true, addAdult: false };
-    }
-    else if (guestNum.adultNum < guestNumLimit.maxAdultNum && guestNum.adultNum > guestNumLimit.minAdultNum) {
+    } else if ((guestNum.adultNum < guestNumLimit.maxAdultNum && guestNum.adultNum > guestNumLimit.minAdultNum) || 
+                (guestNum.adultNum <= guestNumLimit.minAdultNum)) {
         return { ...guestNum, adultNum: guestNum.adultNum + 1, totalNum: guestNum.totalNum + 1, removeAdult: true, addAdult: true };
-    }
-    else if (guestNum.adultNum <= guestNumLimit.minAdultNum) {
-        return { ...guestNum, adultNum: guestNum.adultNum + 1, totalNum: guestNum.totalNum + 1, removeAdult: true, addAdult: true };
-        // 최대 도달(추가 불가)
     } else if (guestNum.adultNum >= guestNumLimit.maxAdultNum) {
         return { ...guestNum, removeAdult: true, addAdult: false };
     }
@@ -99,22 +68,19 @@ const addAdult = (guestNum) => {
 const addChild = (guestNum) => {
     if (guestNum.childNum === 4) {
         return { ...guestNum, childNum: guestNum.childNum + 1, totalNum: guestNum.totalNum + 1, removeChildren: true, addChildren: false };
-    } else if (guestNum.adultNum > 0 && guestNum.childNum < guestNumLimit.maxChildNum && guestNum.childNum > guestNumLimit.minChildNum) {
-        return { ...guestNum, childNum: guestNum.childNum + 1, totalNum: guestNum.totalNum + 1, removeChildren: true, addChildren: true };
-    } else if (guestNum.adultNum > 0 && guestNum.childNum <= guestNumLimit.minChildNum) {
+    } else if ((guestNum.adultNum > 0 && guestNum.childNum < guestNumLimit.maxChildNum && guestNum.childNum > guestNumLimit.minChildNum) || 
+                (guestNum.adultNum > 0 && guestNum.childNum <= guestNumLimit.minChildNum) ) {
         return { ...guestNum, childNum: guestNum.childNum + 1, totalNum: guestNum.totalNum + 1, removeChildren: true, addChildren: true };
     } else if (guestNum.adultNum > 0 && guestNum.childNum >= guestNumLimit.maxChildNum) {
         return { ...guestNum, removeChildren: true, addChildren: false };
     }
-
 }
 
 const addToddler = (guestNum) => {
     if (guestNum.toddlerNum === 4) {
         return { ...guestNum, toddlerNum: guestNum.toddlerNum + 1, removeToddler: true, addToddler: false };
-    } else if (guestNum.adultNum > 0 && guestNum.toddlerNum < guestNumLimit.maxToddlerNum && guestNum.toddlerNum > guestNumLimit.minToddlerNum) {
-        return { ...guestNum, toddlerNum: guestNum.toddlerNum + 1, removeToddler: true, addToddler: true };
-    } else if (guestNum.adultNum > 0 && guestNum.toddlerNum <= guestNumLimit.minToddlerNum) {
+    } else if ((guestNum.adultNum > 0 && guestNum.toddlerNum < guestNumLimit.maxToddlerNum && guestNum.toddlerNum > guestNumLimit.minToddlerNum) ||
+                (guestNum.adultNum > 0 && guestNum.toddlerNum <= guestNumLimit.minToddlerNum)) {
         return { ...guestNum, toddlerNum: guestNum.toddlerNum + 1, removeToddler: true, addToddler: true };
     } else if (guestNum.adultNum > 0 && guestNum.toddlerNum >= guestNumLimit.maxToddlerNum) {
         return { ...guestNum, removeToddler: true, addToddler: false };
@@ -151,5 +117,4 @@ const removeToddler = (guestNum) => {
     } else if (guestNum.toddlerNum > guestNumLimit.minToddlerNum && guestNum.toddlerNum <= guestNumLimit.maxToddlerNum) {
         return { ...guestNum, toddlerNum: guestNum.toddlerNum - 1, removeToddler: true, addToddler: true };
     }
-
 }

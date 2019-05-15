@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import { OptionTabStyle } from './OptionTabStyle';
+import React from 'react';
+import OptionTabStyle from './OptionTabStyle';
 
 function AddFilters(props) {
 
@@ -10,4 +10,4 @@ function AddFilters(props) {
     )
 }
 
-export { AddFilters };
+export default AddFilters;

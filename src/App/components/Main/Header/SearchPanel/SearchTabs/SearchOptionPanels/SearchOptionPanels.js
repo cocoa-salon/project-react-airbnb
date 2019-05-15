@@ -1,7 +1,7 @@
 import React,{useContext} from 'react';
 import { Route } from 'react-router-dom';
 import { ClosePanelContext } from '../../../../Main';
-import { SelectedSearchOptionPanels } from './SelectedSearchOptionPanels';
+import SelectedSearchOptionPanels from './SelectedSearchOptionPanels';
 
 
 const SearchOptionPanels = (props) => {
@@ -24,4 +24,4 @@ const SearchOptionPanels = (props) => {
     )
 }
 
-export { SearchOptionPanels };
+export default SearchOptionPanels;

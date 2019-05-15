@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { SearchTabStyle } from './SearchTabStyle'
-import { SearchOptionTabs } from './SearchOptionTabs/SearchOptionTabs';
+import SearchTabStyle from './SearchTabStyle'
+import SearchOptionTabs from './SearchOptionTabs/SearchOptionTabs';
 
 function InnSearchTab(props) {
     
@@ -17,4 +17,4 @@ function InnSearchTab(props) {
     )
 }
 
-export { InnSearchTab };
+export default InnSearchTab;

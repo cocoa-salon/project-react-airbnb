@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { OptionTabStyle } from './OptionTabStyle';
-import { OptionSetContext } from '../../../Header';
+import OptionTabStyle from './OptionTabStyle';
+import { OptionPanelSetContext } from '../../../Header';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const innDesc = {
@@ -26,7 +26,7 @@ const checkInnTypeStates = (isChecked, name) => {
 
 function InnType(props) {
 
-    const value = useContext(OptionSetContext);
+    const contextValue = useContext(OptionPanelSetContext);
 
     const checkboxStyle = {
         color : "#519D9E",
@@ -36,13 +36,13 @@ function InnType(props) {
     const checkInnType = (event) => {
         const name = event.target.name;
         const isChecked = event.target.checked;
-        value.dispatchInnTypes({type: 'check', payload: {name : name, isChecked: isChecked} });
-        value.toggleTabOnOff('innType', checkInnTypeStates(isChecked, name)); 
+        contextValue.dispatchInnTypes({type: 'check', payload: {name : name, isChecked: isChecked} });
+        contextValue.toggleTabOnOff('innType', checkInnTypeStates(isChecked, name)); 
     }
 
     const resetChecked = () => {
-        value.dispatchInnTypes({type: 'reset'})
-        value.toggleTabOnOff('innType', false); 
+        contextValue.dispatchInnTypes({type: 'reset'})
+        contextValue.toggleTabOnOff('innType', false); 
     }
 
     const InnTypeCheck = (props) => {
@@ -54,19 +54,19 @@ function InnType(props) {
     return (
         <OptionTabStyle>
             <InnTypeDiv>
-                <InnTypeCheck name='allhouse' innTypes={value.innTypes.allhouse} checkInnType={checkInnType} />집 전체<br />
+                <InnTypeCheck name='allhouse' innTypes={contextValue.innTypes.allhouse} checkInnType={checkInnType} />집 전체<br />
                 <InnTypeDescStyle>{innDesc.allhouse}</InnTypeDescStyle>
             </InnTypeDiv>
             <InnTypeDiv>
-                <InnTypeCheck name='privateRoom' innTypes={value.innTypes.privateRoom} checkInnType={checkInnType} />개인실<br />
+                <InnTypeCheck name='privateRoom' innTypes={contextValue.innTypes.privateRoom} checkInnType={checkInnType} />개인실<br />
                 <InnTypeDescStyle>{innDesc.privateRoom}</InnTypeDescStyle>
             </InnTypeDiv>
             <InnTypeDiv>
-                <InnTypeCheck name='hotelRoom' innTypes={value.innTypes.hotelRoom} checkInnType={checkInnType} />호텔 객실<br />
+                <InnTypeCheck name='hotelRoom' innTypes={contextValue.innTypes.hotelRoom} checkInnType={checkInnType} />호텔 객실<br />
                 <InnTypeDescStyle>{innDesc.hotelRoom}</InnTypeDescStyle>
             </InnTypeDiv>
             <InnTypeDiv>
-                <InnTypeCheck name='publicRoom' innTypes={value.innTypes.publicRoom} checkInnType={checkInnType} />다인실<br />
+                <InnTypeCheck name='publicRoom' innTypes={contextValue.innTypes.publicRoom} checkInnType={checkInnType} />다인실<br />
                 <InnTypeDescStyle>{innDesc.publicRoom}</InnTypeDescStyle>
             </InnTypeDiv>
             <StyledResetButton name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
@@ -97,4 +97,4 @@ const StyledResetButton = styled.button`
     font-size: 16px; 
 `
 
-export { InnType }; 
+export default InnType; 

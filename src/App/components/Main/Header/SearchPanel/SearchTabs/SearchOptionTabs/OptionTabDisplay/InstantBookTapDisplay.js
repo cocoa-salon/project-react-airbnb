@@ -1,9 +1,6 @@
-import React, { useContext } from 'react';
-import { OptionSetContext } from '../../../../Header';
+import React from 'react';
 
 const InstantBookTapDisplay = (props) => {
-
-    // const value = useContext(OptionSetContext);
 
     return (
         <span>즉시예약</span>
@@ -11,4 +8,4 @@ const InstantBookTapDisplay = (props) => {
 
 }
 
-export { InstantBookTapDisplay };
+export default InstantBookTapDisplay;

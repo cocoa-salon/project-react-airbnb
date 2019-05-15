@@ -1,17 +1,17 @@
 import React, {useContext} from 'react';
-import { OptionSetContext } from '../../../../Header';
+import { OptionPanelSetContext } from '../../../../Header';
 
 
 const GuestTapDisplay = () => {
     
-    const value = useContext(OptionSetContext);
+    const contextValue = useContext(OptionPanelSetContext);
 
     return (
         <div>
-            {value.totalNum === 0 ? '인원' : value.totalNum > 0 ? `게스트 ${value.totalNum}` : ''}
-            {value.toddlerNum > 0 ? `유아 ${value.toddlerNum}` : ''}
+            {contextValue.totalNum === 0 ? '인원' : contextValue.totalNum > 0 ? `게스트 ${contextValue.totalNum}` : ''}
+            {contextValue.toddlerNum > 0 ? `유아 ${contextValue.toddlerNum}` : ''}
         </div>
     )
 }
 
-export { GuestTapDisplay };
+export default GuestTapDisplay;

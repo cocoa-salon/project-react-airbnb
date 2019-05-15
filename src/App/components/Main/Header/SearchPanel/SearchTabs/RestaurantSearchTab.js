@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { SearchTabStyle } from './SearchTabStyle'
-import { SearchOptionTabs } from './SearchOptionTabs/SearchOptionTabs';
+import SearchTabStyle from './SearchTabStyle'
+import SearchOptionTabs from './SearchOptionTabs/SearchOptionTabs';
 
 function RestaurantSearchTab(props) {
 
@@ -13,4 +13,4 @@ function RestaurantSearchTab(props) {
     )
 }
 
-export { RestaurantSearchTab };
+export default RestaurantSearchTab;

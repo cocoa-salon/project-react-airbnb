@@ -1,14 +1,10 @@
-import React, { useContext } from 'react';
-import { OptionSetContext } from '../../../../Header';
-
+import React from 'react';
 
 const TimeTapDisplay = (props) => {
-
-    // const value = useContext(OptionSetContext);
 
     return (
         <span>시간</span>
     )
 }
 
-export { TimeTapDisplay };
+export default TimeTapDisplay;

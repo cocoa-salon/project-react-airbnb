@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { AllSearchTab } from './AllSearchTab';
-import { InnSearchTab } from './InnSearchTab';
-import { RestaurantSearchTab } from './RestaurantSearchTab';
-import { TripSearchTab } from './TripSearchTab';
+import React from 'react';
+import AllSearchTab from './AllSearchTab';
+import InnSearchTab from './InnSearchTab';
+import RestaurantSearchTab from './RestaurantSearchTab';
+import TripSearchTab from './TripSearchTab';
 
-import { SearchOptionPanels } from './SearchOptionPanels/SearchOptionPanels';
+import SearchOptionPanels from './SearchOptionPanels/SearchOptionPanels';
 
 export const SearchTabContext = React.createContext();
 const { Provider: SearchTabProvider } = SearchTabContext;

@@ -2,23 +2,22 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { DateTapDisplay } from './OptionTabDisplay/DateTapDisplay';
-import { GuestTapDisplay } from './OptionTabDisplay/GuestTapDisplay';
-import { InnTypeTapDisplay } from './OptionTabDisplay/InnTypeTapDisplay';
-import { InstantBookTapDisplay } from './OptionTabDisplay/InstantBookTapDisplay';
-import { PriceTapDisplay } from './OptionTabDisplay/PriceTapDisplay';
-import { TimeTapDisplay } from './OptionTabDisplay/TimeTapDisplay';
-import { FilterAddTapDisplay } from './OptionTabDisplay/FilterAddTapDisplay';
+import DateTapDisplay from './OptionTabDisplay/DateTapDisplay';
+import GuestTapDisplay from './OptionTabDisplay/GuestTapDisplay';
+import InnTypeTapDisplay from './OptionTabDisplay/InnTypeTapDisplay';
+import InstantBookTapDisplay from './OptionTabDisplay/InstantBookTapDisplay';
+import PriceTapDisplay from './OptionTabDisplay/PriceTapDisplay';
+import TimeTapDisplay from './OptionTabDisplay/TimeTapDisplay';
+import FilterAddTapDisplay from './OptionTabDisplay/FilterAddTapDisplay';
 
 import { SearchTabContext } from '../SearchTabs';
-import { OptionSetContext } from '../../../Header';
+import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main';
-
 
 const SearchOptionTabs = (props) => {
 
     const matchContextValue = useContext(SearchTabContext);
-    const searchTabContextValue = useContext(OptionSetContext);
+    const searchTabContextValue = useContext(OptionPanelSetContext);
     const mouseLeaveContextValue = useContext(ClosePanelContext);
 
     const SearchOptionTabStyle = styled.button`
@@ -36,10 +35,10 @@ const SearchOptionTabs = (props) => {
     font-weight: thin;
     margin-left: 10px;
     color: rgb(60,60,60); 
-    background: ${props => searchTabContextValue.isTabActivated[props.name] ? "rgb(15,114,118)" : "white"};
-    color: ${props => searchTabContextValue.isTabActivated[props.name] ? "white" : "black"};
+    background: ${props => searchTabContextValue.isSearchOptionTabActivated[props.name] ? "rgb(15,114,118)" : "white"};
+    color: ${props => searchTabContextValue.isSearchOptionTabActivated[props.name] ? "white" : "black"};
     &:hover {
-        ${props => searchTabContextValue.isTabActivated[props.name] ? `background: rgb(30,90,93)`  : `background: rgb(230,230,230)`};
+        ${props => searchTabContextValue.isSearchOptionTabActivated[props.name] ? `background: rgb(30,90,93)`  : `background: rgb(230,230,230)`};
         border-radius: none; 
         outline: 0; ;
     }
@@ -75,7 +74,7 @@ const SearchOptionTabs = (props) => {
 
 }
 
-export { SearchOptionTabs }
+export default SearchOptionTabs; 
 
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { OptionTabStyle } from './OptionTabStyle';
+import OptionTabStyle from './OptionTabStyle';
 
 function Price(props) {
 
@@ -11,4 +11,4 @@ function Price(props) {
     )
 }
 
-export { Price };
+export default Price;

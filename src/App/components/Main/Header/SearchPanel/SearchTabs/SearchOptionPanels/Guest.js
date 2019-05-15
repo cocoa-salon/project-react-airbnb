@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { OptionTabStyle } from './OptionTabStyle';
-import { OptionSetContext } from '../../../Header';
+import OptionTabStyle from './OptionTabStyle';
+import { OptionPanelSetContext } from '../../../Header';
 
 const StyledButton = styled.button`
     display: inline-block;
@@ -15,7 +15,7 @@ const StyledButton = styled.button`
 
 const MinusPlusButton = (props) => {
 
-    const value = useContext(OptionSetContext);
+    const contextValue = useContext(OptionPanelSetContext);
 
     const buttonActivatedStyle = {
         borderColor: "#008c9e",
@@ -29,12 +29,12 @@ const MinusPlusButton = (props) => {
 
     const checkButtonIsActivated = () => {
         if (
-            (props.name === "removeAdult" && value.guestNum.removeAdult === false) ||
-            (props.name === "removeChildren" && value.guestNum.removeChildren === false) ||
-            (props.name === "removeToddler" && value.guestNum.removeToddler === false) ||
-            (props.name === "addAdult" && value.guestNum.addAdult === false) ||
-            (props.name === "addChildren" && value.guestNum.addChildren === false) ||
-            (props.name === "addToddler" && value.guestNum.addToddler === false)
+            (props.name === "removeAdult" && contextValue.guestNum.removeAdult === false) ||
+            (props.name === "removeChildren" && contextValue.guestNum.removeChildren === false) ||
+            (props.name === "removeToddler" && contextValue.guestNum.removeToddler === false) ||
+            (props.name === "addAdult" && contextValue.guestNum.addAdult === false) ||
+            (props.name === "addChildren" && contextValue.guestNum.addChildren === false) ||
+            (props.name === "addToddler" && contextValue.guestNum.addToddler === false)
         ) {
             return buttonInactivatedStyle;
         } else {
@@ -52,8 +52,6 @@ const MinusPlusButton = (props) => {
 
 const GuestNumSetButton = (props) => {
 
-    const value = useContext(OptionSetContext);
-
     return (
         <StyledDiv>
             <StyledP>{props.guestType}</StyledP>
@@ -67,26 +65,26 @@ const GuestNumSetButton = (props) => {
 };
 
 function Guest(props) {
-    const value = useContext(OptionSetContext);
+    const contextValue = useContext(OptionPanelSetContext);
 
     const setGuestNum = (event) => {
         const name = event.target.name;
         if(event.target.tagName !== 'BUTTON') return;
         if(name === "addAdult" || name === "addChildren" || name === "addToddler") {
-            value.toggleTabOnOff('guest', true); 
+         contextValue.toggleTabOnOff('guest', true); 
         }
-        value.dispatchGuestNum({type: name });
+     contextValue.dispatchGuestNum({type: name });
     }
 
     const resetGuestNum = (event) => {
-        value.dispatchGuestNum({type: 'reset'});
+     contextValue.dispatchGuestNum({type: 'reset'});
     }
 
     return (
         <OptionTabStyle onClick={setGuestNum} >
-            <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={value.guestNum.adultNum} />
-            <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={value.guestNum.childNum} />
-            <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={value.guestNum.toddlerNum} />
+            <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers= {contextValue.guestNum.adultNum} />
+            <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers= {contextValue.guestNum.childNum} />
+            <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers= {contextValue.guestNum.toddlerNum} />
             <StyledDiv>
                 <StyleResetButton name="reset" style={{ cursor: 'pointer' }} onClick={resetGuestNum}>삭제</StyleResetButton>
             </StyledDiv> 
@@ -122,4 +120,4 @@ const StyledNumDiv = styled.div`
     margin-left: 10px; 
 `
 
-export { Guest };
+export default Guest;

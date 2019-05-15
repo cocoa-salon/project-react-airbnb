@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 
-import { Calendar } from './Calendar'
-import { Guest } from './Guest'
-import { InnType } from './InnType'
-import { InstantBook } from './InstantBook'
-import { Price } from './Price'
-import { Time } from './Time'
-import { AddFilters } from './AddFilters'
+import  Calendar from './Calendar'
+import  Guest from './Guest'
+import  InnType from './InnType'
+import  InstantBook from './InstantBook'
+import  Price from './Price'
+import  Time from './Time'
+import  AddFilters from './AddFilters'
 
 import { ClosePanelContext } from '../../../../Main';
 
@@ -14,7 +14,7 @@ const SelectedSearchOptionPanels = ({ match}) => {
     const mouseLeaveContextValue = useContext(ClosePanelContext);
     const id = match.params.id;
     return (
-            (mouseLeaveContextValue.selectedTabName === "none" && <div>{null}</div>) ||
+            (mouseLeaveContextValue.selectedTab === "none" && <div>{null}</div>) ||
             (id === "date" && <Calendar />) ||
             (id === "guest" && <Guest />) ||
             (id === "innType" && <InnType />) ||
@@ -25,4 +25,4 @@ const SelectedSearchOptionPanels = ({ match}) => {
     )
 };
 
-export { SelectedSearchOptionPanels };
+export default SelectedSearchOptionPanels;

@@ -4,4 +4,4 @@ const SearchTabStyle = styled.div`
     display: flex;
     flex-direction: row;
 `
-export { SearchTabStyle };
+export default SearchTabStyle;

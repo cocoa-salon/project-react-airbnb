@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { OptionTabStyle } from './OptionTabStyle';
+import React from 'react';
+import OptionTabStyle from './OptionTabStyle';
 
 function Time(props) {
 
@@ -10,4 +10,4 @@ function Time(props) {
     )
 }
 
-export { Time };
+export default Time;

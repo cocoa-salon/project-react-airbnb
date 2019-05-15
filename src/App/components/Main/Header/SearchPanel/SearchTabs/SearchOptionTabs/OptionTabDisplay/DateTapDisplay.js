@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
-import { OptionSetContext } from '../../../../Header';
+import React from 'react';
 
 const DateTapDisplay = (props) => {
-    // const value = useContext(OptionSetContext);
 
     return (
         <span>날짜</span>
     )
 }
 
-export { DateTapDisplay }; 
+export default DateTapDisplay; 

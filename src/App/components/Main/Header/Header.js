@@ -5,7 +5,7 @@ import { checkGuestNumReducer } from './SearchPanel/SearchTabs/stateReducers/che
 import { innTypeCheckReducer } from './SearchPanel/SearchTabs/stateReducers/innTypeCheckReducer';
 
 export const ResetContext = React.createContext();
-export const OptionSetContext = React.createContext();
+export const OptionPanelSetContext = React.createContext();
 
 function Header() {
 
@@ -35,12 +35,10 @@ function Header() {
     const [isInstantBookChecked, setIsInstantBookChecked] = useState({ isChecked: false });
     const toggleInstantBookChecked = () => {
         setIsInstantBookChecked({ isChecked: !isInstantBookChecked.isChecked });
-        console.log(isInstantBookChecked);
-        
     }
 
     // 검색 옵션 탭 활성화 state    
-    const [isTabActivated, SetIsTabActivated] = useState({
+    const [isSearchOptionTabActivated, SetIsTabActivated] = useState({
         date: false,
         guest: false,
         innType: false,
@@ -52,7 +50,7 @@ function Header() {
 
     // 검색 옵션 탭 하이라이트 토글
     const toggleTabOnOff = (name, isActivated) => {
-        SetIsTabActivated({ ...isTabActivated, [name]: isActivated });
+        SetIsTabActivated({ ...isSearchOptionTabActivated, [name]: isActivated });
     }
 
     // 패널 설정 일괄 초기화
@@ -71,40 +69,40 @@ function Header() {
         setIsInstantBookChecked({isChecked : false});
     }
 
-    const SearchOptionGuestTab = {
+    const SearchOptionGuestPanelProps = {
         guestNum: guestNum,
         dispatchGuestNum : dispatchGuestNum,
         adultNum: guestNum.adultNum,
         childNum: guestNum.childNum,
         toddlerNum: guestNum.toddlerNum,
     }
-
-    const SearchOptionInstantBookTab = {
-        isInstantBookChecked: isInstantBookChecked,
-        toggleInstantBookChecked: toggleInstantBookChecked
-    }
-
-    const SearchOptionInnTypeTab = {
+    
+    const SearchOptionInnTypePanelProps = {
         dispatchInnTypes: dispatchInnTypes,
         innTypes: innTypes,
     };
-
+    
+    const SearchOptionInstantBookPanelProps = {
+        isInstantBookChecked: isInstantBookChecked,
+        toggleInstantBookChecked: toggleInstantBookChecked
+    }
+    
     return (
         <ResetContext.Provider value={{ resetAll: resetAll, toggleTabOnOff: toggleTabOnOff }}>
-            <OptionSetContext.Provider value={{ 
-                ...SearchOptionGuestTab, 
-                ...SearchOptionInnTypeTab, 
-                ...SearchOptionInstantBookTab,
+            <OptionPanelSetContext.Provider value={{ 
+                ...SearchOptionGuestPanelProps, 
+                ...SearchOptionInnTypePanelProps, 
+                ...SearchOptionInstantBookPanelProps,
                 toggleTabOnOff: toggleTabOnOff,
-                isTabActivated: isTabActivated, 
+                isSearchOptionTabActivated: isSearchOptionTabActivated, 
                 totalNum: guestNum.totalNum,
                 toddlerNum: guestNum.toddlerNum 
-            }}>
+            }}>  
                 <SearchField />
                 <SearchPanel />
-            </OptionSetContext.Provider>
+            </OptionPanelSetContext.Provider>
         </ResetContext.Provider>
     )
 }
 
-export default Header; 
+export default Header;

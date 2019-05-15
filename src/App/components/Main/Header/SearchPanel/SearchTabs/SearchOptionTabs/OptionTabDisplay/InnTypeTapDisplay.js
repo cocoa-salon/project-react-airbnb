@@ -29,4 +29,4 @@ const InnTypeTapDisplay = (props) => {
     );
 }
 
-export { InnTypeTapDisplay };
+export default InnTypeTapDisplay;

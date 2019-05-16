@@ -9,6 +9,32 @@ export const OptionPanelSetContext = React.createContext();
 
 function Header() {
 
+    // 가격 state
+    const [price, setPrice] = useState({
+        defaultMin : 10000,
+        defaultMax : 1000000,
+        min: 10000,
+        max: 1000000
+    })
+
+    const handleChange = (event) => {
+        setPrice({...price, min: event[0], max: event[1]});
+        console.log(price);
+    }
+
+    const handleChangeMin = (event) => {
+        const value = Number(event.target.value); 
+        setPrice({...price, min: value});
+        console.log(price);
+    }
+
+    const handleChangeMax = (event) => {
+        const value = Number(event.target.value); 
+        setPrice({...price, max: value});
+        console.log(price);
+    }
+
+
     // 인원 state
     const [guestNum, dispatchGuestNum] = useReducer(checkGuestNumReducer, {
         adultNum: 0,
@@ -86,13 +112,20 @@ function Header() {
         isInstantBookChecked: isInstantBookChecked,
         toggleInstantBookChecked: toggleInstantBookChecked
     }
-    
+
+    const SearchOptionPricePanelProps = {
+        price : price,
+        handleChange: handleChange,
+        handleChangeMin: handleChangeMin,
+        handleChangeMax: handleChangeMax
+    }   
     return (
         <ResetContext.Provider value={{ resetAll: resetAll, toggleTabOnOff: toggleTabOnOff }}>
             <OptionPanelSetContext.Provider value={{ 
                 ...SearchOptionGuestPanelProps, 
                 ...SearchOptionInnTypePanelProps, 
                 ...SearchOptionInstantBookPanelProps,
+                ...SearchOptionPricePanelProps,
                 toggleTabOnOff: toggleTabOnOff,
                 isSearchOptionTabActivated: isSearchOptionTabActivated, 
                 totalNum: guestNum.totalNum,

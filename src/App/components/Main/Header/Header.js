@@ -11,29 +11,35 @@ function Header() {
 
     // 가격 state
     const [price, setPrice] = useState({
-        defaultMin : 10000,
+        defaultMin : 12000,
         defaultMax : 1000000,
-        min: 10000,
-        max: 1000000
+        min: 12000,
+        max: 1000000,
+        tabMsg: '가격'
     })
 
     const handleChange = (event) => {
         setPrice({...price, min: event[0], max: event[1]});
-        console.log(price);
     }
 
-    const handleChangeMin = (event) => {
-        const value = Number(event.target.value); 
-        setPrice({...price, min: value});
-        console.log(price);
+    const handleChangeMin = (minValue) => {
+        setPrice({...price, min: minValue});
     }
 
-    const handleChangeMax = (event) => {
-        const value = Number(event.target.value); 
-        setPrice({...price, max: value});
-        console.log(price);
+    const handleChangeMax = (maxValue) => {
+        setPrice({...price, max: maxValue});
     }
 
+    const resetChecked = () => {
+        setPrice({
+            defaultMin : 12000,
+            defaultMax : 1000000,
+            min: 12000,
+            max: 1000000,
+            tabMsg: '가격'
+        });
+        toggleTabOnOff("price", false);
+    }
 
     // 인원 state
     const [guestNum, dispatchGuestNum] = useReducer(checkGuestNumReducer, {
@@ -93,6 +99,13 @@ function Header() {
         dispatchGuestNum({type: 'resetAll'});
         dispatchInnTypes({type: 'reset'});        
         setIsInstantBookChecked({isChecked : false});
+        setPrice({
+            defaultMin : 12000,
+            defaultMax : 1000000,
+            min: 12000,
+            max: 1000000,
+            tabMsg: '가격'
+        });
     }
 
     const SearchOptionGuestPanelProps = {
@@ -115,9 +128,11 @@ function Header() {
 
     const SearchOptionPricePanelProps = {
         price : price,
+        setPrice: setPrice,
         handleChange: handleChange,
         handleChangeMin: handleChangeMin,
-        handleChangeMax: handleChangeMax
+        handleChangeMax: handleChangeMax,
+        resetChecked: resetChecked
     }   
     return (
         <ResetContext.Provider value={{ resetAll: resetAll, toggleTabOnOff: toggleTabOnOff }}>

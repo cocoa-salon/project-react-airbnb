@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import OptionTabStyle from './OptionTabStyle';
 import { OptionPanelSetContext } from '../../../Header';
+import { DeleteApplyStyle } from './DeleteApplyStyle';
+import { DeleteApplyButtonStyle } from './DeleteApplyStyle';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const innDesc = {
@@ -69,9 +71,14 @@ function InnType(props) {
                 <InnTypeCheck name='publicRoom' innTypes={contextValue.innTypes.publicRoom} checkInnType={checkInnType} />다인실<br />
                 <InnTypeDescStyle>{innDesc.publicRoom}</InnTypeDescStyle>
             </InnTypeDiv>
-            <StyledResetButton name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
-                삭제
-            </StyledResetButton>
+            <DeleteApplyStyle>
+                <DeleteApplyButtonStyle name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
+                    삭제
+                </DeleteApplyButtonStyle>
+                <DeleteApplyButtonStyle>
+                    적용
+                </DeleteApplyButtonStyle>
+            </DeleteApplyStyle>
         </OptionTabStyle>
     )
 }
@@ -83,18 +90,6 @@ const InnTypeDescStyle = styled.p`
 
 const InnTypeDiv = styled.div`
     margin: 10px; 
-`
-
-const StyledResetButton = styled.button`
-    display: inline-block;
-    border-radius: 0%; 
-    border: none;
-    width: 60px; 
-    height:40px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    outline: none;
-    font-size: 16px; 
 `
 
 export default InnType; 

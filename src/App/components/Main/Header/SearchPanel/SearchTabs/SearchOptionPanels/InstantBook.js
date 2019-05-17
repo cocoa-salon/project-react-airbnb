@@ -2,6 +2,8 @@ import React, {useContext} from 'react';
 import { OptionPanelSetContext } from '../../../Header';
 import OptionTabStyle from './OptionTabStyle';
 import styled from 'styled-components';
+import { DeleteApplyStyle } from './DeleteApplyStyle';
+import { DeleteApplyButtonStyle } from './DeleteApplyStyle';
 import Switch from '@material-ui/core/Switch';
 
 function InstantBook(props) {
@@ -26,8 +28,7 @@ function InstantBook(props) {
                 {instantBookDesc}
             </DescStyle>
             <DeleteApplyStyle> 
-                <div>삭제</div>
-                <div>적용</div>
+                <DeleteApplyButtonStyle>적용</DeleteApplyButtonStyle>
             </DeleteApplyStyle> 
         </OptionTabStyle>
     )
@@ -50,14 +51,6 @@ const InsStyle = styled.div`
 const DescStyle = styled.p`
     padding: 0 0 0 10px;  
     font-size: 14px;
-`
-
-const DeleteApplyStyle = styled.div`
-    padding: 10px;
-    display : flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
 `
 
 export default InstantBook;

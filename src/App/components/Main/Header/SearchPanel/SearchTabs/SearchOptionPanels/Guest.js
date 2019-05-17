@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import OptionTabStyle from './OptionTabStyle';
 import { OptionPanelSetContext } from '../../../Header';
+import { DeleteApplyStyle } from './DeleteApplyStyle';
+import { DeleteApplyButtonStyle } from './DeleteApplyStyle';
 
 const StyledButton = styled.button`
     display: inline-block;
@@ -85,9 +87,12 @@ function Guest(props) {
             <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers= {contextValue.guestNum.adultNum} />
             <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers= {contextValue.guestNum.childNum} />
             <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers= {contextValue.guestNum.toddlerNum} />
-            <StyledDiv>
-                <StyleResetButton name="reset" style={{ cursor: 'pointer' }} onClick={resetGuestNum}>삭제</StyleResetButton>
-            </StyledDiv> 
+            <DeleteApplyStyle>
+                <DeleteApplyButtonStyle name="reset" onClick={resetGuestNum}>삭제</DeleteApplyButtonStyle>
+                <DeleteApplyButtonStyle>
+                    적용
+                </DeleteApplyButtonStyle>
+            </DeleteApplyStyle> 
         </OptionTabStyle>
     )
 }

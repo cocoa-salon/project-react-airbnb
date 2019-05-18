@@ -48,6 +48,7 @@ function Main() {
         passSelectedTab: setSelectedTabUrl,
         selectedTab: selectedTab,
         optionTabUrl: optionTabUrl,
+        setSelectedTab: setSelectedTab
     }
 
     return (

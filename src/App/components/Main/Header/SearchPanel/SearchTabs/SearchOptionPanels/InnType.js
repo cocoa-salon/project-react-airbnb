@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import OptionTabStyle from './OptionTabStyle';
 import { OptionPanelSetContext } from '../../../Header';
+import { ClosePanelContext } from '../../../../Main'
 import { DeleteApplyStyle } from './DeleteApplyStyle';
 import { DeleteApplyButtonStyle } from './DeleteApplyStyle';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -29,6 +30,7 @@ const checkInnTypeStates = (isChecked, name) => {
 function InnType(props) {
 
     const contextValue = useContext(OptionPanelSetContext);
+    const closePanelContextValue = useContext(ClosePanelContext);
 
     const checkboxStyle = {
         color : "#519D9E",
@@ -40,11 +42,14 @@ function InnType(props) {
         const isChecked = event.target.checked;
         contextValue.dispatchInnTypes({type: 'check', payload: {name : name, isChecked: isChecked} });
         contextValue.toggleTabOnOff('innType', checkInnTypeStates(isChecked, name)); 
+        contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : true});
     }
 
-    const resetChecked = () => {
+    const resetChecked = (event) => {
+        event.stopPropagation();
         contextValue.dispatchInnTypes({type: 'reset'})
         contextValue.toggleTabOnOff('innType', false); 
+        contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : false});
     }
 
     const InnTypeCheck = (props) => {
@@ -52,6 +57,12 @@ function InnType(props) {
             <Checkbox style ={checkboxStyle} name={props.name} checked={props.innTypes} onChange={props.checkInnType} />
         )
     }
+
+  
+    const applyInnType = (event) => {
+        event.stopPropagation();
+        closePanelContextValue.setSelectedTab('none'); 
+    };
 
     return (
         <OptionTabStyle>
@@ -73,9 +84,9 @@ function InnType(props) {
             </InnTypeDiv>
             <DeleteApplyStyle>
                 <DeleteApplyButtonStyle name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
-                    삭제
+                    { contextValue.isPanelDeleteButtonActivated.innType ? '삭제' : null }
                 </DeleteApplyButtonStyle>
-                <DeleteApplyButtonStyle>
+                <DeleteApplyButtonStyle onClick={applyInnType}>
                     적용
                 </DeleteApplyButtonStyle>
             </DeleteApplyStyle>

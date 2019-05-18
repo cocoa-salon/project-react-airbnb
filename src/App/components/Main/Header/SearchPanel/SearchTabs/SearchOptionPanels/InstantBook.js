@@ -1,4 +1,5 @@
 import React, {useContext} from 'react';
+import { ClosePanelContext } from '../../../../Main'
 import { OptionPanelSetContext } from '../../../Header';
 import OptionTabStyle from './OptionTabStyle';
 import styled from 'styled-components';
@@ -9,6 +10,7 @@ import Switch from '@material-ui/core/Switch';
 function InstantBook(props) {
     
     const contextValue = useContext(OptionPanelSetContext);
+    const closePanelContextValue = useContext(ClosePanelContext);
 
     const instantBookDesc = "호스트 승인을 기다릴 필요 없이 예약할 수 있는 숙소";
 
@@ -17,6 +19,11 @@ function InstantBook(props) {
         contextValue.toggleInstantBookChecked(); 
         contextValue.toggleTabOnOff('instantBook', isActivated);
     }
+
+    const applyInstantBook = (event) => {
+        event.stopPropagation();
+        closePanelContextValue.setSelectedTab('none'); 
+    };
 
     return (
         <OptionTabStyle>
@@ -28,7 +35,7 @@ function InstantBook(props) {
                 {instantBookDesc}
             </DescStyle>
             <DeleteApplyStyle> 
-                <DeleteApplyButtonStyle>적용</DeleteApplyButtonStyle>
+                <DeleteApplyButtonStyle onClick={applyInstantBook}>적용</DeleteApplyButtonStyle>
             </DeleteApplyStyle> 
         </OptionTabStyle>
     )

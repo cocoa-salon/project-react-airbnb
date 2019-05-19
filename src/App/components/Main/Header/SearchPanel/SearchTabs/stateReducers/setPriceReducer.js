@@ -13,6 +13,10 @@ export const setPriceReducer = (price, { type, payload }) => {
     }
 };
 
+function numberFormat(inputNumber) {
+    return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 const handleOnAfterChange = (price, minValue, maxValue) => {
     return { ...price, min: minValue, max: maxValue };
 };
@@ -38,3 +42,4 @@ const resetChecked = () => {
 const setTabState = (price, tabMsg) => {
     return { ...price, tabMsg: tabMsg };
 };
+

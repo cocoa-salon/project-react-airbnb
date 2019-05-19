@@ -4,7 +4,8 @@ import OptionTabStyle from './OptionTabStyle';
 import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main'
 import { DeleteApplyStyle } from './DeleteApplyStyle';
-import { DeleteApplyButtonStyle } from './DeleteApplyStyle';
+import { ApplyButtonStyle } from './DeleteApplyStyle';
+import { DeleteButtonStyle } from './DeleteApplyStyle';
 
 const StyledButton = styled.button`
     display: inline-block;
@@ -32,12 +33,12 @@ const MinusPlusButton = (props) => {
 
     const checkButtonIsActivated = () => {
         if (
-            (props.name === "removeAdult" && contextValue.guestNum.removeAdult === false) ||
-            (props.name === "removeChildren" && contextValue.guestNum.removeChildren === false) ||
-            (props.name === "removeToddler" && contextValue.guestNum.removeToddler === false) ||
-            (props.name === "addAdult" && contextValue.guestNum.addAdult === false) ||
-            (props.name === "addChildren" && contextValue.guestNum.addChildren === false) ||
-            (props.name === "addToddler" && contextValue.guestNum.addToddler === false)
+            (props.name === "removeAdult" && contextValue.removeAdult === false) ||
+            (props.name === "removeChildren" && contextValue.removeChildren === false) ||
+            (props.name === "removeToddler" && contextValue.removeToddler === false) ||
+            (props.name === "addAdult" && contextValue.addAdult === false) ||
+            (props.name === "addChildren" && contextValue.addChildren === false) ||
+            (props.name === "addToddler" && contextValue.addToddler === false)
         ) {
             return buttonInactivatedStyle;
         } else {
@@ -74,11 +75,20 @@ function Guest(props) {
     const setGuestNum = (event) => {
         const name = event.target.name;
         if (event.target.tagName !== 'BUTTON') return;
-        if (name === "addAdult" || name === "addChildren" || name === "addToddler") {
+        if (name === "addAdult" || name === "addChildren" || name === "addToddler" ) {
             contextValue.toggleTabOnOff('guest', true);
             contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, guest : true});
-        }
+        } 
+        checkIsRemoveAdultActivated(name); 
         contextValue.dispatchGuestNum({ type: name });
+    };
+
+    const checkIsRemoveAdultActivated = (name) => {
+        if (( name === "removeAdult" && contextValue.totalNum === 2 && contextValue.adultNum === 2) ||
+        ( name === "removeChildren" && contextValue.totalNum === 2 && contextValue.childNum === 1) ||
+        ( name === "removeToddler" && contextValue.totalNum === 1 && contextValue.toddlerNum === 1)) {
+         contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, guest : false});
+        } 
     };
 
     const resetGuestNum = (event) => {
@@ -89,21 +99,25 @@ function Guest(props) {
 
     const applyGuestNum = (event) => {
         event.stopPropagation();
+        if(contextValue.adultNum === 0) {
+            contextValue.dispatchGuestNum({ type: 'addAdult' });
+            contextValue.toggleTabOnOff('guest', true);
+        }
         closePanelContextValue.setSelectedTab('none');
     };
-
+    
     return (
         <OptionTabStyle onClick={setGuestNum} >
-            <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={contextValue.guestNum.adultNum} />
-            <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={contextValue.guestNum.childNum} />
-            <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={contextValue.guestNum.toddlerNum} />
+            <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={contextValue.adultNum} />
+            <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={contextValue.childNum} />
+            <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={contextValue.toddlerNum} />
             <DeleteApplyStyle>
-                <DeleteApplyButtonStyle name="reset" onClick={resetGuestNum}>
+                <DeleteButtonStyle visible={contextValue.isPanelDeleteButtonActivated.guest}  name="reset" onClick={resetGuestNum}>
                     { contextValue.isPanelDeleteButtonActivated.guest ? '삭제' : null }
-                </DeleteApplyButtonStyle>
-                <DeleteApplyButtonStyle name="apply" onClick={applyGuestNum}>
+                </DeleteButtonStyle>
+                <ApplyButtonStyle name="apply" onClick={applyGuestNum}>
                     적용
-                </DeleteApplyButtonStyle>
+                </ApplyButtonStyle>
             </DeleteApplyStyle>
         </OptionTabStyle>
     );

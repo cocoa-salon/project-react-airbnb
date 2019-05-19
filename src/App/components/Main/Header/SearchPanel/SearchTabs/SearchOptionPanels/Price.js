@@ -3,7 +3,8 @@ import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main'
 import styled from 'styled-components';
 import { DeleteApplyStyle } from './DeleteApplyStyle';
-import { DeleteApplyButtonStyle } from './DeleteApplyStyle';
+import { ApplyButtonStyle } from './DeleteApplyStyle';
+import { DeleteButtonStyle } from './DeleteApplyStyle';
 import OptionTabStyle from './OptionTabStyle';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
@@ -54,16 +55,21 @@ const CurrencyStyle = styled.span`
 `
 
 function Price(props) {
-
-    const refMin = useRef(null);
-    const refMax = useRef(null);
-    const refSlider = useRef(null);
-
+    
     const priceContext = useContext(OptionPanelSetContext);
     const closePanelContextValue = useContext(ClosePanelContext);
 
     const price = priceContext.price;
 
+    const refMin = useRef(null);
+    const refMax = useRef(null);
+    const refSlider = useRef(null);
+
+    // 가격에 콤마 추가
+    const attachComma = (number) => 
+        number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    // 슬라이더 막대 이동시 이벤트 처리
     const handleOnChange = (event) => {
         refMin.current.value = event[0];
         refMax.current.value = event[1];
@@ -71,6 +77,7 @@ function Price(props) {
         refSlider.current.state.bounds[1] = event[1];
     };
 
+    // 슬라이더 막대 이동 완료 시 이벤트 처리(가격 상태 업데이트)
     const handleOnAfterChange = (event) => {
         const minValue = event[0];
         const maxValue = event[1];
@@ -80,10 +87,7 @@ function Price(props) {
         } else priceContext.setIsPanelDeleteButtonActivated({...priceContext.isPanelDeleteButtonActivated, price : true});
     };
 
-    function numberFormat(inputNumber) {
-        return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    };
-
+    // 가격 입력 시 이벤트 처리
     const handleOnChangeInput = (event) => {
         const name = event.target.name;
         const value = Number(event.target.value);
@@ -91,21 +95,33 @@ function Price(props) {
         else if(name === "priceMax" ) setPriceMax(value);
     };
 
+    // 최소값 입력 및 상태 업데이트
     const setPriceMin = (value) => {
         if (value >= price.max || isNaN(value)) return;
+        checkDeleteButtonOnChange(value, price.defaultMin, price.max, price.defaultMax);
         priceContext.dispatchSetPrice({type: "setPriceMin", payload: { minValue: value }});
     };
 
+    // 최대값 입력 및 상태 업데이트
     const setPriceMax = (value) => {
         if (value > price.defaultMax || isNaN(value)) return;
+        checkDeleteButtonOnChange(value, price.defaultMax, price.min, price.defaultMin);
         priceContext.dispatchSetPrice({type: "setPriceMax", payload: { maxValue: value }});
     };
 
+    // 가격 직접 입력시 삭제 버튼 노출 여부 결정
+    const checkDeleteButtonOnChange = (value, defaultMinMax1, minMax, defaultMinMax2 ) => {
+        if(value === defaultMinMax1 && minMax === defaultMinMax2 ) {
+            priceContext.setIsPanelDeleteButtonActivated({...priceContext.isPanelDeleteButtonActivated, price : false});
+        } else priceContext.setIsPanelDeleteButtonActivated({...priceContext.isPanelDeleteButtonActivated, price : true});
+    }
+
+    // 탭에 표시할 가격 정보
     const tabMsgs = {
         priceDefault : '가격',
-        prices : `\u{FFE6} ${price.min}- \u{FFE6} ${price.max}`,
-        priceMin : `최대 \u{FFE6} ${price.max}`,
-        priceMax : `\u{FFE6} ${price.min} +`
+        prices : `\u{FFE6} ${attachComma(price.min)}- \u{FFE6} ${attachComma(price.max)}`,
+        priceMin : `최대 \u{FFE6} ${attachComma(price.max)}`,
+        priceMax : `\u{FFE6} ${attachComma(price.min)} +`
     };
 
     const { priceDefault, prices, priceMin, priceMax } = tabMsgs;
@@ -162,12 +178,12 @@ function Price(props) {
                 </PriceInputStyle>
             </PriceInputContainerStyle>
             <DeleteApplyStyle>
-                <DeleteApplyButtonStyle name="reset" onClick={resetPrice}>
+                <DeleteButtonStyle visible={priceContext.isPanelDeleteButtonActivated.price} name="reset" onClick={resetPrice}>
                     { priceContext.isPanelDeleteButtonActivated.price ? '삭제' : null }
-                </DeleteApplyButtonStyle>
-                <DeleteApplyButtonStyle onClick={setOptionTabState}>
+                </DeleteButtonStyle>
+                <ApplyButtonStyle onClick={setOptionTabState}>
                     적용
-                </DeleteApplyButtonStyle>
+                </ApplyButtonStyle>
             </DeleteApplyStyle>
         </PriceOptionTabStyle>
     );

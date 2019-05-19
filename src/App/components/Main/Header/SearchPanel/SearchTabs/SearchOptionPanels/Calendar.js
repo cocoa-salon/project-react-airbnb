@@ -3,7 +3,8 @@ import OptionTabStyle from './OptionTabStyle';
 import { ClosePanelContext } from '../../../../Main'
 import { OptionPanelSetContext } from '../../../Header';
 import { DeleteApplyStyle } from './DeleteApplyStyle';
-import { DeleteApplyButtonStyle } from './DeleteApplyStyle';
+import { ApplyButtonStyle } from './DeleteApplyStyle';
+import { DeleteButtonStyle } from './DeleteApplyStyle';
 
 function Calendar(props) {
 
@@ -24,12 +25,12 @@ function Calendar(props) {
         <OptionTabStyle>
             달력, 기간을 설정하는 옵션 패널
             <DeleteApplyStyle>
-                <DeleteApplyButtonStyle onClick={resetCalendar}>
+                <DeleteButtonStyle visible={contextValue.isPanelDeleteButtonActivated.date} onClick={resetCalendar}>
                     { contextValue.isPanelDeleteButtonActivated ? '삭제' : null }   
-                </DeleteApplyButtonStyle>
-                <DeleteApplyButtonStyle onClick={applyCalendar}>
+                </DeleteButtonStyle>
+                <ApplyButtonStyle onClick={applyCalendar}>
                     적용
-                </DeleteApplyButtonStyle>
+                </ApplyButtonStyle>
             </DeleteApplyStyle>
         </OptionTabStyle>
     )

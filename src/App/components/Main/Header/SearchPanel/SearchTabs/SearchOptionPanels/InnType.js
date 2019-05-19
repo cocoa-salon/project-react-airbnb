@@ -4,7 +4,8 @@ import OptionTabStyle from './OptionTabStyle';
 import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main'
 import { DeleteApplyStyle } from './DeleteApplyStyle';
-import { DeleteApplyButtonStyle } from './DeleteApplyStyle';
+import { ApplyButtonStyle } from './DeleteApplyStyle';
+import { DeleteButtonStyle } from './DeleteApplyStyle';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const innDesc = {
@@ -83,12 +84,12 @@ function InnType(props) {
                 <InnTypeDescStyle>{innDesc.publicRoom}</InnTypeDescStyle>
             </InnTypeDiv>
             <DeleteApplyStyle>
-                <DeleteApplyButtonStyle name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
+                <DeleteButtonStyle visible={contextValue.isPanelDeleteButtonActivated.innType} name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
                     { contextValue.isPanelDeleteButtonActivated.innType ? '삭제' : null }
-                </DeleteApplyButtonStyle>
-                <DeleteApplyButtonStyle onClick={applyInnType}>
+                </DeleteButtonStyle>
+                <ApplyButtonStyle onClick={applyInnType}>
                     적용
-                </DeleteApplyButtonStyle>
+                </ApplyButtonStyle>
             </DeleteApplyStyle>
         </OptionTabStyle>
     )

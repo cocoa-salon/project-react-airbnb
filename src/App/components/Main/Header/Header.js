@@ -63,6 +63,7 @@ function Header() {
         SetIsTabActivated({ ...isSearchOptionTabActivated, [name]: isActivated });
     };
 
+    // 패널 삭제 버튼 활성화 토글
     const [isPanelDeleteButtonActivated, setIsPanelDeleteButtonActivated] = useState({
             date: false,
             guest: false,
@@ -88,7 +89,8 @@ function Header() {
         dispatchInnTypes({ type: 'reset' });
         setIsInstantBookChecked({ isChecked: false });
         dispatchSetPrice({ type: 'reset' });
-        setIsPanelDeleteButtonActivated({date: false,
+        setIsPanelDeleteButtonActivated({
+            date: false,
             guest: false,
             innType: false,
             instantBook: false,
@@ -99,7 +101,17 @@ function Header() {
 
     const SearchOptionGuestPanelProps = {
         guestNum: guestNum,
-        dispatchGuestNum: dispatchGuestNum,
+        totalNum: guestNum.totalNum,
+        adultNum: guestNum.adultNum,
+        childNum: guestNum.childNum,
+        toddlerNum: guestNum.toddlerNum,
+        removeAdult: guestNum.removeAdult,
+        addAdult: guestNum.addAdult,
+        removeChildren: guestNum.removeChildren,
+        addChildren: guestNum.addChildren,
+        removeToddler: guestNum.removeToddler,
+        addToddler: guestNum.addToddler,
+        dispatchGuestNum: dispatchGuestNum
     };
 
     const SearchOptionInnTypePanelProps = {

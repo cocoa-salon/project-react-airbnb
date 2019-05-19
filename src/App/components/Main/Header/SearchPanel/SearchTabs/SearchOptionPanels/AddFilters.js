@@ -3,7 +3,8 @@ import OptionTabStyle from './OptionTabStyle';
 import { ClosePanelContext } from '../../../../Main'
 import { OptionPanelSetContext } from '../../../Header';
 import { DeleteApplyStyle } from './DeleteApplyStyle';
-import { DeleteApplyButtonStyle } from './DeleteApplyStyle';
+import { ApplyButtonStyle } from './DeleteApplyStyle';
+import { DeleteButtonStyle } from './DeleteApplyStyle';
 
 function AddFilters(props) {
 
@@ -25,12 +26,12 @@ function AddFilters(props) {
         <OptionTabStyle>
             필터를 추가하는 옵션 패널
             <DeleteApplyStyle>
-                <DeleteApplyButtonStyle onClick={resetAddFilters}>
+                <DeleteButtonStyle visible={contextValue.isPanelDeleteButtonActivated.filterAdd} onClick={resetAddFilters}>
                     { contextValue.isPanelDeleteButtonActivated.filterAdd ? '삭제' : null }
-                </DeleteApplyButtonStyle>
-                <DeleteApplyButtonStyle onClick={applyAddFilters}>
+                </DeleteButtonStyle>
+                <ApplyButtonStyle onClick={applyAddFilters}>
                     적용
-                </DeleteApplyButtonStyle>
+                </ApplyButtonStyle>
             </DeleteApplyStyle>
         </OptionTabStyle>
     )

@@ -4,7 +4,7 @@ import { OptionPanelSetContext } from '../../../Header';
 import OptionTabStyle from './OptionTabStyle';
 import styled from 'styled-components';
 import { DeleteApplyStyle } from './DeleteApplyStyle';
-import { DeleteApplyButtonStyle } from './DeleteApplyStyle';
+import { ApplyButtonStyle } from './DeleteApplyStyle';
 import Switch from '@material-ui/core/Switch';
 
 function InstantBook(props) {
@@ -35,7 +35,7 @@ function InstantBook(props) {
                 {instantBookDesc}
             </DescStyle>
             <DeleteApplyStyle> 
-                <DeleteApplyButtonStyle onClick={applyInstantBook}>적용</DeleteApplyButtonStyle>
+                <ApplyButtonStyle onClick={applyInstantBook}>적용</ApplyButtonStyle>
             </DeleteApplyStyle> 
         </OptionTabStyle>
     )

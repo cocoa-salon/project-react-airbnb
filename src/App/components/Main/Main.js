@@ -24,6 +24,7 @@ function Main() {
         isCursorOffPanel = cursorOff;
     }
 
+    // 패널 닫힘
     const closeSearchOptionPanel = () => {
         if (isCursorOffTab === true && isCursorOffPanel === true) {
             setSelectedTab("none");

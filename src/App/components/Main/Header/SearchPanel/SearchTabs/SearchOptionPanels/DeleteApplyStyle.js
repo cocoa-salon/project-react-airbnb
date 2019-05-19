@@ -8,7 +8,7 @@ export const DeleteApplyStyle = styled.div`
     align-items: center;
 `
 
-export const DeleteApplyButtonStyle = styled.button`
+export const ApplyButtonStyle = styled.button`
     display: inline-block;
     border-radius: 0%; 
     border: none;
@@ -19,4 +19,10 @@ export const DeleteApplyButtonStyle = styled.button`
     outline: none;
     font-size: 16px; 
     cursor: pointer;
+`
+
+export const DeleteButtonStyle = styled(ApplyButtonStyle)`
+        visibility : ${(props) => props.visible ?
+            'visible' : 'hidden'
+        };
 `

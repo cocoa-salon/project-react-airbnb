@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import OptionTabStyle from './OptionTabStyle';
+import { ClosePanelContext } from '../../../../Main'
 
 function Time(props) {
+
+    const closePanelContextValue = useContext(ClosePanelContext);
+
+    const applyTime = (event) => {
+        event.stopPropagation();
+        closePanelContextValue.setSelectedTab('none'); 
+    };
 
     return (
         <OptionTabStyle>

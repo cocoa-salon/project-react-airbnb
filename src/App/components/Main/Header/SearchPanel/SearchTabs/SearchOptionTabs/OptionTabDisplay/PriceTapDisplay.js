@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { OptionPanelSetContext } from '../../../../Header';
 
 const PriceTapDisplay = (props) => {
+    const value = useContext(OptionPanelSetContext);
 
     return (
-        <span>가격</span>
+        <span>{value.price.tabMsg}</span>
     );
 }
 

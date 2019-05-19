@@ -2,6 +2,10 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import OptionTabStyle from './OptionTabStyle';
 import { OptionPanelSetContext } from '../../../Header';
+import { ClosePanelContext } from '../../../../Main'
+import { DeleteApplyStyle } from './DeleteApplyStyle';
+import { ApplyButtonStyle } from './DeleteApplyStyle';
+import { DeleteButtonStyle } from './DeleteApplyStyle';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const innDesc = {
@@ -27,6 +31,7 @@ const checkInnTypeStates = (isChecked, name) => {
 function InnType(props) {
 
     const contextValue = useContext(OptionPanelSetContext);
+    const closePanelContextValue = useContext(ClosePanelContext);
 
     const checkboxStyle = {
         color : "#519D9E",
@@ -38,11 +43,14 @@ function InnType(props) {
         const isChecked = event.target.checked;
         contextValue.dispatchInnTypes({type: 'check', payload: {name : name, isChecked: isChecked} });
         contextValue.toggleTabOnOff('innType', checkInnTypeStates(isChecked, name)); 
+        contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : true});
     }
 
-    const resetChecked = () => {
+    const resetChecked = (event) => {
+        event.stopPropagation();
         contextValue.dispatchInnTypes({type: 'reset'})
         contextValue.toggleTabOnOff('innType', false); 
+        contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : false});
     }
 
     const InnTypeCheck = (props) => {
@@ -50,6 +58,12 @@ function InnType(props) {
             <Checkbox style ={checkboxStyle} name={props.name} checked={props.innTypes} onChange={props.checkInnType} />
         )
     }
+
+  
+    const applyInnType = (event) => {
+        event.stopPropagation();
+        closePanelContextValue.setSelectedTab('none'); 
+    };
 
     return (
         <OptionTabStyle>
@@ -69,9 +83,14 @@ function InnType(props) {
                 <InnTypeCheck name='publicRoom' innTypes={contextValue.innTypes.publicRoom} checkInnType={checkInnType} />다인실<br />
                 <InnTypeDescStyle>{innDesc.publicRoom}</InnTypeDescStyle>
             </InnTypeDiv>
-            <StyledResetButton name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
-                삭제
-            </StyledResetButton>
+            <DeleteApplyStyle>
+                <DeleteButtonStyle visible={contextValue.isPanelDeleteButtonActivated.innType} name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
+                    { contextValue.isPanelDeleteButtonActivated.innType ? '삭제' : null }
+                </DeleteButtonStyle>
+                <ApplyButtonStyle onClick={applyInnType}>
+                    적용
+                </ApplyButtonStyle>
+            </DeleteApplyStyle>
         </OptionTabStyle>
     )
 }
@@ -83,18 +102,6 @@ const InnTypeDescStyle = styled.p`
 
 const InnTypeDiv = styled.div`
     margin: 10px; 
-`
-
-const StyledResetButton = styled.button`
-    display: inline-block;
-    border-radius: 0%; 
-    border: none;
-    width: 60px; 
-    height:40px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    outline: none;
-    font-size: 16px; 
 `
 
 export default InnType; 

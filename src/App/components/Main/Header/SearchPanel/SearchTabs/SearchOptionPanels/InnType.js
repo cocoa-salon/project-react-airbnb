@@ -22,12 +22,6 @@ const innTypeStates = {
     publicRoom: false
 }
 
-const checkInnTypeStates = (isChecked, name) => {
-    innTypeStates[name] = isChecked; 
-    if(Object.values(innTypeStates).includes(true)) return true; 
-    else return false; 
-}
-
 function InnType(props) {
 
     const contextValue = useContext(OptionPanelSetContext);
@@ -36,30 +30,46 @@ function InnType(props) {
     const checkboxStyle = {
         color : "#519D9E",
         padding: "5px 10px 5px 5px"
-    }
+    };
 
     const checkInnType = (event) => {
         const name = event.target.name;
         const isChecked = event.target.checked;
         contextValue.dispatchInnTypes({type: 'check', payload: {name : name, isChecked: isChecked} });
         contextValue.toggleTabOnOff('innType', checkInnTypeStates(isChecked, name)); 
-        contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : true});
-    }
+    };
+
+    const checkInnTypeStates = (isChecked, name) => {
+        innTypeStates[name] = isChecked; 
+        if(Object.values(innTypeStates).includes(true)) { 
+            contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : true});
+            return true; 
+        } else { 
+            contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : false});
+            return false; 
+        };
+    };
 
     const resetChecked = (event) => {
         event.stopPropagation();
         contextValue.dispatchInnTypes({type: 'reset'})
+        resetInnTypeStates(); 
         contextValue.toggleTabOnOff('innType', false); 
         contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : false});
-    }
+    };
+
+    const resetInnTypeStates = () => {
+        for(let innType in innTypeStates) {
+            innTypeStates[innType] = false; 
+        };
+    };
 
     const InnTypeCheck = (props) => {
         return (
             <Checkbox style ={checkboxStyle} name={props.name} checked={props.innTypes} onChange={props.checkInnType} />
         )
-    }
-
-  
+    };
+ 
     const applyInnType = (event) => {
         event.stopPropagation();
         closePanelContextValue.setSelectedTab('none'); 
@@ -92,8 +102,8 @@ function InnType(props) {
                 </ApplyButtonStyle>
             </DeleteApplyStyle>
         </OptionTabStyle>
-    )
-}
+    );
+};
 
 const InnTypeDescStyle = styled.p`
     padding-left: 39px; 

@@ -8,8 +8,6 @@ import { DeleteButtonStyle } from './DeleteApplyStyle';
 
 function Calendar(props) {
 
-    const [ text, setText] = useState("");
-
     const closePanelContextValue = useContext(ClosePanelContext);
     const contextValue = useContext(OptionPanelSetContext);
 
@@ -23,19 +21,10 @@ function Calendar(props) {
         closePanelContextValue.setSelectedTab('none');
     };
 
-    useEffect(()=> {
-        fetch('http://localhost:8080/search/allInfo')
-          .then((response) => response.json())
-          .then((response) => { 
-              setText(response[0].name);
-          })
-    }, []);
-
     return (
         <OptionTabStyle>
             달력, 기간을 설정하는 옵션 패널
             <DeleteApplyStyle>
-                <div>{text}</div>
                 <DeleteButtonStyle visible={contextValue.isPanelDeleteButtonActivated.date} onClick={resetCalendar}>
                     {contextValue.isPanelDeleteButtonActivated ? '삭제' : null}
                 </DeleteButtonStyle>

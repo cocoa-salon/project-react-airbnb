@@ -5,11 +5,18 @@ const Models = require('../models/data');
 
 // this is our get method
 // this method fetches all available data in our database
-router.get('/allInfo', (req, res) => {
-    Models.HostInfo.find({name : "Jake"}, (err, hostInfos) =>{
-        return res.json(hostInfos);
+// router.get('/rooms', (req, res) => {
+//     Models.Stays.find({}, (err, stays) =>{
+//         return res.json(stays);
+//     });
+// });
+
+router.get('/rooms', (req, res) => {
+    Models.Stays.find({}, (err, Stays) =>{
+        return res.json(Stays);
     });
 });
+
 
 // this is our create methid
 // this method adds new data in our database
@@ -44,6 +51,26 @@ router.post('/newInfo', (req, res) => {
 //     return res.json({ success: true });
 //   });
 // });
+
+
+
+
+
+// const fin = new Models.HostInfo({name: "Fin", tier: 2});
+
+// fin.save((err, Fin) => {
+//   if(err) return console.log(err);
+// });
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,14 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 
-function Sections(props) {
+const Sections = (props) => {
+
+    const [stayLists, setStayLists] = useState([]);
+
+    useEffect(() => {
+        console.log('loading...'); 
+        fetch('http://localhost:8080/search/rooms')
+            .then((response) => response.json())
+            .then((response) => {
+                let mappedList = response.map((infos) => {
+                    return <li key={infos['_id']}>{infos['name']}</li>
+                });
+                setStayLists(mappedList);
+            })
+    }, []);
+
     return (
         <StyledDiv>
-            <Route path="/all" component={AllSection} />
-            <Route path="/inn" component={InnSection} />
-            <Route path="/trip" component={TripSection} />
-            <Route path="/restaurant" component={RestaurentSection} />
+            <Route path="/search/all" render={() => {
+                return (
+                    <AllSection stayLists={stayLists} />
+                )
+            }} />
+            <Route path="/search/inn" render={() => {
+                return (
+                    <InnSection stayLists={stayLists} />
+                )
+            }} />
+            <Route path="/search/trip" component={TripSection} />
+            <Route path="/search/restaurant" component={RestaurentSection} />
         </StyledDiv>
     )
 }
@@ -22,27 +45,31 @@ const StyledDiv = styled.div`
     background: white; 
 `
 
-function AllSection({match}) {
+const AllSection = ({ stayLists }) => {
     return (
-        <div>
+        <>
             <h3>All section</h3>
-        </div>
+            <ul>{stayLists}</ul>
+        </>
     )
 }
 
-function InnSection({match}) {
+const InnSection = ({ stayLists }) => {
     return (
-        <h3>Inn section</h3>
+        <>
+            <h3>Inn section</h3>
+            <ul>{stayLists}</ul>
+        </>
     )
 }
 
-function TripSection({match}) {
+const TripSection = () => {
     return (
         <h3>Trip section</h3>
     )
 }
 
-function RestaurentSection({match}) {
+const RestaurentSection = () => {
     return (
         <h3>Restaurant section</h3>
     )

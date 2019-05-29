@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
+import { ClosePanelContext } from '../Main';
 
 const Sections = (props) => {
 
-    const [stayLists, setStayLists] = useState([]);
+    const value = useContext(ClosePanelContext);
 
     useEffect(() => {
         console.log('loading...'); 
         fetch('http://localhost:8080/search/rooms')
             .then((response) => response.json())
             .then((response) => {
+                console.log(response);
                 let mappedList = response.map((infos) => {
-                    return <li key={infos['_id']}>{infos['name']}</li>
+                    return <li key={infos['_id']}>{infos['name']} 가격: {`${infos['price']}원`}, 숙소타입: {`${infos['roomType']}`}, 수용인원: {`${infos['accommodates']}명`}</li>
                 });
-                setStayLists(mappedList);
+                value.setStayLists(mappedList);
             })
     }, []);
 
@@ -22,12 +24,12 @@ const Sections = (props) => {
         <StyledDiv>
             <Route path="/search/all" render={() => {
                 return (
-                    <AllSection stayLists={stayLists} />
+                    <AllSection stayLists={value.stayLists} />
                 )
             }} />
             <Route path="/search/inn" render={() => {
                 return (
-                    <InnSection stayLists={stayLists} />
+                    <InnSection stayLists={value.stayLists} />
                 )
             }} />
             <Route path="/search/trip" component={TripSection} />
@@ -49,7 +51,7 @@ const AllSection = ({ stayLists }) => {
     return (
         <>
             <h3>All section</h3>
-            <ul>{stayLists}</ul>
+            <ul>{stayLists }</ul>
         </>
     )
 }

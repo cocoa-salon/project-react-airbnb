@@ -68,6 +68,8 @@ const GuestNumSetButton = (props) => {
     );
 };
 
+let queryToClear = "";
+
 function Guest(props) {
     const contextValue = useContext(OptionPanelSetContext);
     const closePanelContextValue = useContext(ClosePanelContext);
@@ -97,12 +99,48 @@ function Guest(props) {
         contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, guest : false});
     };
 
+
+    const templateGuest = {
+        adults: `&adults={{adults}}`,
+        children: `&children={{children}}`,
+        infants: `&infants={{infants}}`
+    }
+
+    const regExpGuest = {
+        adults: new RegExp('\{\{adults\}\}'),
+        children: new RegExp('\{\{children\}\}'),
+        infants: new RegExp('\{\{infants\}\}')
+    }
+
+    // 쿼리 생성(각 검색 옵션 패널마다 상이)
+    const generateQueryString = () => {
+        let queryString = "";
+        if(contextValue.adultNum === 0) {
+            queryString += templateGuest.adults.replace(regExpGuest.adults, 1);
+        } else if(contextValue.adultNum > 0) {
+            queryString += templateGuest.adults.replace(regExpGuest.adults, contextValue.adultNum);
+        }
+        if(contextValue.childNum > 0) {
+            queryString += templateGuest.children.replace(regExpGuest.children, contextValue.childNum);
+        } 
+        if(contextValue.toddlerNum > 0) {
+            queryString += templateGuest.infants.replace(regExpGuest.infants, contextValue.toddlerNum);
+        } 
+        return queryString;
+    }
+
     const applyGuestNum = (event) => {
         event.stopPropagation();
         if(contextValue.adultNum === 0) {
             contextValue.dispatchGuestNum({ type: 'addAdult' });
             contextValue.toggleTabOnOff('guest', true);
         }
+
+        closePanelContextValue.queryString.str = closePanelContextValue.queryString.str.replace(queryToClear, "");
+        let generatedQuery = generateQueryString();
+        queryToClear = generatedQuery;
+        closePanelContextValue.queryString.str  += generatedQuery;
+        closePanelContextValue.operateFetch(closePanelContextValue.queryString.str);
         closePanelContextValue.setSelectedTab('none');
     };
     

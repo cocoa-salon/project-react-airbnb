@@ -2,8 +2,16 @@ import React, { useState } from 'react';
 import Header from './Header/Header';
 import Sections from './Sections/Sections';
 
+
+// 참조에 의한 복사
+let queryString = {
+    str : ""
+}
+
 // 변수 이름 변경
 export const ClosePanelContext = React.createContext();
+
+
 
 function Main() {
 
@@ -42,6 +50,22 @@ function Main() {
         setOptionTabUrl(optionTabUrl);
     }
 
+    const [stayLists, setStayLists] = useState([]);
+
+    // 생성한 쿼리로 fetch 요청 
+    const operateFetch = async (queryString) => {
+        try {
+            const response = await fetch(`http://localhost:8080/search/rooms/${queryString}`, { mode: "cors"}); 
+            const resultJson = await response.json();
+            let mappedList = resultJson.map((infos) => {
+                return <li key={infos['_id']}>{infos['name']} 가격: {`${infos['price']}원`}, 숙소타입: {`${infos['roomType']}`}, 수용인원: {`${infos['accommodates']}명`}</li>
+            });
+            setStayLists(mappedList);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     // 분리
     const SearchOptionPanelToggleProps = {
         handleIsOnMouseLeavePanel: handleIsOnMouseLeavePanel,
@@ -53,7 +77,7 @@ function Main() {
     }
 
     return (
-        <ClosePanelContext.Provider value={{ ...SearchOptionPanelToggleProps }}>
+        <ClosePanelContext.Provider value={{ ...SearchOptionPanelToggleProps, operateFetch : operateFetch, stayLists : stayLists, setStayLists: setStayLists, queryString : queryString }}>
             <div onClick={closeSearchOptionPanel}>
                 <Header />
                 <Sections />

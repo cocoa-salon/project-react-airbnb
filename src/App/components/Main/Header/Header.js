@@ -40,10 +40,10 @@ function Header() {
 
     // 가격 state
     const [price, dispatchSetPrice] = useReducer(setPriceReducer, {
-        defaultMin: 12000,
-        defaultMax: 1000000,
-        min: 12000,
-        max: 1000000,
+        defaultMin: 10000,
+        defaultMax: 500000,
+        min: 10000,
+        max: 500000,
         tabMsg: '가격'
     });
 

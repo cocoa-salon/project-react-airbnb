@@ -7,6 +7,9 @@ import { DeleteApplyStyle } from './DeleteApplyStyle';
 import { ApplyButtonStyle } from './DeleteApplyStyle';
 import Switch from '@material-ui/core/Switch';
 
+
+let queryToClear = "";
+
 function InstantBook(props) {
     
     const contextValue = useContext(OptionPanelSetContext);
@@ -20,9 +23,25 @@ function InstantBook(props) {
         contextValue.toggleTabOnOff('instantBook', isActivated);
     }
 
+    // 쿼리 생성(각 검색 옵션 패널마다 상이)
+    const generateQueryString = () => {
+        let queryString = "";
+        const template = `&instantbook={{}}`
+        let regExp = new RegExp('\{\{\}\}');
+        let isChecked = contextValue.isInstantBookChecked.isChecked;
+        queryString += template.replace(regExp, isChecked);
+        return queryString;
+    }
+
     const applyInstantBook = (event) => {
         event.stopPropagation();
         closePanelContextValue.setSelectedTab('none'); 
+
+        closePanelContextValue.queryString.str = closePanelContextValue.queryString.str.replace(queryToClear, "");
+        let generatedQuery = generateQueryString();
+        queryToClear = generatedQuery;
+        closePanelContextValue.queryString.str  += generatedQuery;
+        closePanelContextValue.operateFetch(closePanelContextValue.queryString.str);
     };
 
     return (

@@ -54,6 +54,8 @@ const CurrencyStyle = styled.span`
     font-weight: bold; 
 `
 
+let queryToClear = "";
+
 function Price(props) {
     
     const priceContext = useContext(OptionPanelSetContext);
@@ -126,8 +128,24 @@ function Price(props) {
 
     const { priceDefault, prices, priceMin, priceMax } = tabMsgs;
 
+    const generateQueryString = () => {
+        let queryString = "";
+        const template = `&price_min={{min}}&price_max={{max}}`
+        let regExpMin = new RegExp('\{\{min\}\}');
+        let regExpMax = new RegExp('\{\{max\}\}');
+        queryString += template.replace(regExpMin, price.min).replace(regExpMax, price.max);
+        return queryString;
+    }
+
     const setOptionTabState = (event) => {
         event.stopPropagation();
+
+        closePanelContextValue.queryString.str = closePanelContextValue.queryString.str.replace(queryToClear, "");
+        let generatedQuery = generateQueryString();
+        queryToClear = generatedQuery;
+        closePanelContextValue.queryString.str += generatedQuery;
+        closePanelContextValue.operateFetch(closePanelContextValue.queryString.str);
+
         closePanelContextValue.setSelectedTab('none'); 
         if(price.min === price.defaultMin && price.max === price.defaultMax) {
             priceContext.toggleTabOnOff("price", false);
@@ -141,6 +159,8 @@ function Price(props) {
             priceContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg: priceMax}});
         } 
         priceContext.toggleTabOnOff("price", true);
+
+        
     };
 
     const resetPrice = (event) => {
@@ -163,7 +183,7 @@ function Price(props) {
                     max={price.defaultMax}
                     defaultValue={[price.defaultMin, price.defaultMax]}
                     value={[price.min, price.max]}
-                    step={1000}
+                    step={2000}
                 />
             </SliderStyle>
             <PriceInputContainerStyle>

@@ -22,6 +22,8 @@ const innTypeStates = {
     publicRoom: false
 }
 
+let queryToClear = "";
+
 function InnType(props) {
 
     const contextValue = useContext(OptionPanelSetContext);
@@ -56,6 +58,8 @@ function InnType(props) {
         resetInnTypeStates(); 
         contextValue.toggleTabOnOff('innType', false); 
         contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : false});
+
+        closePanelContextValue.queryString.str = closePanelContextValue.queryString.str.replace(queryToClear, "");
     };
 
     const resetInnTypeStates = () => {
@@ -70,10 +74,38 @@ function InnType(props) {
         )
     };
  
+    const roomTypes = { 
+        allhouse : "entireRoom", 
+        privateRoom: "privateRoom", 
+        hotelRoom: "hotelRoom" , 
+        publicRoom: "sharedRoom"
+    }; 
+
+    // 적용 버튼 클릭
     const applyInnType = (event) => {
         event.stopPropagation();
         closePanelContextValue.setSelectedTab('none'); 
+
+        closePanelContextValue.queryString.str = closePanelContextValue.queryString.str.replace(queryToClear, "");
+        let generatedQuery = generateQueryString();
+        queryToClear = generatedQuery;
+        closePanelContextValue.queryString.str  += generatedQuery;
+        closePanelContextValue.operateFetch(closePanelContextValue.queryString.str);
     };
+
+    // 쿼리 생성(각 검색 옵션 패널마다 상이)
+    const generateQueryString = () => {
+        let queryString = "";
+        const template = `&roomType={{}}`
+        let regExp = new RegExp('\{\{\}\}');
+        for(let key in innTypeStates) {
+            if(innTypeStates[key] === true) {
+                let selectedKey = roomTypes[key];
+                queryString += template.replace(regExp, selectedKey);
+            }
+        };
+        return queryString;
+    }
 
     return (
         <OptionTabStyle>

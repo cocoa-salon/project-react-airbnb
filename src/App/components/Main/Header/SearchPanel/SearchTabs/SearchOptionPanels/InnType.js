@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import OptionTabStyle from './OptionTabStyle';
 import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main'
+import { FetchQueryContext } from '../../../../Main'
 import { DeleteApplyStyle } from './DeleteApplyStyle';
 import { ApplyButtonStyle } from './DeleteApplyStyle';
 import { DeleteButtonStyle } from './DeleteApplyStyle';
@@ -26,8 +27,9 @@ let queryToClear = "";
 
 function InnType(props) {
 
-    const contextValue = useContext(OptionPanelSetContext);
-    const closePanelContextValue = useContext(ClosePanelContext);
+    const optionPanelSetContext = useContext(OptionPanelSetContext);
+    const closePanelContext = useContext(ClosePanelContext);
+    const fetchQueryContext = useContext(FetchQueryContext);
 
     const checkboxStyle = {
         color : "#519D9E",
@@ -37,29 +39,29 @@ function InnType(props) {
     const checkInnType = (event) => {
         const name = event.target.name;
         const isChecked = event.target.checked;
-        contextValue.dispatchInnTypes({type: 'check', payload: {name : name, isChecked: isChecked} });
-        contextValue.toggleTabOnOff('innType', checkInnTypeStates(isChecked, name)); 
+        optionPanelSetContext.dispatchInnTypes({type: 'check', payload: {name : name, isChecked: isChecked} });
+        optionPanelSetContext.toggleTabOnOff('innType', checkInnTypeStates(isChecked, name)); 
     };
 
     const checkInnTypeStates = (isChecked, name) => {
         innTypeStates[name] = isChecked; 
         if(Object.values(innTypeStates).includes(true)) { 
-            contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : true});
+            optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, innType : true});
             return true; 
         } else { 
-            contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : false});
+            optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, innType : false});
             return false; 
         };
     };
 
     const resetChecked = (event) => {
         event.stopPropagation();
-        contextValue.dispatchInnTypes({type: 'reset'})
+        optionPanelSetContext.dispatchInnTypes({type: 'reset'})
         resetInnTypeStates(); 
-        contextValue.toggleTabOnOff('innType', false); 
-        contextValue.setIsPanelDeleteButtonActivated({...contextValue.isPanelDeleteButtonActivated, innType : false});
+        optionPanelSetContext.toggleTabOnOff('innType', false); 
+        optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, innType : false});
 
-        closePanelContextValue.queryString.str = closePanelContextValue.queryString.str.replace(queryToClear, "");
+        fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
     };
 
     const resetInnTypeStates = () => {
@@ -84,13 +86,13 @@ function InnType(props) {
     // 적용 버튼 클릭
     const applyInnType = (event) => {
         event.stopPropagation();
-        closePanelContextValue.setSelectedTab('none'); 
+        closePanelContext.setSelectedTab('none'); 
 
-        closePanelContextValue.queryString.str = closePanelContextValue.queryString.str.replace(queryToClear, "");
+        fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
         let generatedQuery = generateQueryString();
         queryToClear = generatedQuery;
-        closePanelContextValue.queryString.str  += generatedQuery;
-        closePanelContextValue.operateFetch(closePanelContextValue.queryString.str);
+        fetchQueryContext.queryString.str  += generatedQuery;
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
     };
 
     // 쿼리 생성(각 검색 옵션 패널마다 상이)
@@ -110,24 +112,24 @@ function InnType(props) {
     return (
         <OptionTabStyle>
             <InnTypeDiv>
-                <InnTypeCheck name='allhouse' innTypes={contextValue.innTypes.allhouse} checkInnType={checkInnType} />집 전체<br />
+                <InnTypeCheck name='allhouse' innTypes={optionPanelSetContext.innTypes.allhouse} checkInnType={checkInnType} />집 전체<br />
                 <InnTypeDescStyle>{innDesc.allhouse}</InnTypeDescStyle>
             </InnTypeDiv>
             <InnTypeDiv>
-                <InnTypeCheck name='privateRoom' innTypes={contextValue.innTypes.privateRoom} checkInnType={checkInnType} />개인실<br />
+                <InnTypeCheck name='privateRoom' innTypes={optionPanelSetContext.innTypes.privateRoom} checkInnType={checkInnType} />개인실<br />
                 <InnTypeDescStyle>{innDesc.privateRoom}</InnTypeDescStyle>
             </InnTypeDiv>
             <InnTypeDiv>
-                <InnTypeCheck name='hotelRoom' innTypes={contextValue.innTypes.hotelRoom} checkInnType={checkInnType} />호텔 객실<br />
+                <InnTypeCheck name='hotelRoom' innTypes={optionPanelSetContext.innTypes.hotelRoom} checkInnType={checkInnType} />호텔 객실<br />
                 <InnTypeDescStyle>{innDesc.hotelRoom}</InnTypeDescStyle>
             </InnTypeDiv>
             <InnTypeDiv>
-                <InnTypeCheck name='publicRoom' innTypes={contextValue.innTypes.publicRoom} checkInnType={checkInnType} />다인실<br />
+                <InnTypeCheck name='publicRoom' innTypes={optionPanelSetContext.innTypes.publicRoom} checkInnType={checkInnType} />다인실<br />
                 <InnTypeDescStyle>{innDesc.publicRoom}</InnTypeDescStyle>
             </InnTypeDiv>
             <DeleteApplyStyle>
-                <DeleteButtonStyle visible={contextValue.isPanelDeleteButtonActivated.innType} name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
-                    { contextValue.isPanelDeleteButtonActivated.innType ? '삭제' : null }
+                <DeleteButtonStyle visible={optionPanelSetContext.isPanelDeleteButtonActivated.innType} name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
+                    { optionPanelSetContext.isPanelDeleteButtonActivated.innType ? '삭제' : null }
                 </DeleteButtonStyle>
                 <ApplyButtonStyle onClick={applyInnType}>
                     적용

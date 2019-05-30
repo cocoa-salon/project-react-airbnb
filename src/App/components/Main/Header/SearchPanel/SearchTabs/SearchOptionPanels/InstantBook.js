@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import { ClosePanelContext } from '../../../../Main'
+import { FetchQueryContext } from '../../../../Main'
 import { OptionPanelSetContext } from '../../../Header';
 import OptionTabStyle from './OptionTabStyle';
 import styled from 'styled-components';
@@ -12,15 +13,16 @@ let queryToClear = "";
 
 function InstantBook(props) {
     
-    const contextValue = useContext(OptionPanelSetContext);
-    const closePanelContextValue = useContext(ClosePanelContext);
+    const optionPanelSetContext = useContext(OptionPanelSetContext);
+    const closePanelContext = useContext(ClosePanelContext);
+    const fetchQueryContext = useContext(FetchQueryContext);
 
     const instantBookDesc = "호스트 승인을 기다릴 필요 없이 예약할 수 있는 숙소";
 
     const toggleOnOff = (event) => {
         const isActivated = event.target.checked;
-        contextValue.toggleInstantBookChecked(); 
-        contextValue.toggleTabOnOff('instantBook', isActivated);
+        optionPanelSetContext.toggleInstantBookChecked(); 
+        optionPanelSetContext.toggleTabOnOff('instantBook', isActivated);
     }
 
     // 쿼리 생성(각 검색 옵션 패널마다 상이)
@@ -28,27 +30,27 @@ function InstantBook(props) {
         let queryString = "";
         const template = `&instantbook={{}}`
         let regExp = new RegExp('\{\{\}\}');
-        let isChecked = contextValue.isInstantBookChecked.isChecked;
+        let isChecked = optionPanelSetContext.isInstantBookChecked.isChecked;
         queryString += template.replace(regExp, isChecked);
         return queryString;
     }
 
     const applyInstantBook = (event) => {
         event.stopPropagation();
-        closePanelContextValue.setSelectedTab('none'); 
+        closePanelContext.setSelectedTab('none'); 
 
-        closePanelContextValue.queryString.str = closePanelContextValue.queryString.str.replace(queryToClear, "");
+        fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
         let generatedQuery = generateQueryString();
         queryToClear = generatedQuery;
-        closePanelContextValue.queryString.str  += generatedQuery;
-        closePanelContextValue.operateFetch(closePanelContextValue.queryString.str);
+        fetchQueryContext.queryString.str  += generatedQuery;
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
     };
 
     return (
         <OptionTabStyle>
             <InsStyle>
                 <div>즉시예약</div>
-                <Switch style={OnOffSwitchStyle} checked={contextValue.isInstantBookChecked.isChecked} onChange={toggleOnOff}/ >
+                <Switch style={OnOffSwitchStyle} checked={optionPanelSetContext.isInstantBookChecked.isChecked} onChange={toggleOnOff}/ >
             </InsStyle>
             <DescStyle>
                 {instantBookDesc}

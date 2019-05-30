@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { style } from './inputFieldStyle';
 
 import { ResetContext } from '../Header';
+import { FetchQueryContext } from '../../Main';
 
 const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
 
@@ -114,9 +115,11 @@ const InputFieldDiv = styled.div`
 const AdditionalButtons = function (props) {
 
     const triggerResetValue = useContext(ResetContext);
+    const fetchQueryContext = useContext(FetchQueryContext);
+
 
     const triggerReset = (event) => {
-        if(event.target.tagName === 'BUTTON') {
+        if (event.target.tagName === 'BUTTON') {
             triggerResetValue.resetAll();
         }
     }
@@ -149,16 +152,16 @@ const AdditionalButtons = function (props) {
         font-weight: bold;
         padding-left: 20px;
         margin: 0px;
-    `   
+    `
 
     return (
         <StyledDiv onClick={triggerReset}>
             <ExploreTestStyle>에어비엔비 둘러보기</ExploreTestStyle>
             <Link to="/search/all">
-                <StyledButton>모두</StyledButton>
+                <StyledButton onClick={fetchQueryContext.operateFetchQuery}>모두</StyledButton>
             </Link>
             <Link to="/search/inn">
-                <StyledButton>숙소</StyledButton>
+                <StyledButton onClick={fetchQueryContext.operateFetchQuery}>숙소</StyledButton>
             </Link>
             <Link to="/search/trip">
                 <StyledButton>트립</StyledButton>

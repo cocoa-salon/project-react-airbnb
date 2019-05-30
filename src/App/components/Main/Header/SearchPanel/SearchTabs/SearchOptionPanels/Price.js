@@ -1,6 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main'
+import { FetchQueryContext } from '../../../../Main'
 import styled from 'styled-components';
 import { DeleteApplyStyle } from './DeleteApplyStyle';
 import { ApplyButtonStyle } from './DeleteApplyStyle';
@@ -58,10 +59,11 @@ let queryToClear = "";
 
 function Price(props) {
     
-    const priceContext = useContext(OptionPanelSetContext);
-    const closePanelContextValue = useContext(ClosePanelContext);
+    const optionPanelSetContext = useContext(OptionPanelSetContext);
+    const closePanelContext = useContext(ClosePanelContext);
+    const fetchQueryContext = useContext(FetchQueryContext);
 
-    const price = priceContext.price;
+    const price = optionPanelSetContext.price;
 
     const refMin = useRef(null);
     const refMax = useRef(null);
@@ -83,10 +85,10 @@ function Price(props) {
     const handleOnAfterChange = (event) => {
         const minValue = event[0];
         const maxValue = event[1];
-        priceContext.dispatchSetPrice({type: "setPrices", payload: {minValue: minValue, maxValue: maxValue}});
+        optionPanelSetContext.dispatchSetPrice({type: "setPrices", payload: {minValue: minValue, maxValue: maxValue}});
         if(minValue === price.defaultMin && maxValue === price.defaultMax) {
-            priceContext.setIsPanelDeleteButtonActivated({...priceContext.isPanelDeleteButtonActivated, price : false});
-        } else priceContext.setIsPanelDeleteButtonActivated({...priceContext.isPanelDeleteButtonActivated, price : true});
+            optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, price : false});
+        } else optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, price : true});
     };
 
     // 가격 입력 시 이벤트 처리
@@ -101,21 +103,21 @@ function Price(props) {
     const setPriceMin = (value) => {
         if (value >= price.max || isNaN(value)) return;
         checkDeleteButtonOnChange(value, price.defaultMin, price.max, price.defaultMax);
-        priceContext.dispatchSetPrice({type: "setPriceMin", payload: { minValue: value }});
+        optionPanelSetContext.dispatchSetPrice({type: "setPriceMin", payload: { minValue: value }});
     };
 
     // 최대값 입력 및 상태 업데이트
     const setPriceMax = (value) => {
         if (value > price.defaultMax || isNaN(value)) return;
         checkDeleteButtonOnChange(value, price.defaultMax, price.min, price.defaultMin);
-        priceContext.dispatchSetPrice({type: "setPriceMax", payload: { maxValue: value }});
+        optionPanelSetContext.dispatchSetPrice({type: "setPriceMax", payload: { maxValue: value }});
     };
 
     // 가격 직접 입력시 삭제 버튼 노출 여부 결정
     const checkDeleteButtonOnChange = (value, defaultMinMax1, minMax, defaultMinMax2 ) => {
         if(value === defaultMinMax1 && minMax === defaultMinMax2 ) {
-            priceContext.setIsPanelDeleteButtonActivated({...priceContext.isPanelDeleteButtonActivated, price : false});
-        } else priceContext.setIsPanelDeleteButtonActivated({...priceContext.isPanelDeleteButtonActivated, price : true});
+            optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, price : false});
+        } else optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, price : true});
     }
 
     // 탭에 표시할 가격 정보
@@ -140,34 +142,34 @@ function Price(props) {
     const setOptionTabState = (event) => {
         event.stopPropagation();
 
-        closePanelContextValue.queryString.str = closePanelContextValue.queryString.str.replace(queryToClear, "");
+        fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
         let generatedQuery = generateQueryString();
         queryToClear = generatedQuery;
-        closePanelContextValue.queryString.str += generatedQuery;
-        closePanelContextValue.operateFetch(closePanelContextValue.queryString.str);
+        fetchQueryContext.queryString.str += generatedQuery;
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
 
-        closePanelContextValue.setSelectedTab('none'); 
+        closePanelContext.setSelectedTab('none'); 
         if(price.min === price.defaultMin && price.max === price.defaultMax) {
-            priceContext.toggleTabOnOff("price", false);
-            priceContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg : priceDefault}});
+            optionPanelSetContext.toggleTabOnOff("price", false);
+            optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg : priceDefault}});
             return; 
         } else if (price.min !== price.defaultMin && price.max !== price.defaultMax) {
-            priceContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg : prices}});
+            optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg : prices}});
         } else if(price.min === price.defaultMin) {
-            priceContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg: priceMin}});
+            optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg: priceMin}});
         } else if(price.max === price.defaultMax) {
-            priceContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg: priceMax}});
+            optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg: priceMax}});
         } 
-        priceContext.toggleTabOnOff("price", true);
+        optionPanelSetContext.toggleTabOnOff("price", true);
 
         
     };
 
     const resetPrice = (event) => {
         event.stopPropagation();
-        priceContext.toggleTabOnOff("price", false);
-        priceContext.dispatchSetPrice({type: 'reset'});
-        priceContext.setIsPanelDeleteButtonActivated({...priceContext.isPanelDeleteButtonActivated, price : false});
+        optionPanelSetContext.toggleTabOnOff("price", false);
+        optionPanelSetContext.dispatchSetPrice({type: 'reset'});
+        optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, price : false});
     };
 
     return (
@@ -198,8 +200,8 @@ function Price(props) {
                 </PriceInputStyle>
             </PriceInputContainerStyle>
             <DeleteApplyStyle>
-                <DeleteButtonStyle visible={priceContext.isPanelDeleteButtonActivated.price} name="reset" onClick={resetPrice}>
-                    { priceContext.isPanelDeleteButtonActivated.price ? '삭제' : null }
+                <DeleteButtonStyle visible={optionPanelSetContext.isPanelDeleteButtonActivated.price} name="reset" onClick={resetPrice}>
+                    { optionPanelSetContext.isPanelDeleteButtonActivated.price ? '삭제' : null }
                 </DeleteButtonStyle>
                 <ApplyButtonStyle onClick={setOptionTabState}>
                     적용

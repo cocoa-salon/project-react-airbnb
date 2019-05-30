@@ -2,8 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Models = require('../models/data');
 
-
-const keysToReturn = { name: 1, price: 1, roomType: 1, accommodates: 1 };
+// DB로 부터 가져올 키값 설정
+const keysToReturn = { 
+    name: 1, 
+    price: 1, 
+    propertyType: 1,
+    roomType: 1, 
+    accommodates: 1, 
+    numberOfReviews: 1, 
+    review_scores : 1, 
+    images : 1 
+};
 
 // 전체 목록 조회
 router.get('/rooms', (req, res) => {
@@ -67,39 +76,36 @@ const convertObjectifiedQueryList = (queryArrayList) => {
 const convertRoomTypeQuery = (acc, v, key) => {
     if (acc.hasOwnProperty("roomType")) {
         acc[key]['$in'].push(v[key]);
-        return acc;
     } else {
         acc[key] = {};
         acc[key]['$in'] = [];
         acc[key]['$in'].push(v[key]);
-        return acc;
     };
+    return acc;
 };
 
 // 가격 쿼리 객체 변환
 const convertPriceQuery = (acc, v, key) => {
     if (acc.hasOwnProperty("price")) {
         acc['price']['$lte'] = v[key];
-        return acc;
     } else {
         acc['price'] = {};
         acc['price']['$gte'] = v[key];
-        return acc;
     };
+    return acc; 
 };
 
 // 게스트 쿼리 객체 변환
 const convertGuestQuery = (acc, v, key) => {
     if (acc.hasOwnProperty("accommodates") && key !== "infants") {
         acc['accommodates']['$gte'] += v[key];
-        return acc;
     } else if (!acc.hasOwnProperty("accommodates") && key !== "infants") {
         acc['accommodates'] = {};
         acc['accommodates']['$gte'] = v[key];
-        return acc;
     } else if (key === "infants") {
         return acc;
     }
+    return acc;
 };
 
 // 즉시 예약 쿼리 객체 변환

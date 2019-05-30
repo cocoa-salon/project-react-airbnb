@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import Header from './Header/Header';
 import Sections from './Sections/Sections';
-
-
-// 참조에 의한 복사
-let queryString = {
-    str : ""
-}
-
-// 변수 이름 변경
+import { StyledItemsContainer, StyledItemsList } from './Sections/ItemsList';
 export const ClosePanelContext = React.createContext();
+export const FetchQueryContext = React.createContext();
 
-
+let queryString = {
+    str: ""
+};
 
 function Main() {
 
@@ -25,12 +21,12 @@ function Main() {
     // 마우스 커서와 탭
     function handleIsOnMouseLeaveTab(cursorOff) {
         isCursorOffTab = cursorOff;
-    }
+    };
 
     // 마우스 커서와 패널
     function handleIsOnMouseLeavePanel(cursorOff) {
         isCursorOffPanel = cursorOff;
-    }
+    };
 
     // 패널 닫힘
     const closeSearchOptionPanel = () => {
@@ -48,42 +44,64 @@ function Main() {
 
     const passTabUrl = (optionTabUrl) => {
         setOptionTabUrl(optionTabUrl);
-    }
+    };
 
     const [stayLists, setStayLists] = useState([]);
 
     // 생성한 쿼리로 fetch 요청 
-    const operateFetch = async (queryString) => {
+    const operateFetchQuery = async (queryString) => {
         try {
-            const response = await fetch(`http://localhost:8080/search/rooms/${queryString}`, { mode: "cors"}); 
+            const response = await fetch(`http://localhost:8080/search/rooms/${queryString}`, { mode: "cors" });
             const resultJson = await response.json();
             let mappedList = resultJson.map((infos) => {
-                return <li key={infos['_id']}>{infos['name']} 가격: {`${infos['price']}원`}, 숙소타입: {`${infos['roomType']}`}, 수용인원: {`${infos['accommodates']}명`}</li>
+                const itemProps = {
+                    className: "items",
+                    name: infos['name'],
+                    price: infos['price'],
+                    propertyType: infos['propertyType'],
+                    numberOfReviews: infos['numberOfReviews'],
+                    review_scores: infos['review_scores'],
+                    image: infos['images']
+                };
+                return (
+                    <StyledItemsList key={infos['_id']}>
+                        <StyledItemsContainer {...itemProps} />
+                    </StyledItemsList>
+                );
             });
             setStayLists(mappedList);
         } catch (err) {
             console.log(err);
-        }
-    }
+        };
+    };
 
     // 분리
-    const SearchOptionPanelToggleProps = {
+    const searchOptionPanelToggleProps = {
         handleIsOnMouseLeavePanel: handleIsOnMouseLeavePanel,
         handleIsOnMouseLeaveTab: handleIsOnMouseLeaveTab,
         passSelectedTab: setSelectedTabUrl,
         selectedTab: selectedTab,
         optionTabUrl: optionTabUrl,
         setSelectedTab: setSelectedTab
+    };
+
+    const fetchQueryProps = {
+        operateFetchQuery: operateFetchQuery,
+        stayLists: stayLists,
+        setStayLists: setStayLists,
+        queryString: queryString
     }
 
     return (
-        <ClosePanelContext.Provider value={{ ...SearchOptionPanelToggleProps, operateFetch : operateFetch, stayLists : stayLists, setStayLists: setStayLists, queryString : queryString }}>
-            <div onClick={closeSearchOptionPanel}>
-                <Header />
-                <Sections />
-            </div>
+        <ClosePanelContext.Provider value={{ ...searchOptionPanelToggleProps }}>
+            <FetchQueryContext.Provider value={{ ...fetchQueryProps }}>
+                <div onClick={closeSearchOptionPanel}>
+                    <Header />
+                    <Sections />
+                </div>
+            </FetchQueryContext.Provider>
         </ClosePanelContext.Provider>
-    )
-}
+    );
+};
 
 export default Main;

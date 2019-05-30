@@ -6,7 +6,7 @@ import { DeleteApplyStyle } from './DeleteApplyStyle';
 import { ApplyButtonStyle } from './DeleteApplyStyle';
 import { DeleteButtonStyle } from './DeleteApplyStyle';
 
-function AddFilters(props) {
+function MoreFilters(props) {
 
     const closePanelContextValue = useContext(ClosePanelContext);
     const contextValue = useContext(OptionPanelSetContext);
@@ -37,4 +37,4 @@ function AddFilters(props) {
     )
 }
 
-export default AddFilters;
+export default MoreFilters;

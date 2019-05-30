@@ -71,7 +71,7 @@ const GuestNumSetButton = (props) => {
 
 let queryToClear = "";
 
-function Guest(props) {
+function Guests(props) {
     const optionPanelSetContext = useContext(OptionPanelSetContext);
     const closePanelContext = useContext(ClosePanelContext);
     const fetchQueryContext = useContext(FetchQueryContext);
@@ -80,7 +80,7 @@ function Guest(props) {
         const name = event.target.name;
         if (event.target.tagName !== 'BUTTON') return;
         if (name === "addAdult" || name === "addChildren" || name === "addToddler" ) {
-            optionPanelSetContext.toggleTabOnOff('guest', true);
+            optionPanelSetContext.toggleTabOnOff('guests', true);
             optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, guest : true});
         } 
         checkIsRemoveAdultActivated(name); 
@@ -135,7 +135,7 @@ function Guest(props) {
         event.stopPropagation();
         if(optionPanelSetContext.adultNum === 0) {
             optionPanelSetContext.dispatchGuestNum({ type: 'addAdult' });
-            optionPanelSetContext.toggleTabOnOff('guest', true);
+            optionPanelSetContext.toggleTabOnOff('guests', true);
         }
 
         fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
@@ -184,4 +184,4 @@ const StyledP = styled.p`
 const StyledNumDiv = styled.div`
     margin-left: 10px; 
 `
-export default Guest;
+export default Guests;

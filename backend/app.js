@@ -22,10 +22,6 @@ db.once('open', function(){
 });
 db.on('error', console.error.bind(console, "MongoDB connection error"));
 
-
-
-// (optional) only made for logging and
-// bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
@@ -33,35 +29,7 @@ app.use(logger('dev'));
 // 라우터 설정
 app.use('/search', indexRouter);
 
-// 백엔드 서버 실행하기
+// 백엔드 서버 실행
 app.listen(port, () =>
     console.log("Express server has started on port " + port)
 );
-
-
-// 설정한 스키마와 모델을 가지고 도큐먼트 생성
-// const batesMotel = new Models.Inn({name : 'Inn1', location: "LA", type: "motel", num: 1});
-
-// batesMotel.save((err, batesMotel) => {
-//   if(err) return console.log(err);
-// });
-
-// const hotelMumbai = new Models.Inn({name: 'Inn2', location: "Mumbai", type: "hotel", num: 2});
-
-// hotelMumbai.save((err, hotelMumbai) => {
-//   if(err) return console.log(err);
-// });
-
-// const jake = new Models.HostInfo({name: "Jake", tier: 3 });
-
-// jake.save((err, Jake) => {
-//   if(err) return console.log(err);
-// });
-
-// const fin = new Models.HostInfo({name: "Fin", tier: 2});
-
-// fin.save((err, Fin) => {
-//   if(err) return console.log(err);
-// });
-
-

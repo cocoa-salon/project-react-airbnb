@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import DateTapDisplay from './OptionTabDisplay/DateTapDisplay';
-import GuestTapDisplay from './OptionTabDisplay/GuestTapDisplay';
-import InnTypeTapDisplay from './OptionTabDisplay/InnTypeTapDisplay';
+import DatesTapDisplay from './OptionTabDisplay/DatesTapDisplay';
+import GuestsTapDisplay from './OptionTabDisplay/GuestsTapDisplay';
+import TypeOfPlaceTapDisplay from './OptionTabDisplay/TypeOfPlaceTapDisplay';
 import InstantBookTapDisplay from './OptionTabDisplay/InstantBookTapDisplay';
 import PriceTapDisplay from './OptionTabDisplay/PriceTapDisplay';
 import TimeTapDisplay from './OptionTabDisplay/TimeTapDisplay';
-import FilterAddTapDisplay from './OptionTabDisplay/FilterAddTapDisplay';
+import MoreFiltersTapDisplay from './OptionTabDisplay/MoreFiltersTapDisplay';
 
 import { SearchTabContext } from '../SearchTabs';
 import { OptionPanelSetContext } from '../../../Header';
@@ -60,13 +60,13 @@ const SearchOptionTabs = (props) => {
             onMouseEnter={handleIsOnMouseLeaveTab}
         >
             <SearchOptionTabStyle name={props.type}> {
-                (props.type === 'date' && <DateTapDisplay />) ||
-                (props.type === 'guest' && <GuestTapDisplay />) ||
-                (props.type === 'innType' && <InnTypeTapDisplay innTypes={searchTabContextValue.innTypes} />) ||
+                (props.type === 'dates' && <DatesTapDisplay />) ||
+                (props.type === 'guests' && <GuestsTapDisplay />) ||
+                (props.type === 'typeOfPlace' && <TypeOfPlaceTapDisplay typeOfPlace={searchTabContextValue.typeOfPlace} />) ||
                 (props.type === 'instantBook' && <InstantBookTapDisplay />) ||
                 (props.type === 'price' && <PriceTapDisplay />) ||
                 (props.type === 'time' && <TimeTapDisplay />) ||
-                (props.type === 'filterAdd' && <FilterAddTapDisplay />)
+                (props.type === 'morefilters' && <MoreFiltersTapDisplay />)
             }
             </SearchOptionTabStyle>
         </Link>

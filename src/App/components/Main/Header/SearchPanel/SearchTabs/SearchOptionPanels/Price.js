@@ -11,7 +11,6 @@ import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import { Range } from 'rc-slider';
 
-
 const PriceOptionTabStyle = styled(OptionTabStyle)`
     display: flex;
     flex-direction: column;

@@ -1,15 +1,15 @@
-export const innTypeCheckReducer = (innTypes, { type, payload }) => {
+export const typeOfPlaceCheckReducer = (typeOfPlace, { type, payload }) => {
     switch (type) {
         case 'check':
             const name = payload.name;
             const isChecked = payload.isChecked;
-            return { ...innTypes, [name]: isChecked };
+            return { ...typeOfPlace, [name]: isChecked };
         case 'reset':
             return {
-                allhouse: false,
+                entireRoom: false,
                 privateRoom: false,
                 hotelRoom: false,
-                publicRoom: false
+                sharedRoom: false
             }
     }
 }

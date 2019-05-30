@@ -7,10 +7,10 @@ function RestaurantSearchTab(props) {
 
     return (
         <SearchTabStyle>
-            <SearchOptionTabs type='date' />
-            <SearchOptionTabs type='guest' />
+            <SearchOptionTabs type='dates' />
+            <SearchOptionTabs type='guests' />
         </SearchTabStyle>
-    )
-}
+    );
+};
 
 export default RestaurantSearchTab;

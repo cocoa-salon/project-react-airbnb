@@ -154,19 +154,24 @@ const AdditionalButtons = function (props) {
         margin: 0px;
     `
 
+    const operateFetchQuery = () => {
+        fetchQueryContext.queryString.str = ""; 
+        fetchQueryContext.operateFetchQuery("");
+    }
+
     return (
         <StyledDiv onClick={triggerReset}>
             <ExploreTestStyle>에어비엔비 둘러보기</ExploreTestStyle>
             <Link to="/search/all">
-                <StyledButton onClick={fetchQueryContext.operateFetchQuery}>모두</StyledButton>
+                <StyledButton onClick={operateFetchQuery}>모두</StyledButton>
             </Link>
-            <Link to="/search/inn">
-                <StyledButton onClick={fetchQueryContext.operateFetchQuery}>숙소</StyledButton>
+            <Link to="/search/stays">
+                <StyledButton onClick={operateFetchQuery}>숙소</StyledButton>
             </Link>
-            <Link to="/search/trip">
+            <Link to="/search/experiences">
                 <StyledButton>트립</StyledButton>
             </Link>
-            <Link to="/search/restaurant">
+            <Link to="/search/restaurants">
                 <StyledButton>레스토랑</StyledButton>
             </Link>
         </StyledDiv>

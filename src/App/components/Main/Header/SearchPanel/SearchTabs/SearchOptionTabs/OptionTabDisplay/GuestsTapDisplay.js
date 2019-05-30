@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { OptionPanelSetContext } from '../../../../Header';
 
 
-const GuestTapDisplay = () => {
+const GuestsTapDisplay = () => {
     
     const contextValue = useContext(OptionPanelSetContext);
 
@@ -14,4 +14,4 @@ const GuestTapDisplay = () => {
     )
 }
 
-export default GuestTapDisplay;
+export default GuestsTapDisplay;

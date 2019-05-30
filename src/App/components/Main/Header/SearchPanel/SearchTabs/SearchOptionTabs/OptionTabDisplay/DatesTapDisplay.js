@@ -1,10 +1,10 @@
 import React from 'react';
 
-const DateTapDisplay = (props) => {
+const DatesTapDisplay = (props) => {
 
     return (
         <span>날짜</span>
     )
 }
 
-export default DateTapDisplay; 
+export default DatesTapDisplay; 

@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { FetchQueryContext } from '../Main';
 import { StyledItemsContainer, StyledItemsList } from './ItemsList';
+import requestURL from '../../../../../src/requestURL';
 
 const Sections = (props) => {
 
     const fetchQueryContext = useContext(FetchQueryContext);
 
     useEffect(() => {
-        fetch('http://localhost:8080/search/rooms')
+        fetch(`${requestURL.FETCHALL}`, { mode: "cors" })
             .then((response) => response.json())
             .then((response) => {
                 let mappedList = response.map((infos) => {
@@ -39,13 +40,13 @@ const Sections = (props) => {
                     <AllSection stayLists={fetchQueryContext.stayLists} />
                 )
             }} />
-            <Route path="/search/inn" render={() => {
+            <Route path="/search/stays" render={() => {
                 return (
                     <InnSection stayLists={fetchQueryContext.stayLists} />
                 )
             }} />
-            <Route path="/search/trip" component={TripSection} />
-            <Route path="/search/restaurant" component={RestaurentSection} />
+            <Route path="/search/experiences" component={TripSection} />
+            <Route path="/search/restaurants" component={RestaurentSection} />
         </StyledDiv>
     );
 };
@@ -71,7 +72,7 @@ const AllSection = ({ stayLists }) => {
 const InnSection = ({ stayLists }) => {
     return (
         <>
-            <h3>Inn section</h3>
+            <h3>Stays section</h3>
             <ul style={{ listStyle: "none" }}>{stayLists}</ul>
         </>
     );
@@ -79,13 +80,13 @@ const InnSection = ({ stayLists }) => {
 
 const TripSection = () => {
     return (
-        <h3>Trip section</h3>
+        <h3>Experiences section</h3>
     );
 };
 
 const RestaurentSection = () => {
     return (
-        <h3>Restaurant section</h3>
+        <h3>Restaurants section</h3>
     );
 };
 

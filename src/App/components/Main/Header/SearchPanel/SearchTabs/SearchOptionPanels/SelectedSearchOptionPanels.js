@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 
-import  Calendar from './Calendar'
-import  Guest from './Guest'
-import  InnType from './InnType'
+import  Dates from './Dates'
+import  Guests from './Guests'
+import  TypeOfPlace from './TypeOfPlace'
 import  InstantBook from './InstantBook'
 import  Price from './Price'
 import  Time from './Time'
-import  AddFilters from './AddFilters'
+import  MoreFilters from './MoreFilters'
 
 import { ClosePanelContext } from '../../../../Main';
 
@@ -15,13 +15,13 @@ const SelectedSearchOptionPanels = ({ match}) => {
     const id = match.params.id;
     return (
             (mouseLeaveContextValue.selectedTab === "none" && <div>{null}</div>) ||
-            (id === "date" && <Calendar />) ||
-            (id === "guest" && <Guest />) ||
-            (id === "innType" && <InnType />) ||
+            (id === "dates" && <Dates />) ||
+            (id === "guests" && <Guests />) ||
+            (id === "typeOfPlace" && <TypeOfPlace />) ||
             (id === "instantBook" && <InstantBook />) ||
             (id === "price" && <Price />) ||
             (id === "time" && <Time />) ||
-            (id === "filterAdd" && <AddFilters />)
+            (id === "morefilters" && <MoreFilters />)
     )
 };
 

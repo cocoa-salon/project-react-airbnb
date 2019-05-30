@@ -2,7 +2,7 @@ import React, { useState, useReducer } from 'react';
 import SearchField from './SearchField/SearchField';
 import SearchPanel from './SearchPanel/SearchPanel';
 import { checkGuestNumReducer } from './SearchPanel/SearchTabs/stateReducers/checkGuestNumReducer';
-import { innTypeCheckReducer } from './SearchPanel/SearchTabs/stateReducers/innTypeCheckReducer';
+import { typeOfPlaceCheckReducer } from './SearchPanel/SearchTabs/stateReducers/typeOfPlaceCheckReducer';
 import { setPriceReducer } from './SearchPanel/SearchTabs/stateReducers/setPriceReducer';
 
 export const ResetContext = React.createContext();
@@ -25,11 +25,11 @@ function Header() {
     });
 
     // 숙소타입 state
-    const [innTypes, dispatchInnTypes] = useReducer(innTypeCheckReducer, {
-        allhouse: false,
+    const [typeOfPlace, dispatchTypeOfPlace] = useReducer(typeOfPlaceCheckReducer, {
+        entireRoom: false,
         privateRoom: false,
         hotelRoom: false,
-        publicRoom: false
+        sharedRoom: false
     });
 
     // 즉시예약 state
@@ -48,10 +48,10 @@ function Header() {
     });
 
     // 검색 옵션 탭 활성화 state    
-    const [isSearchOptionTabActivated, SetIsTabActivated] = useState({
+    const [isSearchOptionTabActivated, setIsSearchOptionTabActivated] = useState({
         date: false,
         guest: false,
-        innType: false,
+        typeOfPlace: false,
         instantBook: false,
         price: false,
         time: false,
@@ -60,43 +60,44 @@ function Header() {
 
     // 검색 옵션 탭 하이라이트 토글
     const toggleTabOnOff = (name, isActivated) => {
-        SetIsTabActivated({ ...isSearchOptionTabActivated, [name]: isActivated });
+        setIsSearchOptionTabActivated({ ...isSearchOptionTabActivated, [name]: isActivated });
     };
 
     // 패널 삭제 버튼 활성화 토글
     const [isPanelDeleteButtonActivated, setIsPanelDeleteButtonActivated] = useState({
-            date: false,
-            guest: false,
-            innType: false,
-            instantBook: false,
-            price: false,
-            time: false,
-            filterAdd: false
+        dates: false,
+        guests: false,
+        typeOfPlace: false,
+        instantBook: false,
+        price: false,
+        time: false,
+        moreFilters: false
     });
 
     // 패널 설정 일괄 초기화
     const resetAll = () => {
-        SetIsTabActivated({
+        setIsSearchOptionTabActivated({
             date: false,
             guest: false,
-            innType: false,
+            typeOfPlace: false,
             instantBook: false,
             price: false,
             time: false,
             filterAdd: false
         });
         dispatchGuestNum({ type: 'resetAll' });
-        dispatchInnTypes({ type: 'reset' });
+        dispatchTypeOfPlace({ type: 'reset' });
         setIsInstantBookChecked({ isChecked: false });
         dispatchSetPrice({ type: 'reset' });
         setIsPanelDeleteButtonActivated({
             date: false,
             guest: false,
-            innType: false,
+            typeOfPlace: false,
             instantBook: false,
             price: false,
             time: false,
-            filterAdd: false});
+            filterAdd: false
+        });
     };
 
     const SearchOptionGuestPanelProps = {
@@ -114,9 +115,9 @@ function Header() {
         dispatchGuestNum: dispatchGuestNum
     };
 
-    const SearchOptionInnTypePanelProps = {
-        dispatchInnTypes: dispatchInnTypes,
-        innTypes: innTypes,
+    const SearchOptionTypeOfPlacePanelProps = {
+        dispatchTypeOfPlace: dispatchTypeOfPlace,
+        typeOfPlace: typeOfPlace,
     };
 
     const SearchOptionInstantBookPanelProps = {
@@ -133,7 +134,7 @@ function Header() {
         <ResetContext.Provider value={{ resetAll: resetAll, toggleTabOnOff: toggleTabOnOff }}>
             <OptionPanelSetContext.Provider value={{
                 ...SearchOptionGuestPanelProps,
-                ...SearchOptionInnTypePanelProps,
+                ...SearchOptionTypeOfPlacePanelProps,
                 ...SearchOptionInstantBookPanelProps,
                 ...SearchOptionPricePanelProps,
                 toggleTabOnOff: toggleTabOnOff,

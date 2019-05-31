@@ -99,7 +99,7 @@ function Main() {
     return (
         <ClosePanelContext.Provider value={{ ...searchOptionPanelToggleProps }}>
             <FetchQueryContext.Provider value={{ ...fetchQueryProps }}>
-                <div>
+                <div onClick={closeSearchOptionPanel}>
                     <Header />
                     <Sections />
                 </div>

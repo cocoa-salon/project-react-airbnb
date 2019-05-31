@@ -43,4 +43,21 @@
 
 <img src="https://user-images.githubusercontent.com/38235501/57766566-88e88f00-7742-11e9-82d8-f1e134307d9e.gif" alt="">
 
+
+### 검색 옵션 패널(가격) 기능 구현
+
+- npm rc-slider 라이브러리 이용하여 이중 슬라이더 구현
+- 최소,최대 금액 슬라이더 이동시 실시간 가격 반영
+- useRef 적용, 슬라이더 이동 시 불필요한 리랜더링 방지
+- onAfterChange 이벤트를 통해 슬라이더 이동이 끝난 후 랜더링
+
+<img src="https://user-images.githubusercontent.com/38235501/58684010-9a23d380-83b1-11e9-9970-26e1d3699398.gif" alt="">
+
+- 가격 직접 입력 가능
+- 가격 입력 시 슬라이더 막대 위치 자동 변경
+- 적용 버튼 클릭시 설정한 가격대 검색 옵션 탭에 반영(금액에 콤마 표시), 패널 닫힘
+
+<img src="https://user-images.githubusercontent.com/38235501/58684200-54b3d600-83b2-11e9-995e-87f28c1f8fbd.gif" alt="">
+
+
 **기타 기능 추후 구현 예정**

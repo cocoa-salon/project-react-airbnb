@@ -72,6 +72,6 @@
 - 각 선택 조건에 해당하는 query string 생성
 - query string에 대한 DB 조회용 conditional query 객체 생성 로직 구현
 
-<img src="https://user-images.githubusercontent.com/38235501/58684928-f0464600-83b4-11e9-92f1-29672e7d296d.gif" alt="">
+<img src="https://user-images.githubusercontent.com/38235501/58685056-664aad00-83b5-11e9-9b28-9ff8cbdfa439.gif" alt="">
 
 **기타 기능 추후 구현 예정**

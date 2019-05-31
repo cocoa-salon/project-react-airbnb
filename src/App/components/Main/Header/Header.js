@@ -140,13 +140,29 @@ function Header() {
                 toggleTabOnOff: toggleTabOnOff,
                 isSearchOptionTabActivated: isSearchOptionTabActivated,
                 isPanelDeleteButtonActivated: isPanelDeleteButtonActivated,
-                setIsPanelDeleteButtonActivated: setIsPanelDeleteButtonActivated
+                setIsPanelDeleteButtonActivated: setIsPanelDeleteButtonActivated,
+
+                typeOfPlaceStates: typeOfPlaceStates,
+                clearTypeOfPlace: clearTypeOfPlace
             }}>
                 <SearchField />
                 <SearchPanel />
             </OptionPanelSetContext.Provider>
         </ResetContext.Provider>
     );
+};
+
+const typeOfPlaceStates = {
+    entireRoom: false,
+    privateRoom: false,
+    hotelRoom: false,
+    sharedRoom: false
+}
+
+const clearTypeOfPlace = () => {
+    for(let type in typeOfPlaceStates) {
+        typeOfPlaceStates[type] = false; 
+    };
 };
 
 export default Header;

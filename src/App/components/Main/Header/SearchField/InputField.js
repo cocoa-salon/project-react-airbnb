@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { style } from './inputFieldStyle';
 
 import { ResetContext } from '../Header';
+import { OptionPanelSetContext } from '../Header';
 import { FetchQueryContext } from '../../Main';
 
 const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
@@ -116,6 +117,7 @@ const AdditionalButtons = function (props) {
 
     const triggerResetValue = useContext(ResetContext);
     const fetchQueryContext = useContext(FetchQueryContext);
+    const optionPanelSetContext = useContext(OptionPanelSetContext);
 
 
     const triggerReset = (event) => {
@@ -155,6 +157,7 @@ const AdditionalButtons = function (props) {
     `
 
     const operateFetchQuery = () => {
+        optionPanelSetContext.clearTypeOfPlace();
         fetchQueryContext.queryString.str = ""; 
         fetchQueryContext.operateFetchQuery("");
     }

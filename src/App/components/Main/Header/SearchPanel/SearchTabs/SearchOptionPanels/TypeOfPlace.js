@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import OptionTabStyle from './OptionTabStyle';
 import { OptionPanelSetContext } from '../../../Header';
@@ -14,13 +14,6 @@ const typeOfPlaceDesc = {
     privateRoom: "침실은 단독으로 쓰고, 이외의 공간은 호스트나 다른 게스트와 함께 이용할 수도 있습니다.",
     hotelRoom: "부티크 호텔, 호스텔 등의 개인실이나 다인실을 이용합니다.",
     sharedRoom: "사적 공간 없이, 침실이나 욕실 등을 호스트나 다른 게스트와 함께 이용합니다."
-}
-
-const typeOfPlaceStates = {
-    entireRoom: false,
-    privateRoom: false,
-    hotelRoom: false,
-    sharedRoom: false
 }
 
 let queryToClear = "";
@@ -44,8 +37,8 @@ function TypeOfPlace(props) {
     };
 
     const checkTypeOfPlaceStates = (isChecked, name) => {
-        typeOfPlaceStates[name] = isChecked; 
-        if(Object.values(typeOfPlaceStates).includes(true)) { 
+        optionPanelSetContext.typeOfPlaceStates[name] = isChecked; 
+        if(Object.values(optionPanelSetContext.typeOfPlaceStates).includes(true)) { 
             optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, typeOfPlace : true});
             return true; 
         } else { 
@@ -57,17 +50,11 @@ function TypeOfPlace(props) {
     const resetChecked = (event) => {
         event.stopPropagation();
         optionPanelSetContext.dispatchTypeOfPlace({type: 'reset'})
-        clearTypeOfPlace(); 
+        optionPanelSetContext.clearTypeOfPlace(); 
         optionPanelSetContext.toggleTabOnOff('typeOfPlace', false); 
         optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, typeOfPlace : false});
         
         fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
-    };
-
-    const clearTypeOfPlace = () => {
-        for(let type in typeOfPlaceStates) {
-            typeOfPlaceStates[type] = false; 
-        };
     };
 
     const TypeOfPlaceCheck = (props) => {
@@ -85,6 +72,8 @@ function TypeOfPlace(props) {
         let generatedQuery = generateQueryString();
         queryToClear = generatedQuery;
         fetchQueryContext.queryString.str  += generatedQuery;
+        // console.log(generatedQuery);
+        // console.log(queryToClear);
         fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
     };
 
@@ -93,10 +82,10 @@ function TypeOfPlace(props) {
         let queryString = "";
         const template = `&roomType={{}}`
         let regExp = new RegExp('\{\{\}\}');
-        for(let key in typeOfPlaceStates) {
-            if(typeOfPlaceStates[key] === true) {
-                let selectedKey = key;
-                queryString += template.replace(regExp, selectedKey);
+        for(let type in optionPanelSetContext.typeOfPlaceStates) {
+            if(optionPanelSetContext.typeOfPlaceStates[type]) {
+                let selectedType = type;
+                queryString += template.replace(regExp, selectedType);
             }
         };
         return queryString;

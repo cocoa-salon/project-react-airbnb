@@ -60,4 +60,18 @@
 <img src="https://user-images.githubusercontent.com/38235501/58684200-54b3d600-83b2-11e9-995e-87f28c1f8fbd.gif" alt="">
 
 
+### DB 연동 및 조회(mongoDB), 결과 표시
+
+- airbnb 샘플 데이터 참고하여 숙소 데이터 schema 및 모델 생성
+- 숙소 mock 데이터 생성 및 mongoDB shell 이용하여 insert(30개)
+- 최초 페이지 로딩 후 useEffect를 통해 전체 숙소 정보 표시
+
+<img src="https://user-images.githubusercontent.com/38235501/58684655-e2dc8c00-83b3-11e9-9329-a16f21014fd7.gif" alt="">
+
+- 검색옵션 패널에서 선택한 조건에 해당하는 데이터 DB 조회(인원, 숙소타입, 가격, 즉시예약)
+- 각 선택 조건에 해당하는 query string 생성
+- query string에 대한 DB 조회용 conditional query 객체 생성 로직 구현
+
+<img src="https://user-images.githubusercontent.com/38235501/58684928-f0464600-83b4-11e9-92f1-29672e7d296d.gif" alt="">
+
 **기타 기능 추후 구현 예정**

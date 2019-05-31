@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components'; 
 import Header from './Header/Header';
 import Sections from './Sections/Sections';
 import requestURL from '../../../../src/requestURL';
@@ -11,6 +12,8 @@ let queryString = {
 };
 
 function Main() {
+
+    const [ isDimmed, setIsDimmed ] = useState('false');
 
     const [selectedTab, setSelectedTab] = useState('none');
     const [optionTabUrl, setOptionTabUrl] = useState('');
@@ -96,7 +99,7 @@ function Main() {
     return (
         <ClosePanelContext.Provider value={{ ...searchOptionPanelToggleProps }}>
             <FetchQueryContext.Provider value={{ ...fetchQueryProps }}>
-                <div onClick={closeSearchOptionPanel}>
+                <div>
                     <Header />
                     <Sections />
                 </div>

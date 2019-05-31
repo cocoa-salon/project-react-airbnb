@@ -72,8 +72,6 @@ function TypeOfPlace(props) {
         let generatedQuery = generateQueryString();
         queryToClear = generatedQuery;
         fetchQueryContext.queryString.str  += generatedQuery;
-        // console.log(generatedQuery);
-        // console.log(queryToClear);
         fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
     };
 

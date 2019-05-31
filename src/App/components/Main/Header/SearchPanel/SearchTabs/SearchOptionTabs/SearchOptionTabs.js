@@ -49,7 +49,7 @@ const SearchOptionTabs = (props) => {
         let cursorOff = event.target.dataset.cursorOff;
         event.type === "mouseleave" ?  cursorOff = true : cursorOff = false; 
         mouseLeaveContextValue.handleIsOnMouseLeaveTab(cursorOff);
-    }
+    };
 
     return (
         <Link to={`${matchContextValue.match.url}/${props.type}`} 
@@ -59,7 +59,7 @@ const SearchOptionTabs = (props) => {
             onMouseLeave={handleIsOnMouseLeaveTab} 
             onMouseEnter={handleIsOnMouseLeaveTab}
         >
-            <SearchOptionTabStyle name={props.type}> {
+            <SearchOptionTabStyle name={props.type} > {
                 (props.type === 'dates' && <DatesTapDisplay />) ||
                 (props.type === 'guests' && <GuestsTapDisplay />) ||
                 (props.type === 'typeOfPlace' && <TypeOfPlaceTapDisplay typeOfPlace={searchTabContextValue.typeOfPlace} />) ||

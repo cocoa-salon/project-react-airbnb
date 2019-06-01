@@ -1,9 +1,10 @@
 import React, { useState, useReducer } from 'react';
+import styled from 'styled-components';
 import SearchField from './SearchField/SearchField';
 import SearchPanel from './SearchPanel/SearchPanel';
-import { checkGuestNumReducer } from './SearchPanel/SearchTabs/stateReducers/checkGuestNumReducer';
-import { typeOfPlaceCheckReducer } from './SearchPanel/SearchTabs/stateReducers/typeOfPlaceCheckReducer';
-import { setPriceReducer } from './SearchPanel/SearchTabs/stateReducers/setPriceReducer';
+import checkGuestNumReducer from './SearchPanel/SearchTabs/stateReducers/checkGuestNumReducer';
+import typeOfPlaceCheckReducer from './SearchPanel/SearchTabs/stateReducers/typeOfPlaceCheckReducer';
+import setPriceReducer from './SearchPanel/SearchTabs/stateReducers/setPriceReducer';
 
 export const ResetContext = React.createContext();
 export const OptionPanelSetContext = React.createContext();
@@ -49,13 +50,13 @@ function Header() {
 
     // 검색 옵션 탭 활성화 state    
     const [isSearchOptionTabActivated, setIsSearchOptionTabActivated] = useState({
-        date: false,
-        guest: false,
+        dates: false,
+        guests: false,
         typeOfPlace: false,
         instantBook: false,
         price: false,
         time: false,
-        filterAdd: false
+        moreFilters: false
     });
 
     // 검색 옵션 탭 하이라이트 토글
@@ -77,26 +78,26 @@ function Header() {
     // 패널 설정 일괄 초기화
     const resetAll = () => {
         setIsSearchOptionTabActivated({
-            date: false,
-            guest: false,
+            dates: false,
+            guests: false,
             typeOfPlace: false,
             instantBook: false,
             price: false,
             time: false,
-            filterAdd: false
+            moreFilters: false
         });
         dispatchGuestNum({ type: 'resetAll' });
         dispatchTypeOfPlace({ type: 'reset' });
         setIsInstantBookChecked({ isChecked: false });
         dispatchSetPrice({ type: 'reset' });
         setIsPanelDeleteButtonActivated({
-            date: false,
-            guest: false,
+            dates: false,
+            guests: false,
             typeOfPlace: false,
             instantBook: false,
             price: false,
             time: false,
-            filterAdd: false
+            moreFilters: false
         });
     };
 
@@ -131,26 +132,35 @@ function Header() {
     };
 
     return (
-        <ResetContext.Provider value={{ resetAll: resetAll, toggleTabOnOff: toggleTabOnOff }}>
-            <OptionPanelSetContext.Provider value={{
-                ...SearchOptionGuestPanelProps,
-                ...SearchOptionTypeOfPlacePanelProps,
-                ...SearchOptionInstantBookPanelProps,
-                ...SearchOptionPricePanelProps,
-                toggleTabOnOff: toggleTabOnOff,
-                isSearchOptionTabActivated: isSearchOptionTabActivated,
-                isPanelDeleteButtonActivated: isPanelDeleteButtonActivated,
-                setIsPanelDeleteButtonActivated: setIsPanelDeleteButtonActivated,
+        <FixedHeader>
+            <ResetContext.Provider value={{ resetAll: resetAll, toggleTabOnOff: toggleTabOnOff }}>
+                <OptionPanelSetContext.Provider value={{
+                    ...SearchOptionGuestPanelProps,
+                    ...SearchOptionTypeOfPlacePanelProps,
+                    ...SearchOptionInstantBookPanelProps,
+                    ...SearchOptionPricePanelProps,
+                    toggleTabOnOff: toggleTabOnOff,
+                    isSearchOptionTabActivated: isSearchOptionTabActivated,
+                    isPanelDeleteButtonActivated: isPanelDeleteButtonActivated,
+                    setIsPanelDeleteButtonActivated: setIsPanelDeleteButtonActivated,
 
-                typeOfPlaceStates: typeOfPlaceStates,
-                clearTypeOfPlace: clearTypeOfPlace
-            }}>
-                <SearchField />
-                <SearchPanel />
-            </OptionPanelSetContext.Provider>
-        </ResetContext.Provider>
+                    typeOfPlaceStates: typeOfPlaceStates,
+                    clearTypeOfPlace: clearTypeOfPlace
+                }}>
+                    <SearchField />
+                    <SearchPanel />
+                </OptionPanelSetContext.Provider>
+            </ResetContext.Provider>
+        </FixedHeader>
     );
 };
+
+const FixedHeader = styled.div`
+    width:100%;
+    height:142px;
+    position: fixed;
+    z-index:1000; 
+`
 
 const typeOfPlaceStates = {
     entireRoom: false,
@@ -160,8 +170,8 @@ const typeOfPlaceStates = {
 }
 
 const clearTypeOfPlace = () => {
-    for(let type in typeOfPlaceStates) {
-        typeOfPlaceStates[type] = false; 
+    for (let type in typeOfPlaceStates) {
+        typeOfPlaceStates[type] = false;
     };
 };
 

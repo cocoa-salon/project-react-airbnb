@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import { DeleteApplyStyle } from './DeleteApplyStyle';
 import { ApplyButtonStyle } from './DeleteApplyStyle';
 import { DeleteButtonStyle } from './DeleteApplyStyle';
-import OptionTabStyle from './OptionTabStyle';
+import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import { Range } from 'rc-slider';
 
-const PriceOptionTabStyle = styled(OptionTabStyle)`
+const PriceOptionPanelStyle = styled(SearchOptionPanelStyle)`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -132,8 +132,8 @@ function Price(props) {
     const generateQueryString = () => {
         let queryString = "";
         const template = `&price_min={{min}}&price_max={{max}}`
-        let regExpMin = new RegExp('\{\{min\}\}');
-        let regExpMax = new RegExp('\{\{max\}\}');
+        let regExpMin = new RegExp('{{min}}');
+        let regExpMax = new RegExp('{{max}}');
         queryString += template.replace(regExpMin, price.min).replace(regExpMax, price.max);
         return queryString;
     }
@@ -147,7 +147,10 @@ function Price(props) {
         fetchQueryContext.queryString.str += generatedQuery;
         fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
 
-        closePanelContext.setSelectedTab('none'); 
+        closePanelContext.setIsSearchOptionPanelsActivated({
+            ...closePanelContext.isSearchOptionPanelsActivated, price: false
+        });
+        closePanelContext.clearDimmedSections();
         if(price.min === price.defaultMin && price.max === price.defaultMax) {
             optionPanelSetContext.toggleTabOnOff("price", false);
             optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg : priceDefault}});
@@ -172,7 +175,7 @@ function Price(props) {
     };
 
     return (
-        <PriceOptionTabStyle>
+        <PriceOptionPanelStyle>
             <SliderStyle>
                 <Range
                     ref={refSlider}
@@ -206,7 +209,7 @@ function Price(props) {
                     적용
                 </ApplyButtonStyle>
             </DeleteApplyStyle>
-        </PriceOptionTabStyle>
+        </PriceOptionPanelStyle>
     );
 };
 

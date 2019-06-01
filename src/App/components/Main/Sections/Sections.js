@@ -53,11 +53,11 @@ const Sections = (props) => {
 
 const StyledDiv = styled.div`
     padding: 1rem;
-    position: relative; 
+    position: absolute;
+    top: 142px;  
     width: 100%;
-    height: 1000px;
+    height: 100%;
     border: 1px solid rgb(230,230,230);
-    background: white; 
 `
 
 const AllSection = ({ stayLists }) => {

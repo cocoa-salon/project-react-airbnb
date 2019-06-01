@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import OptionTabStyle from './OptionTabStyle';
+import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import { ClosePanelContext } from '../../../../Main'
 import { OptionPanelSetContext } from '../../../Header';
 import { DeleteApplyStyle } from './DeleteApplyStyle';
@@ -8,7 +8,7 @@ import { DeleteButtonStyle } from './DeleteApplyStyle';
 
 function MoreFilters(props) {
 
-    const closePanelContextValue = useContext(ClosePanelContext);
+    const closePanelContext = useContext(ClosePanelContext);
     const contextValue = useContext(OptionPanelSetContext);
 
 
@@ -19,11 +19,14 @@ function MoreFilters(props) {
 
     const applyAddFilters = (event) => {
         event.stopPropagation();
-        closePanelContextValue.setSelectedTab('none');
+        closePanelContext.setIsSearchOptionPanelsActivated({
+            ...closePanelContext.isSearchOptionPanelsActivated, moreFilters: false
+        });
+        closePanelContext.clearDimmedSections();
     };
 
     return (
-        <OptionTabStyle>
+        <SearchOptionPanelStyle>
             필터를 추가하는 옵션 패널
             <DeleteApplyStyle>
                 <DeleteButtonStyle visible={contextValue.isPanelDeleteButtonActivated.filterAdd} onClick={resetAddFilters}>
@@ -33,7 +36,7 @@ function MoreFilters(props) {
                     적용
                 </ApplyButtonStyle>
             </DeleteApplyStyle>
-        </OptionTabStyle>
+        </SearchOptionPanelStyle>
     )
 }
 

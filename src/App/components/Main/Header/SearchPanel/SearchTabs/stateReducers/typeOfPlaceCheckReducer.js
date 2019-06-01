@@ -1,4 +1,4 @@
-export const typeOfPlaceCheckReducer = (typeOfPlace, { type, payload }) => {
+const typeOfPlaceCheckReducer = (typeOfPlace, { type, payload }) => {
     switch (type) {
         case 'check':
             const name = payload.name;
@@ -10,6 +10,8 @@ export const typeOfPlaceCheckReducer = (typeOfPlace, { type, payload }) => {
                 privateRoom: false,
                 hotelRoom: false,
                 sharedRoom: false
-            }
-    }
-}
+            };
+    };
+};
+
+export default typeOfPlaceCheckReducer;

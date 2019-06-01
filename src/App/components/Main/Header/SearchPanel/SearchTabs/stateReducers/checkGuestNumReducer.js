@@ -1,4 +1,4 @@
-export const checkGuestNumReducer = (guestNum, { type }) => {
+const checkGuestNumReducer = (guestNum, { type }) => {
 
     switch (type) {
         case 'addAdult' : 
@@ -129,3 +129,5 @@ const removeToddler = (guestNum) => {
         return { ...guestNum, toddlerNum: guestNum.toddlerNum - 1, removeToddler: true, addToddler: true };
     };
 };
+
+export default checkGuestNumReducer;

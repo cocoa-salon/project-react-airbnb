@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import OptionTabStyle from './OptionTabStyle';
+import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main'
 import { FetchQueryContext } from '../../../../Main'
@@ -66,7 +66,10 @@ function TypeOfPlace(props) {
     // 적용 버튼 클릭
     const applyTypeOfPlace = (event) => {
         event.stopPropagation();
-        closePanelContext.setSelectedTab('none'); 
+        closePanelContext.setIsSearchOptionPanelsActivated({
+            ...closePanelContext.isSearchOptionPanelsActivated, typeOfPlace: false
+        });
+        closePanelContext.clearDimmedSections(); 
 
         fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
         let generatedQuery = generateQueryString();
@@ -79,7 +82,7 @@ function TypeOfPlace(props) {
     const generateQueryString = () => {
         let queryString = "";
         const template = `&roomType={{}}`
-        let regExp = new RegExp('\{\{\}\}');
+        let regExp = new RegExp('{{}}');
         for(let type in optionPanelSetContext.typeOfPlaceStates) {
             if(optionPanelSetContext.typeOfPlaceStates[type]) {
                 let selectedType = type;
@@ -90,7 +93,7 @@ function TypeOfPlace(props) {
     }
 
     return (
-        <OptionTabStyle>
+        <SearchOptionPanelStyle>
             <TypeOfPlaceDiv>
                 <TypeOfPlaceCheck name='entireRoom' typeOfPlace={optionPanelSetContext.typeOfPlace.entireRoom} checkTypeOfPlace={checkTypeOfPlace} />집 전체<br />
                 <TypeOfPlaceDescStyle>{typeOfPlaceDesc.entireRoom}</TypeOfPlaceDescStyle>
@@ -115,7 +118,7 @@ function TypeOfPlace(props) {
                     적용
                 </ApplyButtonStyle>
             </DeleteApplyStyle>
-        </OptionTabStyle>
+        </SearchOptionPanelStyle>
     );
 };
 

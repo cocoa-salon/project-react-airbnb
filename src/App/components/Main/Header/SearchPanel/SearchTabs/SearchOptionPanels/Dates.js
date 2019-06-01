@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import OptionTabStyle from './OptionTabStyle';
+import React, { useContext } from 'react';
+import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import { ClosePanelContext } from '../../../../Main'
 import { OptionPanelSetContext } from '../../../Header';
 import { DeleteApplyStyle } from './DeleteApplyStyle';
@@ -8,7 +8,7 @@ import { DeleteButtonStyle } from './DeleteApplyStyle';
 
 function Dates(props) {
 
-    const closePanelContextValue = useContext(ClosePanelContext);
+    const closePanelContext = useContext(ClosePanelContext);
     const contextValue = useContext(OptionPanelSetContext);
 
     const resetDates = (event) => {
@@ -18,11 +18,14 @@ function Dates(props) {
 
     const applyDates = (event) => {
         event.stopPropagation();
-        closePanelContextValue.setSelectedTab('none');
+        closePanelContext.setIsSearchOptionPanelsActivated({
+            ...closePanelContext.isSearchOptionPanelsActivated,  dates: false 
+        });
+        closePanelContext.clearDimmedSections();
     };
 
     return (
-        <OptionTabStyle>
+        <SearchOptionPanelStyle>
             달력, 기간을 설정하는 옵션 패널
             <DeleteApplyStyle>
                 <DeleteButtonStyle visible={contextValue.isPanelDeleteButtonActivated.date} onClick={resetDates}>
@@ -32,7 +35,7 @@ function Dates(props) {
                     적용
                 </ApplyButtonStyle>
             </DeleteApplyStyle>
-        </OptionTabStyle>
+        </SearchOptionPanelStyle>
     )
 }
 

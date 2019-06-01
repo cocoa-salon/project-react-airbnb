@@ -1,4 +1,4 @@
-export const setPriceReducer = (price, { type, payload }) => {
+const setPriceReducer = (price, { type, payload }) => {
     switch (type) {
         case 'setPrices':
             return handleOnAfterChange(price, payload.minValue, payload.maxValue);
@@ -11,10 +11,6 @@ export const setPriceReducer = (price, { type, payload }) => {
         case 'setTabState':
             return setTabState(price, payload.tabMsg)
     }
-};
-
-function numberFormat(inputNumber) {
-    return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 const handleOnAfterChange = (price, minValue, maxValue) => {
@@ -43,3 +39,4 @@ const setTabState = (price, tabMsg) => {
     return { ...price, tabMsg: tabMsg };
 };
 
+export default setPriceReducer;

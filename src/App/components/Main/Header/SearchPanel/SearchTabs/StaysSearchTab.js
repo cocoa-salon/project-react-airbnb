@@ -7,12 +7,12 @@ function StaysSearchTab(props) {
     
     return (
         <SearchTabStyle>
-            <SearchOptionTabs  type='dates' />
-            <SearchOptionTabs  type='guests' />
-            <SearchOptionTabs  type='typeOfPlace' />
-            <SearchOptionTabs  type='price' />
-            <SearchOptionTabs  type='instantBook' />
-            <SearchOptionTabs  type='morefilters' />
+            <SearchOptionTabs type='dates' />
+            <SearchOptionTabs type='guests' />
+            <SearchOptionTabs type='typeOfPlace' />
+            <SearchOptionTabs type='price' />
+            <SearchOptionTabs type='instantBook' />
+            <SearchOptionTabs type='moreFilters' />
         </SearchTabStyle>
     );
 };

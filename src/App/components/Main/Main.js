@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components'; 
+import styled from 'styled-components';
 import Header from './Header/Header';
 import Sections from './Sections/Sections';
 import requestURL from '../../../../src/requestURL';
@@ -11,16 +11,13 @@ let queryString = {
     str: ""
 };
 
+// 포인터가 바깥에 있는 상태
+let isCursorOffPanel = true;
+let isCursorOffTab = true;
+
 function Main() {
 
-    const [ isDimmed, setIsDimmed ] = useState('false');
-
-    const [selectedTab, setSelectedTab] = useState('none');
-    const [optionTabUrl, setOptionTabUrl] = useState('');
-
-    // 포인터가 바깥에 있는 상태
-    let isCursorOffPanel = true;
-    let isCursorOffTab = true;
+    const [isDimmed, setIsDimmed] = useState(false);
 
     // 마우스 커서와 탭
     function handleIsOnMouseLeaveTab(cursorOff) {
@@ -31,23 +28,37 @@ function Main() {
     function handleIsOnMouseLeavePanel(cursorOff) {
         isCursorOffPanel = cursorOff;
     };
+    
+    // 검색 옵션 패널 활성화  state
+    const [ isSearchOptionPanelsActivated, setIsSearchOptionPanelsActivated ] = useState({
+        dates: false,
+        guests: false,
+        typeOfPlace: false,
+        instantBook: false,
+        price: false,
+        time: false,
+        moreFilters: false
+    });
 
     // 패널 닫힘
     const closeSearchOptionPanel = () => {
         if (isCursorOffTab === true && isCursorOffPanel === true) {
-            setSelectedTab("none");
-        }
+            clearDimmedSections();
+            setIsSearchOptionPanelsActivated({
+                dates: false,
+                guests: false,
+                typeOfPlace: false,
+                instantBook: false,
+                price: false,
+                time: false,
+                moreFilters: false,
+            });
+
+        };
     };
 
-    const setSelectedTabUrl = (event, url) => {
-        const tabName = event.currentTarget.name;
-        const optionTabUrl = url;
-        passTabUrl(optionTabUrl);
-        setSelectedTab(tabName);
-    };
-
-    const passTabUrl = (optionTabUrl) => {
-        setOptionTabUrl(optionTabUrl);
+    const clearDimmedSections = () => {
+        setIsDimmed(false);
     };
 
     const [stayLists, setStayLists] = useState([]);
@@ -79,14 +90,13 @@ function Main() {
         };
     };
 
-    // 분리
     const searchOptionPanelToggleProps = {
         handleIsOnMouseLeavePanel: handleIsOnMouseLeavePanel,
         handleIsOnMouseLeaveTab: handleIsOnMouseLeaveTab,
-        passSelectedTab: setSelectedTabUrl,
-        selectedTab: selectedTab,
-        optionTabUrl: optionTabUrl,
-        setSelectedTab: setSelectedTab
+        setIsDimmed: setIsDimmed,
+        clearDimmedSections: clearDimmedSections,
+        isSearchOptionPanelsActivated: isSearchOptionPanelsActivated,
+        setIsSearchOptionPanelsActivated: setIsSearchOptionPanelsActivated
     };
 
     const fetchQueryProps = {
@@ -94,17 +104,29 @@ function Main() {
         stayLists: stayLists,
         setStayLists: setStayLists,
         queryString: queryString
-    }
+    };
+
+    const DimmedSection = styled.div`
+        position: fixed;
+        top: 140px;
+        margin: 0; 
+        width: 100%;
+        height: 100%; 
+        background: white;
+        opacity: ${ isDimmed ? 0.8 : 0};
+        z-index: 20;
+    `
 
     return (
-        <ClosePanelContext.Provider value={{ ...searchOptionPanelToggleProps }}>
-            <FetchQueryContext.Provider value={{ ...fetchQueryProps }}>
-                <div onClick={closeSearchOptionPanel}>
-                    <Header />
-                    <Sections />
-                </div>
-            </FetchQueryContext.Provider>
-        </ClosePanelContext.Provider>
+            <div onClick={closeSearchOptionPanel} >
+                <DimmedSection  />
+                <ClosePanelContext.Provider value={{ ...searchOptionPanelToggleProps }}>
+                    <FetchQueryContext.Provider value={{ ...fetchQueryProps }}>
+                        <Header />
+                        <Sections />
+                    </FetchQueryContext.Provider>
+                </ClosePanelContext.Provider>
+            </div>
     );
 };
 

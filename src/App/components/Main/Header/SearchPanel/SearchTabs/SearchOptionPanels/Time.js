@@ -1,20 +1,24 @@
 import React, { useContext } from 'react';
-import OptionTabStyle from './OptionTabStyle';
+import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import { ClosePanelContext } from '../../../../Main'
 
 function Time(props) {
 
-    const closePanelContextValue = useContext(ClosePanelContext);
+    const closePanelContext = useContext(ClosePanelContext);
 
     const applyTime = (event) => {
         event.stopPropagation();
-        closePanelContextValue.setSelectedTab('none'); 
+        closePanelContext.clearDimmedSections();
+        closePanelContext.setIsSearchOptionPanelsActivated({
+            ...closePanelContext.isSearchOptionPanelsActivated, time: false
+        });
+        
     };
 
     return (
-        <OptionTabStyle>
+        <SearchOptionPanelStyle>
             시간대를 설정하는 옵션 패널
-        </OptionTabStyle>
+        </SearchOptionPanelStyle>
     )
 }
 

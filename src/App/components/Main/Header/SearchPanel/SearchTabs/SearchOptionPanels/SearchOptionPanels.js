@@ -1,4 +1,5 @@
 import React,{useContext} from 'react';
+import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { ClosePanelContext } from '../../../../Main';
 import SelectedSearchOptionPanels from './SelectedSearchOptionPanels';
@@ -6,22 +7,27 @@ import SelectedSearchOptionPanels from './SelectedSearchOptionPanels';
 
 const SearchOptionPanels = (props) => {
 
-    const mouseLeaveContextValue = useContext(ClosePanelContext);
+    const closePanelContext = useContext(ClosePanelContext);
 
     const handleIsOnMouseLeavePanel = (event) => {
         let cursorOff = event.target.dataset.cursorOff;
         event.type === "mouseleave" ?  cursorOff = true : cursorOff = false; 
-        mouseLeaveContextValue.handleIsOnMouseLeavePanel(cursorOff);
-    }
+        closePanelContext.handleIsOnMouseLeavePanel(cursorOff);
+    };
+
+    const SearchOptionPanelArea = styled.div`
+        width: 400px;
+        height: 100%; 
+    `  
 
     return (
-        <div data-cursoroff={true} onMouseLeave={handleIsOnMouseLeavePanel} onMouseEnter={handleIsOnMouseLeavePanel}>
-            <Route path={`${mouseLeaveContextValue.optionTabUrl}/:id`} render={(props) =>
+        <SearchOptionPanelArea data-cursoroff={true} onMouseLeave={handleIsOnMouseLeavePanel} onMouseEnter={handleIsOnMouseLeavePanel}>
+            <Route path="/:id" render={(props) =>
                 <SelectedSearchOptionPanels match={props.match} />
             }
             />
-        </div>
-    )
-}
+        </SearchOptionPanelArea>
+    );
+};
 
 export default SearchOptionPanels;

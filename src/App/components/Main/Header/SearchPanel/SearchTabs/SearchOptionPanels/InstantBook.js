@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { ClosePanelContext } from '../../../../Main'
 import { FetchQueryContext } from '../../../../Main'
 import { OptionPanelSetContext } from '../../../Header';
-import OptionTabStyle from './OptionTabStyle';
+import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import styled from 'styled-components';
 import { DeleteApplyStyle } from './DeleteApplyStyle';
 import { ApplyButtonStyle } from './DeleteApplyStyle';
@@ -29,7 +29,7 @@ function InstantBook(props) {
     const generateQueryString = () => {
         let queryString = "";
         const template = `&instantbook={{}}`
-        let regExp = new RegExp('\{\{\}\}');
+        let regExp = new RegExp('{{}}');
         let isChecked = optionPanelSetContext.isInstantBookChecked.isChecked;
         queryString += template.replace(regExp, isChecked);
         return queryString;
@@ -37,7 +37,10 @@ function InstantBook(props) {
 
     const applyInstantBook = (event) => {
         event.stopPropagation();
-        closePanelContext.setSelectedTab('none'); 
+        closePanelContext.setIsSearchOptionPanelsActivated({
+            ...closePanelContext.isSearchOptionPanelsActivated, instantBook: false
+        });
+        closePanelContext.clearDimmedSections();
 
         fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
         let generatedQuery = generateQueryString();
@@ -47,10 +50,10 @@ function InstantBook(props) {
     };
 
     return (
-        <OptionTabStyle>
+        <SearchOptionPanelStyle>
             <InsStyle>
                 <div>즉시예약</div>
-                <Switch style={OnOffSwitchStyle} checked={optionPanelSetContext.isInstantBookChecked.isChecked} onChange={toggleOnOff}/ >
+                <Switch style={OnOffSwitchStyle} checked={optionPanelSetContext.isInstantBookChecked.isChecked} onChange={toggleOnOff}/>
             </InsStyle>
             <DescStyle>
                 {instantBookDesc}
@@ -58,7 +61,7 @@ function InstantBook(props) {
             <DeleteApplyStyle> 
                 <ApplyButtonStyle onClick={applyInstantBook}>적용</ApplyButtonStyle>
             </DeleteApplyStyle> 
-        </OptionTabStyle>
+        </SearchOptionPanelStyle>
     )
 }
 

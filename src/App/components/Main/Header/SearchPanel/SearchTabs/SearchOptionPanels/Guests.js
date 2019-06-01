@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import OptionTabStyle from './OptionTabStyle';
+import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main'
 import { FetchQueryContext } from '../../../../Main'
@@ -109,9 +109,9 @@ function Guests(props) {
     }
 
     const regExpGuest = {
-        adults: new RegExp('\{\{adults\}\}'),
-        children: new RegExp('\{\{children\}\}'),
-        infants: new RegExp('\{\{infants\}\}')
+        adults: new RegExp('{{adults}}'),
+        children: new RegExp('{{children}}'),
+        infants: new RegExp('{{infants}}')
     }
 
     // 쿼리 생성(각 검색 옵션 패널마다 상이)
@@ -143,11 +143,14 @@ function Guests(props) {
         queryToClear = generatedQuery;
         fetchQueryContext.queryString.str  += generatedQuery;
         fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
-        closePanelContext.setSelectedTab('none');
+        closePanelContext.setIsSearchOptionPanelsActivated({
+            ...closePanelContext.isSearchOptionPanelsActivated, guests : false
+        });
+        closePanelContext.clearDimmedSections();
     };
     
     return (
-        <OptionTabStyle onClick={setGuestNum} >
+        <SearchOptionPanelStyle onClick={setGuestNum} >
             <GuestNumSetButton guestType="성인" rightButton="removeAdult" leftButton="addAdult" numbers={optionPanelSetContext.adultNum} />
             <GuestNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={optionPanelSetContext.childNum} />
             <GuestNumSetButton guestType="유아" rightButton="removeToddler" leftButton="addToddler" numbers={optionPanelSetContext.toddlerNum} />
@@ -159,7 +162,7 @@ function Guests(props) {
                     적용
                 </ApplyButtonStyle>
             </DeleteApplyStyle>
-        </OptionTabStyle>
+        </SearchOptionPanelStyle>
     );
 };
 

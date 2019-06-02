@@ -4,7 +4,9 @@ import { CSSTransition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import { style } from './inputFieldStyle';
 
-import { ResetContext } from '../Header';
+import { ClearContext } from '../Header';
+import { OptionPanelSetContext } from '../Header';
+import { FetchQueryContext } from '../../Main';
 
 const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
 
@@ -113,11 +115,14 @@ const InputFieldDiv = styled.div`
 
 const AdditionalButtons = function (props) {
 
-    const triggerResetValue = useContext(ResetContext);
+    const triggerClearValue = useContext(ClearContext);
+    const fetchQueryContext = useContext(FetchQueryContext);
+    const optionPanelSetContext = useContext(OptionPanelSetContext);
 
-    const triggerReset = (event) => {
-        if(event.target.tagName === 'BUTTON') {
-            triggerResetValue.resetAll();
+
+    const triggerClear = (event) => {
+        if (event.target.tagName === 'BUTTON') {
+            triggerClearValue.clearAll();
         }
     }
 
@@ -149,21 +154,27 @@ const AdditionalButtons = function (props) {
         font-weight: bold;
         padding-left: 20px;
         margin: 0px;
-    `   
+    `
+
+    const operateFetchQuery = () => {
+        optionPanelSetContext.clearTypeOfPlace();
+        fetchQueryContext.queryString.str = ""; 
+        fetchQueryContext.operateFetchQuery("");
+    }
 
     return (
-        <StyledDiv onClick={triggerReset}>
+        <StyledDiv onClick={triggerClear}>
             <ExploreTestStyle>에어비엔비 둘러보기</ExploreTestStyle>
             <Link to="/search/all">
-                <StyledButton>모두</StyledButton>
+                <StyledButton onClick={operateFetchQuery}>모두</StyledButton>
             </Link>
-            <Link to="/search/inn">
-                <StyledButton>숙소</StyledButton>
+            <Link to="/search/stays">
+                <StyledButton onClick={operateFetchQuery}>숙소</StyledButton>
             </Link>
-            <Link to="/search/trip">
+            <Link to="/search/experiences">
                 <StyledButton>트립</StyledButton>
             </Link>
-            <Link to="/search/restaurant">
+            <Link to="/search/restaurants">
                 <StyledButton>레스토랑</StyledButton>
             </Link>
         </StyledDiv>

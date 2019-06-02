@@ -3,15 +3,15 @@ import React from 'react';
 import SearchTabStyle from './SearchTabStyle'
 import SearchOptionTabs from './SearchOptionTabs/SearchOptionTabs';
 
-function TripSearchTab(props) {
+function ExperiencesSearchTab(props) {
 
     return (
         <SearchTabStyle>
-            <SearchOptionTabs type='date' />
-            <SearchOptionTabs type='guest' />
+            <SearchOptionTabs type='dates' />
+            <SearchOptionTabs type='guests' />
             <SearchOptionTabs type='price' />
             <SearchOptionTabs type='time' />
         </SearchTabStyle>
     )
 }
-export default TripSearchTab;
+export default ExperiencesSearchTab;

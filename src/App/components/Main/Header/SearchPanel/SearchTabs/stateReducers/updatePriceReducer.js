@@ -1,4 +1,4 @@
-export const setPriceReducer = (price, { type, payload }) => {
+const updatePriceReducer = (price, { type, payload }) => {
     switch (type) {
         case 'setPrices':
             return handleOnAfterChange(price, payload.minValue, payload.maxValue);
@@ -6,15 +6,11 @@ export const setPriceReducer = (price, { type, payload }) => {
             return handleChangeMin(price, payload.minValue);
         case 'setPriceMax':
             return handleChangeMax(price, payload.maxValue);
-        case 'reset':
-            return resetChecked();
+        case 'clear':
+            return clearChecked();
         case 'setTabState':
             return setTabState(price, payload.tabMsg)
     }
-};
-
-function numberFormat(inputNumber) {
-    return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 const handleOnAfterChange = (price, minValue, maxValue) => {
@@ -29,12 +25,12 @@ const handleChangeMax = (price, maxValue) => {
     return { ...price, max: maxValue };
 };
 
-const resetChecked = () => {
+const clearChecked = () => {
     return {
-        defaultMin: 12000,
-        defaultMax: 1000000,
-        min: 12000,
-        max: 1000000,
+        defaultMin: 10000,
+        defaultMax: 500000,
+        min: 10000,
+        max: 500000,
         tabMsg: '가격'
     };
 };
@@ -43,3 +39,4 @@ const setTabState = (price, tabMsg) => {
     return { ...price, tabMsg: tabMsg };
 };
 
+export default updatePriceReducer;

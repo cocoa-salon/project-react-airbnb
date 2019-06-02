@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-const OptionTabStyle = styled.div`
+const SearchOptionPanelStyle = styled.div`
     font-size: 14px;
     position: relative; 
     padding: 1rem; 
-    z-index: 30;
+    z-index: 50;
     width: 400px;
     height: auto;
     border-radius: 3px;
@@ -14,4 +14,4 @@ const OptionTabStyle = styled.div`
     box-shadow: 0px 0px 30px 10px rgba(240,240,240,1); 
 `
 
-export default OptionTabStyle;
+export default SearchOptionPanelStyle;

@@ -1,28 +1,36 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 
-import  Calendar from './Calendar'
-import  Guest from './Guest'
-import  InnType from './InnType'
-import  InstantBook from './InstantBook'
-import  Price from './Price'
-import  Time from './Time'
-import  AddFilters from './AddFilters'
+import Dates from './Dates';
+import Guests from './Guests';
+import TypeOfPlace from './TypeOfPlace';
+import InstantBook from './InstantBook';
+import Price from './Price';
+import Time from './Time';
+import MoreFilters from './MoreFilters';
 
 import { ClosePanelContext } from '../../../../Main';
 
-const SelectedSearchOptionPanels = ({ match}) => {
-    const mouseLeaveContextValue = useContext(ClosePanelContext);
-    const id = match.params.id;
+const SelectedSearchOptionPanels = ({ match }) => {
+    const closePanelContext = useContext(ClosePanelContext);
+    const panelName = closePanelContext.isSearchOptionPanelsActivated;
+
+    const closeSearchOptionPanel = () => {
+        if (!Object.values(closePanelContext.isSearchOptionPanelsActivated).includes(true)) {
+            closePanelContext.clearDimmedSections();
+            return true;
+        };
+    };
+
     return (
-            (mouseLeaveContextValue.selectedTab === "none" && <div>{null}</div>) ||
-            (id === "date" && <Calendar />) ||
-            (id === "guest" && <Guest />) ||
-            (id === "innType" && <InnType />) ||
-            (id === "instantBook" && <InstantBook />) ||
-            (id === "price" && <Price />) ||
-            (id === "time" && <Time />) ||
-            (id === "filterAdd" && <AddFilters />)
-    )
+        (closeSearchOptionPanel() && <div>{null}</div>) ||
+        (panelName.dates && <Dates />) ||
+        (panelName.guests && <Guests />) ||
+        (panelName.typeOfPlace && <TypeOfPlace />) ||
+        (panelName.instantBook && <InstantBook />) ||
+        (panelName.price && <Price />) ||
+        (panelName.time && <Time />) ||
+        (panelName.moreFilters && <MoreFilters />)
+    );
 };
 
 export default SelectedSearchOptionPanels;

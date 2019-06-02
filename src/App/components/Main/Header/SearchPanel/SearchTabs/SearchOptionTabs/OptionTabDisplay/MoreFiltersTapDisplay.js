@@ -1,10 +1,10 @@
 import React from 'react';
 
-const FilterAddTapDisplay = (props) => {
+const MoreFiltersTapDisplay = (props) => {
 
     return (
         <span>필터 추가</span>
     )
 }
 
-export default FilterAddTapDisplay;
+export default MoreFiltersTapDisplay;

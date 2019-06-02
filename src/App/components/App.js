@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Main from './Main/Main'
 
-class App extends Component {
-  render() {
+const App = () => {
+
     return (
       <Router>
-          <Main />
+        <Main />
       </Router>
     );
-  }
 }
 
 export default App;

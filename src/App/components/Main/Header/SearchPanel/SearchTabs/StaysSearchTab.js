@@ -3,14 +3,18 @@ import React from 'react';
 import SearchTabStyle from './SearchTabStyle'
 import SearchOptionTabs from './SearchOptionTabs/SearchOptionTabs';
 
-function RestaurantSearchTab(props) {
-
+function StaysSearchTab(props) {
+    
     return (
         <SearchTabStyle>
             <SearchOptionTabs type='dates' />
             <SearchOptionTabs type='guests' />
+            <SearchOptionTabs type='typeOfPlace' />
+            <SearchOptionTabs type='price' />
+            <SearchOptionTabs type='instantBook' />
+            <SearchOptionTabs type='moreFilters' />
         </SearchTabStyle>
     );
 };
 
-export default RestaurantSearchTab;
+export default StaysSearchTab;

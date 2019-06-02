@@ -1,8 +1,8 @@
 import React from 'react';
 import AllSearchTab from './AllSearchTab';
-import InnSearchTab from './InnSearchTab';
+import StaysSearchTab from './StaysSearchTab';
+import ExperiencesSearchTab from './ExperiencesSearchTab';
 import RestaurantSearchTab from './RestaurantSearchTab';
-import TripSearchTab from './TripSearchTab';
 
 import SearchOptionPanels from './SearchOptionPanels/SearchOptionPanels';
 
@@ -18,9 +18,9 @@ function SearchTabs(props) {
         <div>
             <SearchTabProvider value={{ match: props.match }}> {
                 (routerPathId === "all" && <AllSearchTab />) ||
-                (routerPathId === "inn" && <InnSearchTab />) ||
-                (routerPathId === "trip" && <TripSearchTab />) ||
-                (routerPathId === "restaurant" && <RestaurantSearchTab />)
+                (routerPathId === "stays" && <StaysSearchTab />) ||
+                (routerPathId === "experiences" && <ExperiencesSearchTab />) ||
+                (routerPathId === "restaurants" && <RestaurantSearchTab />)
             }
             </SearchTabProvider>
             <SearchOptionPanels />

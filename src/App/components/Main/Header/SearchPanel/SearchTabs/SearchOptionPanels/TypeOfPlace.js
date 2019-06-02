@@ -4,9 +4,9 @@ import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main'
 import { FetchQueryContext } from '../../../../Main'
-import { DeleteApplyStyle } from './DeleteApplyStyle';
-import { ApplyButtonStyle } from './DeleteApplyStyle';
-import { DeleteButtonStyle } from './DeleteApplyStyle';
+import { ClearApplyStyle } from './ClearApplyStyle';
+import { ApplyButtonStyle } from './ClearApplyStyle';
+import { ClearButtonStyle } from './ClearApplyStyle';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const typeOfPlaceDesc = {
@@ -39,20 +39,20 @@ function TypeOfPlace(props) {
     const checkTypeOfPlaceStates = (isChecked, name) => {
         optionPanelSetContext.typeOfPlaceStates[name] = isChecked; 
         if(Object.values(optionPanelSetContext.typeOfPlaceStates).includes(true)) { 
-            optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, typeOfPlace : true});
+            optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, typeOfPlace : true});
             return true; 
         } else { 
-            optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, typeOfPlace : false});
+            optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, typeOfPlace : false});
             return false; 
         };
     };
 
-    const resetChecked = (event) => {
+    const clearChecked = (event) => {
         event.stopPropagation();
-        optionPanelSetContext.dispatchTypeOfPlace({type: 'reset'})
+        optionPanelSetContext.dispatchTypeOfPlace({type: 'clear'})
         optionPanelSetContext.clearTypeOfPlace(); 
         optionPanelSetContext.toggleTabOnOff('typeOfPlace', false); 
-        optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, typeOfPlace : false});
+        optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, typeOfPlace : false});
         
         fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
     };
@@ -110,14 +110,14 @@ function TypeOfPlace(props) {
                 <TypeOfPlaceCheck name='sharedRoom' typeOfPlace={optionPanelSetContext.typeOfPlace.sharedRoom} checkTypeOfPlace={checkTypeOfPlace} />다인실<br />
                 <TypeOfPlaceDescStyle>{typeOfPlaceDesc.sharedRoom}</TypeOfPlaceDescStyle>
             </TypeOfPlaceDiv>
-            <DeleteApplyStyle>
-                <DeleteButtonStyle visible={optionPanelSetContext.isPanelDeleteButtonActivated.typeOfPlace} name="reset" style={{ cursor: 'pointer' }} onClick={resetChecked}>
-                    { optionPanelSetContext.isPanelDeleteButtonActivated.typeOfPlace ? '삭제' : null }
-                </DeleteButtonStyle>
+            <ClearApplyStyle>
+                <ClearButtonStyle visible={optionPanelSetContext.isPanelClearButtonActivated.typeOfPlace} name="clear" style={{ cursor: 'pointer' }} onClick={clearChecked}>
+                    { optionPanelSetContext.isPanelClearButtonActivated.typeOfPlace ? '삭제' : null }
+                </ClearButtonStyle>
                 <ApplyButtonStyle onClick={applyTypeOfPlace}>
                     적용
                 </ApplyButtonStyle>
-            </DeleteApplyStyle>
+            </ClearApplyStyle>
         </SearchOptionPanelStyle>
     );
 };

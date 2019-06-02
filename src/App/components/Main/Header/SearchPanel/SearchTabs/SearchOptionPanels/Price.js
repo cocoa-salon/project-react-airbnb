@@ -3,9 +3,9 @@ import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main'
 import { FetchQueryContext } from '../../../../Main'
 import styled from 'styled-components';
-import { DeleteApplyStyle } from './DeleteApplyStyle';
-import { ApplyButtonStyle } from './DeleteApplyStyle';
-import { DeleteButtonStyle } from './DeleteApplyStyle';
+import { ClearApplyStyle } from './ClearApplyStyle';
+import { ApplyButtonStyle } from './ClearApplyStyle';
+import { ClearButtonStyle } from './ClearApplyStyle';
 import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
@@ -86,8 +86,8 @@ function Price(props) {
         const maxValue = event[1];
         optionPanelSetContext.dispatchSetPrice({type: "setPrices", payload: {minValue: minValue, maxValue: maxValue}});
         if(minValue === price.defaultMin && maxValue === price.defaultMax) {
-            optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, price : false});
-        } else optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, price : true});
+            optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, price : false});
+        } else optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, price : true});
     };
 
     // 가격 입력 시 이벤트 처리
@@ -101,22 +101,22 @@ function Price(props) {
     // 최소값 입력 및 상태 업데이트
     const setPriceMin = (value) => {
         if (value >= price.max || isNaN(value)) return;
-        checkDeleteButtonOnChange(value, price.defaultMin, price.max, price.defaultMax);
+        checkClearButtonOnChange(value, price.defaultMin, price.max, price.defaultMax);
         optionPanelSetContext.dispatchSetPrice({type: "setPriceMin", payload: { minValue: value }});
     };
 
     // 최대값 입력 및 상태 업데이트
     const setPriceMax = (value) => {
         if (value > price.defaultMax || isNaN(value)) return;
-        checkDeleteButtonOnChange(value, price.defaultMax, price.min, price.defaultMin);
+        checkClearButtonOnChange(value, price.defaultMax, price.min, price.defaultMin);
         optionPanelSetContext.dispatchSetPrice({type: "setPriceMax", payload: { maxValue: value }});
     };
 
     // 가격 직접 입력시 삭제 버튼 노출 여부 결정
-    const checkDeleteButtonOnChange = (value, defaultMinMax1, minMax, defaultMinMax2 ) => {
+    const checkClearButtonOnChange = (value, defaultMinMax1, minMax, defaultMinMax2 ) => {
         if(value === defaultMinMax1 && minMax === defaultMinMax2 ) {
-            optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, price : false});
-        } else optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, price : true});
+            optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, price : false});
+        } else optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, price : true});
     }
 
     // 탭에 표시할 가격 정보
@@ -167,11 +167,11 @@ function Price(props) {
         
     };
 
-    const resetPrice = (event) => {
+    const clearPrice = (event) => {
         event.stopPropagation();
         optionPanelSetContext.toggleTabOnOff("price", false);
-        optionPanelSetContext.dispatchSetPrice({type: 'reset'});
-        optionPanelSetContext.setIsPanelDeleteButtonActivated({...optionPanelSetContext.isPanelDeleteButtonActivated, price : false});
+        optionPanelSetContext.dispatchSetPrice({type: 'clear'});
+        optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, price : false});
     };
 
     return (
@@ -201,14 +201,14 @@ function Price(props) {
                     <PriceInputFieldStyle ref={refMax} name="priceMax" type="text" value={price.max} onChange={handleOnChangeInput} />
                 </PriceInputStyle>
             </PriceInputContainerStyle>
-            <DeleteApplyStyle>
-                <DeleteButtonStyle visible={optionPanelSetContext.isPanelDeleteButtonActivated.price} name="reset" onClick={resetPrice}>
-                    { optionPanelSetContext.isPanelDeleteButtonActivated.price ? '삭제' : null }
-                </DeleteButtonStyle>
+            <ClearApplyStyle>
+                <ClearButtonStyle visible={optionPanelSetContext.isPanelClearButtonActivated.price} name="clear" onClick={clearPrice}>
+                    { optionPanelSetContext.isPanelClearButtonActivated.price ? '삭제' : null }
+                </ClearButtonStyle>
                 <ApplyButtonStyle onClick={setOptionTabState}>
                     적용
                 </ApplyButtonStyle>
-            </DeleteApplyStyle>
+            </ClearApplyStyle>
         </PriceOptionPanelStyle>
     );
 };

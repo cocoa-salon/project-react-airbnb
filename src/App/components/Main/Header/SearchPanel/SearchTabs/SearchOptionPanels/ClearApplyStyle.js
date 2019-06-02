@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const DeleteApplyStyle = styled.div`
+export const ClearApplyStyle = styled.div`
     padding: 10px;
     display : flex;
     flex-direction: row;
@@ -21,7 +21,7 @@ export const ApplyButtonStyle = styled.button`
     cursor: pointer;
 `
 
-export const DeleteButtonStyle = styled(ApplyButtonStyle)`
+export const ClearButtonStyle = styled(ApplyButtonStyle)`
         visibility : ${(props) => props.visible ?
             'visible' : 'hidden'
         };

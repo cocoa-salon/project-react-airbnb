@@ -4,7 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import { style } from './inputFieldStyle';
 
-import { ResetContext } from '../Header';
+import { ClearContext } from '../Header';
 import { OptionPanelSetContext } from '../Header';
 import { FetchQueryContext } from '../../Main';
 
@@ -115,14 +115,14 @@ const InputFieldDiv = styled.div`
 
 const AdditionalButtons = function (props) {
 
-    const triggerResetValue = useContext(ResetContext);
+    const triggerClearValue = useContext(ClearContext);
     const fetchQueryContext = useContext(FetchQueryContext);
     const optionPanelSetContext = useContext(OptionPanelSetContext);
 
 
-    const triggerReset = (event) => {
+    const triggerClear = (event) => {
         if (event.target.tagName === 'BUTTON') {
-            triggerResetValue.resetAll();
+            triggerClearValue.clearAll();
         }
     }
 
@@ -163,7 +163,7 @@ const AdditionalButtons = function (props) {
     }
 
     return (
-        <StyledDiv onClick={triggerReset}>
+        <StyledDiv onClick={triggerClear}>
             <ExploreTestStyle>에어비엔비 둘러보기</ExploreTestStyle>
             <Link to="/search/all">
                 <StyledButton onClick={operateFetchQuery}>모두</StyledButton>

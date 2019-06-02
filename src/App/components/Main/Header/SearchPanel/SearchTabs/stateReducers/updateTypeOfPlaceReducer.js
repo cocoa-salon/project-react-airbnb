@@ -1,10 +1,10 @@
-const typeOfPlaceCheckReducer = (typeOfPlace, { type, payload }) => {
+const updateTypeOfPlaceReducer = (typeOfPlace, { type, payload }) => {
     switch (type) {
         case 'check':
             const name = payload.name;
             const isChecked = payload.isChecked;
             return { ...typeOfPlace, [name]: isChecked };
-        case 'reset':
+        case 'clear':
             return {
                 entireRoom: false,
                 privateRoom: false,
@@ -14,4 +14,4 @@ const typeOfPlaceCheckReducer = (typeOfPlace, { type, payload }) => {
     };
 };
 
-export default typeOfPlaceCheckReducer;
+export default updateTypeOfPlaceReducer;

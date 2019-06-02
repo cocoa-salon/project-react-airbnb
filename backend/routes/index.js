@@ -41,7 +41,7 @@ const generateConditionalQuery = (queryString) => {
         let key = Object.keys(v)[0];
         if (key === "roomType") return convertRoomTypeQuery(acc, v, key);
         else if (key === "price_min" || key === "price_max") return convertPriceQuery(acc, v, key);
-        else if (key === "adults" || key === "children" || key === "infants") return convertGuestQuery(acc, v, key);
+        else if (key === "adults" || key === "children" || key === "infants") return convertGuestsQuery(acc, v, key);
         else if (key === "instantbook") return convertInstantBookQuery(acc, v, key); 
     }, {});
     return conditionalQuery;
@@ -96,7 +96,7 @@ const convertPriceQuery = (acc, v, key) => {
 };
 
 // 게스트 쿼리 객체 변환
-const convertGuestQuery = (acc, v, key) => {
+const convertGuestsQuery = (acc, v, key) => {
     if (acc.hasOwnProperty("accommodates") && key !== "infants") {
         acc['accommodates']['$gte'] += v[key];
     } else if (!acc.hasOwnProperty("accommodates") && key !== "infants") {

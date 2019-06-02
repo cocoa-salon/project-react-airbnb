@@ -2,31 +2,31 @@ import React, { useState, useReducer } from 'react';
 import styled from 'styled-components';
 import SearchField from './SearchField/SearchField';
 import SearchPanel from './SearchPanel/SearchPanel';
-import checkGuestNumReducer from './SearchPanel/SearchTabs/stateReducers/checkGuestNumReducer';
-import typeOfPlaceCheckReducer from './SearchPanel/SearchTabs/stateReducers/typeOfPlaceCheckReducer';
-import setPriceReducer from './SearchPanel/SearchTabs/stateReducers/setPriceReducer';
+import updateGuestsReducer from './SearchPanel/SearchTabs/stateReducers/updateGuestsReducer';
+import updateTypeOfPlaceReducer from './SearchPanel/SearchTabs/stateReducers/updateTypeOfPlaceReducer';
+import updatePriceReducer from './SearchPanel/SearchTabs/stateReducers/updatePriceReducer';
 
-export const ResetContext = React.createContext();
+export const ClearContext = React.createContext();
 export const OptionPanelSetContext = React.createContext();
 
 function Header() {
 
     // 인원 state
-    const [guestNum, dispatchGuestNum] = useReducer(checkGuestNumReducer, {
-        adultNum: 0,
-        childNum: 0,
-        toddlerNum: 0,
+    const [guestsNum, dispatchGuestsNum] = useReducer(updateGuestsReducer, {
+        adultsNum: 0,
+        childrenNum: 0,
+        infantsNum: 0,
         totalNum: 0,
-        removeAdult: false,
-        addAdult: true,
+        removeAdults: false,
+        addAdults: true,
         removeChildren: false,
         addChildren: true,
-        removeToddler: false,
-        addToddler: true,
+        removeInfants: false,
+        addInfants: true,
     });
 
     // 숙소타입 state
-    const [typeOfPlace, dispatchTypeOfPlace] = useReducer(typeOfPlaceCheckReducer, {
+    const [typeOfPlace, dispatchTypeOfPlace] = useReducer(updateTypeOfPlaceReducer, {
         entireRoom: false,
         privateRoom: false,
         hotelRoom: false,
@@ -40,7 +40,7 @@ function Header() {
     };
 
     // 가격 state
-    const [price, dispatchSetPrice] = useReducer(setPriceReducer, {
+    const [price, dispatchSetPrice] = useReducer(updatePriceReducer, {
         defaultMin: 10000,
         defaultMax: 500000,
         min: 10000,
@@ -65,7 +65,7 @@ function Header() {
     };
 
     // 패널 삭제 버튼 활성화 토글
-    const [isPanelDeleteButtonActivated, setIsPanelDeleteButtonActivated] = useState({
+    const [isPanelClearButtonActivated, setIsPanelClearButtonActivated] = useState({
         dates: false,
         guests: false,
         typeOfPlace: false,
@@ -76,7 +76,7 @@ function Header() {
     });
 
     // 패널 설정 일괄 초기화
-    const resetAll = () => {
+    const clearAll = () => {
         setIsSearchOptionTabActivated({
             dates: false,
             guests: false,
@@ -86,11 +86,11 @@ function Header() {
             time: false,
             moreFilters: false
         });
-        dispatchGuestNum({ type: 'resetAll' });
-        dispatchTypeOfPlace({ type: 'reset' });
+        dispatchGuestsNum({ type: 'clearAll' });
+        dispatchTypeOfPlace({ type: 'clear' });
         setIsInstantBookChecked({ isChecked: false });
-        dispatchSetPrice({ type: 'reset' });
-        setIsPanelDeleteButtonActivated({
+        dispatchSetPrice({ type: 'clear' });
+        setIsPanelClearButtonActivated({
             dates: false,
             guests: false,
             typeOfPlace: false,
@@ -101,19 +101,19 @@ function Header() {
         });
     };
 
-    const SearchOptionGuestPanelProps = {
-        guestNum: guestNum,
-        totalNum: guestNum.totalNum,
-        adultNum: guestNum.adultNum,
-        childNum: guestNum.childNum,
-        toddlerNum: guestNum.toddlerNum,
-        removeAdult: guestNum.removeAdult,
-        addAdult: guestNum.addAdult,
-        removeChildren: guestNum.removeChildren,
-        addChildren: guestNum.addChildren,
-        removeToddler: guestNum.removeToddler,
-        addToddler: guestNum.addToddler,
-        dispatchGuestNum: dispatchGuestNum
+    const SearchOptionGuestsPanelProps = {
+        guestsNum: guestsNum,
+        totalNum: guestsNum.totalNum,
+        adultsNum: guestsNum.adultsNum,
+        childrenNum: guestsNum.childrenNum,
+        infantsNum: guestsNum.infantsNum,
+        removeAdults: guestsNum.removeAdults,
+        addAdults: guestsNum. addAdults,
+        removeChildren: guestsNum.removeChildren,
+        addChildren: guestsNum.addChildren,
+        removeInfants: guestsNum.removeInfants,
+        addInfants: guestsNum. addInfants,
+        dispatchGuestsNum: dispatchGuestsNum
     };
 
     const SearchOptionTypeOfPlacePanelProps = {
@@ -133,16 +133,16 @@ function Header() {
 
     return (
         <FixedHeader>
-            <ResetContext.Provider value={{ resetAll: resetAll, toggleTabOnOff: toggleTabOnOff }}>
+            <ClearContext.Provider value={{ clearAll: clearAll, toggleTabOnOff: toggleTabOnOff }}>
                 <OptionPanelSetContext.Provider value={{
-                    ...SearchOptionGuestPanelProps,
+                    ...SearchOptionGuestsPanelProps,
                     ...SearchOptionTypeOfPlacePanelProps,
                     ...SearchOptionInstantBookPanelProps,
                     ...SearchOptionPricePanelProps,
                     toggleTabOnOff: toggleTabOnOff,
                     isSearchOptionTabActivated: isSearchOptionTabActivated,
-                    isPanelDeleteButtonActivated: isPanelDeleteButtonActivated,
-                    setIsPanelDeleteButtonActivated: setIsPanelDeleteButtonActivated,
+                    isPanelClearButtonActivated: isPanelClearButtonActivated,
+                    setIsPanelClearButtonActivated: setIsPanelClearButtonActivated,
 
                     typeOfPlaceStates: typeOfPlaceStates,
                     clearTypeOfPlace: clearTypeOfPlace
@@ -150,7 +150,7 @@ function Header() {
                     <SearchField />
                     <SearchPanel />
                 </OptionPanelSetContext.Provider>
-            </ResetContext.Provider>
+            </ClearContext.Provider>
         </FixedHeader>
     );
 };

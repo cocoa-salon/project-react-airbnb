@@ -1,4 +1,4 @@
-const setPriceReducer = (price, { type, payload }) => {
+const updatePriceReducer = (price, { type, payload }) => {
     switch (type) {
         case 'setPrices':
             return handleOnAfterChange(price, payload.minValue, payload.maxValue);
@@ -6,8 +6,8 @@ const setPriceReducer = (price, { type, payload }) => {
             return handleChangeMin(price, payload.minValue);
         case 'setPriceMax':
             return handleChangeMax(price, payload.maxValue);
-        case 'reset':
-            return resetChecked();
+        case 'clear':
+            return clearChecked();
         case 'setTabState':
             return setTabState(price, payload.tabMsg)
     }
@@ -25,7 +25,7 @@ const handleChangeMax = (price, maxValue) => {
     return { ...price, max: maxValue };
 };
 
-const resetChecked = () => {
+const clearChecked = () => {
     return {
         defaultMin: 10000,
         defaultMax: 500000,
@@ -39,4 +39,4 @@ const setTabState = (price, tabMsg) => {
     return { ...price, tabMsg: tabMsg };
 };
 
-export default setPriceReducer;
+export default updatePriceReducer;

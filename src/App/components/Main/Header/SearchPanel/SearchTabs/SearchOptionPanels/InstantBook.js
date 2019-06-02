@@ -4,8 +4,8 @@ import { FetchQueryContext } from '../../../../Main'
 import { OptionPanelSetContext } from '../../../Header';
 import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import styled from 'styled-components';
-import { DeleteApplyStyle } from './DeleteApplyStyle';
-import { ApplyButtonStyle } from './DeleteApplyStyle';
+import { ClearApplyStyle } from './ClearApplyStyle';
+import { ApplyButtonStyle } from './ClearApplyStyle';
 import Switch from '@material-ui/core/Switch';
 
 
@@ -58,9 +58,9 @@ function InstantBook(props) {
             <DescStyle>
                 {instantBookDesc}
             </DescStyle>
-            <DeleteApplyStyle> 
+            <ClearApplyStyle> 
                 <ApplyButtonStyle onClick={applyInstantBook}>적용</ApplyButtonStyle>
-            </DeleteApplyStyle> 
+            </ClearApplyStyle> 
         </SearchOptionPanelStyle>
     )
 }

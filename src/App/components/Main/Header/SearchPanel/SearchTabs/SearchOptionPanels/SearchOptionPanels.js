@@ -4,6 +4,10 @@ import { Route } from 'react-router-dom';
 import { ClosePanelContext } from '../../../../Main';
 import SelectedSearchOptionPanels from './SelectedSearchOptionPanels';
 
+const SearchOptionPanelArea = styled.div`
+    width: 400px;
+    height: 100%; 
+`  
 
 const SearchOptionPanels = (props) => {
 
@@ -15,18 +19,11 @@ const SearchOptionPanels = (props) => {
         closePanelContext.handleIsOnMouseLeavePanel(cursorOff);
     };
 
-    const SearchOptionPanelArea = styled.div`
-        width: 400px;
-        height: 100%; 
-    `  
-
     return (
         <SearchOptionPanelArea data-cursoroff={true} onMouseLeave={handleIsOnMouseLeavePanel} onMouseEnter={handleIsOnMouseLeavePanel}>
-            <Route path={`${closePanelContext.searchOptionTabUrl}/:id`} render={(props) => {
-                return (
+            <Route path={`${closePanelContext.searchOptionTabUrl}/:id`} render={(props) => 
                     <SelectedSearchOptionPanels match={props.match} />
-                );
-            }}/>
+            }/>
         </SearchOptionPanelArea>
     );
 };

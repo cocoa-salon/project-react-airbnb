@@ -146,7 +146,7 @@ function Guests(props) {
         closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
     };
-    
+
     return (
         <SearchOptionPanelStyle onClick={setGuestsNum} >
             <GuestsNumSetButton guestType="성인" rightButton="removeAdults" leftButton=" addAdults" numbers={optionPanelSetContext.adultsNum} />

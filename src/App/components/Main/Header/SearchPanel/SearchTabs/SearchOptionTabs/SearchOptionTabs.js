@@ -22,7 +22,6 @@ const SearchOptionTabs = (props) => {
     const optionPanelSetContext = useContext(OptionPanelSetContext);
     const closePanelContext = useContext(ClosePanelContext);
 
-
     const SearchOptionTabArea = styled.div`
         width: auto;
         height: auto;
@@ -48,7 +47,7 @@ const SearchOptionTabs = (props) => {
             outline: 0; ;
         }
         cursor: pointer;
-`
+    `
 
     const handleIsOnMouseLeaveTab = (event) => {
         let cursorOff = event.target.dataset.cursorOff;

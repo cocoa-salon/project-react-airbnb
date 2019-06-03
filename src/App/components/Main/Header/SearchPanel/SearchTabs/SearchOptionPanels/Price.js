@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main'
 import { FetchQueryContext } from '../../../../Main'
@@ -192,7 +192,7 @@ function Price(props) {
             <PriceInputContainerStyle>
                 <PriceInputStyle>
                     <CurrencyStyle>&#8361;</CurrencyStyle>&nbsp;
-                    <PriceInputFieldStyle ref={refMin} name="priceMin" type="text" defaultValue={price.min} onChange={handleOnChangeInput} />
+                    <PriceInputFieldStyle ref={refMin} name="priceMin" type="text" value={price.min} onChange={handleOnChangeInput} />
                 </PriceInputStyle>
                 -
                 <PriceInputStyle>

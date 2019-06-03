@@ -37,9 +37,9 @@ const MinusPlusButton = (props) => {
             (props.name === "removeAdults" && optionPanelSetContext.removeAdults === false) ||
             (props.name === "removeChildren" && optionPanelSetContext.removeChildren === false) ||
             (props.name === "removeInfants" && optionPanelSetContext.removeInfants === false) ||
-            (props.name === " addAdults" && optionPanelSetContext. addAdults === false) ||
+            (props.name === " addAdults" && optionPanelSetContext.addAdults === false) ||
             (props.name === "addChildren" && optionPanelSetContext.addChildren === false) ||
-            (props.name === " addInfants" && optionPanelSetContext. addInfants === false)
+            (props.name === " addInfants" && optionPanelSetContext.addInfants === false)
         ) {
             return buttonInactivatedStyle;
         } else {
@@ -143,9 +143,7 @@ function Guests(props) {
         queryToClear = generatedQuery;
         fetchQueryContext.queryString.str  += generatedQuery;
         fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
-        closePanelContext.setIsSearchOptionPanelsActivated({
-            ...closePanelContext.isSearchOptionPanelsActivated, guests : false
-        });
+        closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
     };
     

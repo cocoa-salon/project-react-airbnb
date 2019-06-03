@@ -9,9 +9,7 @@ function Time(props) {
     const applyTime = (event) => {
         event.stopPropagation();
         closePanelContext.clearDimmedSections();
-        closePanelContext.setIsSearchOptionPanelsActivated({
-            ...closePanelContext.isSearchOptionPanelsActivated, time: false
-        });
+        closePanelContext.setIsPanelClosed(true);
         
     };
 

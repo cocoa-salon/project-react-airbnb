@@ -18,9 +18,7 @@ function Dates(props) {
 
     const applyDates = (event) => {
         event.stopPropagation();
-        closePanelContext.setIsSearchOptionPanelsActivated({
-            ...closePanelContext.isSearchOptionPanelsActivated,  dates: false 
-        });
+        closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
     };
 

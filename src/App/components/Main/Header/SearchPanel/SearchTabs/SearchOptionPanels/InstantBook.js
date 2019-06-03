@@ -37,9 +37,7 @@ function InstantBook(props) {
 
     const applyInstantBook = (event) => {
         event.stopPropagation();
-        closePanelContext.setIsSearchOptionPanelsActivated({
-            ...closePanelContext.isSearchOptionPanelsActivated, instantBook: false
-        });
+        closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
 
         fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");

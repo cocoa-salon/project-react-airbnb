@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 
 import SearchTabs from './SearchTabs/SearchTabs';
 
-function SearchPanel(props) {
+function SearchPanel() {
 
     return (
         <SearchPanleDiv>

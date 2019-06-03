@@ -22,10 +22,11 @@ const SearchOptionPanels = (props) => {
 
     return (
         <SearchOptionPanelArea data-cursoroff={true} onMouseLeave={handleIsOnMouseLeavePanel} onMouseEnter={handleIsOnMouseLeavePanel}>
-            <Route path="/:id" render={(props) =>
-                <SelectedSearchOptionPanels match={props.match} />
-            }
-            />
+            <Route path={`${closePanelContext.searchOptionTabUrl}/:id`} render={(props) => {
+                return (
+                    <SelectedSearchOptionPanels match={props.match} />
+                );
+            }}/>
         </SearchOptionPanelArea>
     );
 };

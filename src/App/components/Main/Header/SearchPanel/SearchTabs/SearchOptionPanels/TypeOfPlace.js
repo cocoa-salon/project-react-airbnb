@@ -66,9 +66,7 @@ function TypeOfPlace(props) {
     // 적용 버튼 클릭
     const applyTypeOfPlace = (event) => {
         event.stopPropagation();
-        closePanelContext.setIsSearchOptionPanelsActivated({
-            ...closePanelContext.isSearchOptionPanelsActivated, typeOfPlace: false
-        });
+        closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections(); 
 
         fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");

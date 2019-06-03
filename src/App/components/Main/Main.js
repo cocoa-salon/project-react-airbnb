@@ -17,8 +17,7 @@ let isCursorOffTab = true;
 
 function Main() {
 
-    const [isDimmed, setIsDimmed] = useState(false);
-
+    
     // 마우스 커서와 탭
     function handleIsOnMouseLeaveTab(cursorOff) {
         isCursorOffTab = cursorOff;
@@ -29,37 +28,29 @@ function Main() {
         isCursorOffPanel = cursorOff;
     };
     
-    // 검색 옵션 패널 활성화  state
-    const [ isSearchOptionPanelsActivated, setIsSearchOptionPanelsActivated ] = useState({
-        dates: false,
-        guests: false,
-        typeOfPlace: false,
-        instantBook: false,
-        price: false,
-        time: false,
-        moreFilters: false
-    });
-
     // 패널 닫힘
     const closeSearchOptionPanel = () => {
         if (isCursorOffTab === true && isCursorOffPanel === true) {
             clearDimmedSections();
-            setIsSearchOptionPanelsActivated({
-                dates: false,
-                guests: false,
-                typeOfPlace: false,
-                instantBook: false,
-                price: false,
-                time: false,
-                moreFilters: false,
-            });
-
+            setIsPanelClosed(true); 
         };
     };
+    
+    // 화면 흐려짐 상태 
+    const [isDimmed, setIsDimmed] = useState(false);
 
+    // 화면 흐려짐 해제
     const clearDimmedSections = () => {
         setIsDimmed(false);
     };
+
+    const applyDimmedSections = () => {
+        setIsDimmed(true);
+    };
+
+    const toggleDimmedSections = () => {
+        setIsDimmed(!isDimmed);
+    }
 
     const [stayLists, setStayLists] = useState([]);
 
@@ -90,13 +81,24 @@ function Main() {
         };
     };
 
+    const [ searchOptionTabUrl, setSearchOptionTabUrl] = useState(""); 
+
+    const [ isPanelClosed, setIsPanelClosed ] = useState(true); 
+
+    const searchOptionTabUrlProps = {
+        searchOptionTabUrl: searchOptionTabUrl,
+        setSearchOptionTabUrl: setSearchOptionTabUrl,
+    }
+
     const searchOptionPanelToggleProps = {
         handleIsOnMouseLeavePanel: handleIsOnMouseLeavePanel,
         handleIsOnMouseLeaveTab: handleIsOnMouseLeaveTab,
-        setIsDimmed: setIsDimmed,
         clearDimmedSections: clearDimmedSections,
-        isSearchOptionPanelsActivated: isSearchOptionPanelsActivated,
-        setIsSearchOptionPanelsActivated: setIsSearchOptionPanelsActivated
+        applyDimmedSections: applyDimmedSections,
+        toggleDimmedSections: toggleDimmedSections,
+
+        isPanelClosed: isPanelClosed,
+        setIsPanelClosed: setIsPanelClosed,
     };
 
     const fetchQueryProps = {
@@ -120,7 +122,7 @@ function Main() {
     return (
             <div onClick={closeSearchOptionPanel} >
                 <DimmedSection  />
-                <ClosePanelContext.Provider value={{ ...searchOptionPanelToggleProps }}>
+                <ClosePanelContext.Provider value={{ ...searchOptionPanelToggleProps, ...searchOptionTabUrlProps }}>
                     <FetchQueryContext.Provider value={{ ...fetchQueryProps }}>
                         <Header />
                         <Sections />

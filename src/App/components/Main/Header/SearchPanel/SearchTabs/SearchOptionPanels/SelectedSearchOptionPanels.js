@@ -12,24 +12,17 @@ import { ClosePanelContext } from '../../../../Main';
 
 const SelectedSearchOptionPanels = ({ match }) => {
     const closePanelContext = useContext(ClosePanelContext);
-    const panelName = closePanelContext.isSearchOptionPanelsActivated;
-
-    const closeSearchOptionPanel = () => {
-        if (!Object.values(closePanelContext.isSearchOptionPanelsActivated).includes(true)) {
-            closePanelContext.clearDimmedSections();
-            return true;
-        };
-    };
+    const id = match.params.id; 
 
     return (
-        (closeSearchOptionPanel() && <div>{null}</div>) ||
-        (panelName.dates && <Dates />) ||
-        (panelName.guests && <Guests />) ||
-        (panelName.typeOfPlace && <TypeOfPlace />) ||
-        (panelName.instantBook && <InstantBook />) ||
-        (panelName.price && <Price />) ||
-        (panelName.time && <Time />) ||
-        (panelName.moreFilters && <MoreFilters />)
+        (closePanelContext.isPanelClosed === true && <div>{null}</div>) ||
+        (id === "dates" && <Dates />) ||
+        (id === "guests" && <Guests />) ||
+        (id === "typeOfPlace" && <TypeOfPlace />) ||
+        (id === "instantBook" && <InstantBook />) ||
+        (id === "price" && <Price />) ||
+        (id === "time" && <Time />) ||
+        (id === "moreFilters" && <MoreFilters />)
     );
 };
 

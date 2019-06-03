@@ -19,9 +19,7 @@ function MoreFilters(props) {
 
     const applyAddFilters = (event) => {
         event.stopPropagation();
-        closePanelContext.setIsSearchOptionPanelsActivated({
-            ...closePanelContext.isSearchOptionPanelsActivated, moreFilters: false
-        });
+        closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
     };
 

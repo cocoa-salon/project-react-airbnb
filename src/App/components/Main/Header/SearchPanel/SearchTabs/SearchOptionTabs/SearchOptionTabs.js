@@ -14,15 +14,13 @@ import { SearchTabContext } from '../SearchTabs';
 import { OptionPanelSetContext } from '../../../Header';
 import { ClosePanelContext } from '../../../../Main';
 
-
-let selectedTabName = "";
+let selectedPanelName = "";
 
 const SearchOptionTabs = (props) => {
 
     const matchContext = useContext(SearchTabContext);
     const optionPanelSetContext = useContext(OptionPanelSetContext);
     const closePanelContext = useContext(ClosePanelContext);
-
 
     const SearchOptionTabArea = styled.div`
         width: auto;
@@ -49,7 +47,7 @@ const SearchOptionTabs = (props) => {
             outline: 0; ;
         }
         cursor: pointer;
-`
+    `
 
     const handleIsOnMouseLeaveTab = (event) => {
         let cursorOff = event.target.dataset.cursorOff;
@@ -57,44 +55,32 @@ const SearchOptionTabs = (props) => {
         closePanelContext.handleIsOnMouseLeaveTab(cursorOff);
     };
 
-    const DimSections = () => {
-        closePanelContext.setIsDimmed(true);
-    };
-
-    let panelStates = closePanelContext.isSearchOptionPanelsActivated;
-    let setPanelStates = closePanelContext.setIsSearchOptionPanelsActivated;
-
-
-    const toggleSearchOptionPanel = (event) => {
-        if (selectedTabName === event.currentTarget.name) {
-            selectedTabName = event.currentTarget.name;
-            setPanelStates({
-                ...panelStates, [selectedTabName]: !panelStates[selectedTabName]
-            });
+    const passOptionTabUrl = (event) => {
+        const currentName = event.currentTarget.name
+        const isPanelClosed = closePanelContext.isPanelClosed;
+        const setIsPanelClosed = closePanelContext.setIsPanelClosed;
+        if ( selectedPanelName === currentName ) {
+            setIsPanelClosed(!isPanelClosed);
+            selectedPanelName = currentName;
+            closePanelContext.toggleDimmedSections();
         } else {
-            selectedTabName = event.currentTarget.name;
-            setPanelStates({
-                dates: false,
-                guests: false,
-                typeOfPlace: false,
-                instantBook: false,
-                price: false,
-                time: false,
-                [selectedTabName]: true
-            });
-        }
-    };
+            setIsPanelClosed(false);
+            selectedPanelName = currentName;
+            closePanelContext.applyDimmedSections();
+        };
+        closePanelContext.setSearchOptionTabUrl(matchContext.match.url);
+    } ;
 
     return (
         <SearchOptionTabArea>
             <Link to={`${matchContext.match.url}/${props.type}`}
                 name={props.type}
-                onClick={toggleSearchOptionPanel}
+                onClick={passOptionTabUrl}
                 data-cursoroff={true}
                 onMouseLeave={handleIsOnMouseLeaveTab}
                 onMouseEnter={handleIsOnMouseLeaveTab}
             >
-                <SearchOptionTabStyle name={props.type} onClick={DimSections}> {
+                <SearchOptionTabStyle name={props.type}> {
                     (props.type === 'dates' && <DatesTapDisplay />) ||
                     (props.type === 'guests' && <GuestsTapDisplay />) ||
                     (props.type === 'typeOfPlace' && <TypeOfPlaceTapDisplay typeOfPlace={optionPanelSetContext.typeOfPlace} />) ||
@@ -106,9 +92,8 @@ const SearchOptionTabs = (props) => {
                 </SearchOptionTabStyle>
             </Link>
         </SearchOptionTabArea>
-    )
-
-}
+    );
+};
 
 export default SearchOptionTabs;
 

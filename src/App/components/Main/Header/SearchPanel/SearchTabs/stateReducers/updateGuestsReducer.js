@@ -81,10 +81,10 @@ const  addAdults = (guestsNum) => {
 const  addChildren = (guestsNum) => {
     if (guestsNum.childrenNum === 4) {
         return { ...guestsNum, childrenNum: guestsNum.childrenNum + 1, totalNum: guestsNum.totalNum + 1, removeChildren: true, addChildren: false };
-    } else if ((guestsNum.adultsNum > 0 && guestsNum.childrenNum < guestsNumLimit. maxChildrenNum  && guestsNum.childrenNum > guestsNumLimit.minChildrenNum) || 
+    } else if ((guestsNum.adultsNum > 0 && guestsNum.childrenNum < guestsNumLimit.maxChildrenNum  && guestsNum.childrenNum > guestsNumLimit.minChildrenNum) || 
                 (guestsNum.adultsNum > 0 && guestsNum.childrenNum <= guestsNumLimit.minChildrenNum) ) {
         return { ...guestsNum, childrenNum: guestsNum.childrenNum + 1, totalNum: guestsNum.totalNum + 1, removeChildren: true, addChildren: true };
-    } else if (guestsNum.adultsNum > 0 && guestsNum.childrenNum >= guestsNumLimit. maxChildrenNum ) {
+    } else if (guestsNum.adultsNum > 0 && guestsNum.childrenNum >= guestsNumLimit.maxChildrenNum ) {
         return { ...guestsNum, removeChildren: true, addChildren: false };
     };
 };
@@ -115,7 +115,7 @@ const removeChildren = (guestsNum) => {
         return { ...guestsNum, removeChildren: false, addChildren: true };
     } else if (guestsNum.childrenNum === 1) {
         return { ...guestsNum, childrenNum: guestsNum.childrenNum - 1, totalNum: guestsNum.totalNum - 1, removeChildren: false, addChildren: true };
-    } else if (guestsNum.childrenNum > guestsNumLimit.minChildrenNum && guestsNum.childrenNum <= guestsNumLimit. maxChildrenNum ) {
+    } else if (guestsNum.childrenNum > guestsNumLimit.minChildrenNum && guestsNum.childrenNum <= guestsNumLimit.maxChildrenNum ) {
         return { ...guestsNum, childrenNum: guestsNum.childrenNum - 1, totalNum: guestsNum.totalNum - 1, removeChildren: true, addChildren: true };
     };
 };

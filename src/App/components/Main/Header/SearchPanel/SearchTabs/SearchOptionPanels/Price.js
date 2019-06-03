@@ -57,7 +57,7 @@ const CurrencyStyle = styled.span`
 let queryToClear = "";
 
 function Price(props) {
-    
+
     const optionPanelSetContext = useContext(OptionPanelSetContext);
     const closePanelContext = useContext(ClosePanelContext);
     const fetchQueryContext = useContext(FetchQueryContext);
@@ -138,19 +138,20 @@ function Price(props) {
         return queryString;
     }
 
-    const setOptionTabState = (event) => {
+    const applyPrice = (event) => {
         event.stopPropagation();
 
+        // 쿼리 생성 및 fetch 요청
         fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
         let generatedQuery = generateQueryString();
         queryToClear = generatedQuery;
         fetchQueryContext.queryString.str += generatedQuery;
         fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
 
-        closePanelContext.setIsSearchOptionPanelsActivated({
-            ...closePanelContext.isSearchOptionPanelsActivated, price: false
-        });
+        // 패널 닫기, 화면 흐림 해제
+        closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
+
         if(price.min === price.defaultMin && price.max === price.defaultMax) {
             optionPanelSetContext.toggleTabOnOff("price", false);
             optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg : priceDefault}});
@@ -163,8 +164,6 @@ function Price(props) {
             optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg: priceMax}});
         } 
         optionPanelSetContext.toggleTabOnOff("price", true);
-
-        
     };
 
     const clearPrice = (event) => {
@@ -205,7 +204,7 @@ function Price(props) {
                 <ClearButtonStyle visible={optionPanelSetContext.isPanelClearButtonActivated.price} name="clear" onClick={clearPrice}>
                     { optionPanelSetContext.isPanelClearButtonActivated.price ? '삭제' : null }
                 </ClearButtonStyle>
-                <ApplyButtonStyle onClick={setOptionTabState}>
+                <ApplyButtonStyle onClick={applyPrice}>
                     적용
                 </ApplyButtonStyle>
             </ClearApplyStyle>

@@ -108,11 +108,11 @@ function Header() {
         childrenNum: guestsNum.childrenNum,
         infantsNum: guestsNum.infantsNum,
         removeAdults: guestsNum.removeAdults,
-        addAdults: guestsNum. addAdults,
+        addAdults: guestsNum.addAdults,
         removeChildren: guestsNum.removeChildren,
         addChildren: guestsNum.addChildren,
         removeInfants: guestsNum.removeInfants,
-        addInfants: guestsNum. addInfants,
+        addInfants: guestsNum.addInfants,
         dispatchGuestsNum: dispatchGuestsNum
     };
 

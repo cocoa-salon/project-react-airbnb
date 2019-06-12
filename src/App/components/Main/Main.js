@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from './Header/Header';
 import Sections from './Sections/Sections';
-import requestURL from '../../../../src/requestURL';
 import { StyledItemsContainer, StyledItemsList } from './Sections/ItemsList';
+import { requestURL } from '../../setting_values/setting_values';
 export const ClosePanelContext = React.createContext();
 export const FetchQueryContext = React.createContext();
 
@@ -57,7 +57,7 @@ function Main() {
     // 생성한 쿼리로 fetch 요청 
     const operateFetchQuery = async (queryString) => {
         try {
-            const response = await fetch(`${requestURL.FETCHALL}/${queryString}`, { mode: "cors" });
+            const response = await fetch(`${requestURL.FETCH_ALL_DATA}/${queryString}`, { mode: "cors" });
             const resultJson = await response.json();
             let mappedList = resultJson.map((infos) => {
                 const itemProps = {

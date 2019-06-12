@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { FetchQueryContext } from '../Main';
 import { StyledItemsContainer, StyledItemsList } from './ItemsList';
-import requestURL from '../../../../../src/requestURL';
+import { requestURL } from '../../../setting_values/setting_values';
+
 
 const Sections = (props) => {
 
     const fetchQueryContext = useContext(FetchQueryContext);
 
     useEffect(() => {
-        fetch(`${requestURL.FETCHALL}`, { mode: "cors" })
+        fetch(`${requestURL.FETCH_ALL_DATA}`, { mode: "cors" })
             .then((response) => response.json())
             .then((response) => {
                 let mappedList = response.map((infos) => {

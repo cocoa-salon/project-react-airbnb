@@ -1,3 +1,8 @@
+export const requestURL = {
+    FETCH_ALL_DATA : "https://airbnbreactbackend.herokuapp.com/search/rooms",
+    SEARCH_WORDS : "https://airbnbreactbackend.herokuapp.com/search/list"
+};
+
 export const searchOptionPanelsfilterValues = {
 
     // 인원 state

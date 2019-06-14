@@ -2,7 +2,7 @@ import React from 'react';
 import airbnb_logo from '../../../../img/airbnb_logo.png'
 import styled, { css, keyframes } from 'styled-components';
 
-const blankItemsNum = 12;
+const blankItemsNum = 30;
 const blankItemsArray = [];
 
 const StyledItemsList = styled.li`

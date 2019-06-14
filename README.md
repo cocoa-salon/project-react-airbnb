@@ -74,4 +74,11 @@
 
 <img src="https://user-images.githubusercontent.com/38235501/58685056-664aad00-83b5-11e9-9b28-9ff8cbdfa439.gif" alt="">
 
+### placeholder(로딩화면) 구현
+
+- 콘텐츠 로드시 대기 화면 구현
+
+<img src="https://user-images.githubusercontent.com/38235501/59495236-de42c800-8ec9-11e9-9b62-34b2a00b89c8.gif" alt="">
+
+
 **기타 기능 추후 구현 예정**

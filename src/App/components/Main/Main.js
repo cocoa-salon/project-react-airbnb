@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from './Header/Header';
 import Sections from './Sections/Sections';
-import { StyledItemsContainer, StyledItemsList } from './Sections/ItemsList';
+import { StyledItemsContainer, StyledItemsList } from './Sections/ItemsContainer ';
 import { requestURL } from '../../setting_values/setting_values';
 export const ClosePanelContext = React.createContext();
 export const FetchQueryContext = React.createContext();
@@ -17,7 +17,6 @@ let isCursorOffTab = true;
 
 function Main() {
 
-    
     // 마우스 커서와 탭
     function handleIsOnMouseLeaveTab(cursorOff) {
         isCursorOffTab = cursorOff;
@@ -50,13 +49,16 @@ function Main() {
 
     const toggleDimmedSections = () => {
         setIsDimmed(!isDimmed);
-    }
+    };
 
     const [stayLists, setStayLists] = useState([]);
 
     // 생성한 쿼리로 fetch 요청 
+    const [ isFallBackMsg, setIsFallBackMsg ] = useState(true);
+
     const operateFetchQuery = async (queryString) => {
         try {
+            setIsFallBackMsg(true); 
             const response = await fetch(`${requestURL.FETCH_ALL_DATA}/${queryString}`, { mode: "cors" });
             const resultJson = await response.json();
             let mappedList = resultJson.map((infos) => {
@@ -75,6 +77,7 @@ function Main() {
                     </StyledItemsList>
                 );
             });
+            setIsFallBackMsg(false); 
             setStayLists(mappedList);
         } catch (err) {
             console.log(err);
@@ -88,7 +91,7 @@ function Main() {
     const searchOptionTabUrlProps = {
         searchOptionTabUrl: searchOptionTabUrl,
         setSearchOptionTabUrl: setSearchOptionTabUrl,
-    }
+    };
 
     const searchOptionPanelToggleProps = {
         handleIsOnMouseLeavePanel: handleIsOnMouseLeavePanel,
@@ -105,7 +108,8 @@ function Main() {
         operateFetchQuery: operateFetchQuery,
         stayLists: stayLists,
         setStayLists: setStayLists,
-        queryString: queryString
+        queryString: queryString,
+        isFallBackMsg: isFallBackMsg
     };
 
     const DimmedSection = styled.div`
@@ -133,3 +137,4 @@ function Main() {
 };
 
 export default Main;
+

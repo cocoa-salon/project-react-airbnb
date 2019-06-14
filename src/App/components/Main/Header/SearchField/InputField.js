@@ -183,10 +183,10 @@ const AdditionalButtons = function (props) {
         <StyledDiv onClick={triggerClear}>
             <ExploreTestStyle>에어비엔비 둘러보기</ExploreTestStyle>
             <Link to="/search/all">
-                <StyledButton onClick={operateFetchQuery}>모두</StyledButton>
+                <StyledButton onClick={operateFetchQuery} >모두</StyledButton>
             </Link>
             <Link to="/search/stays">
-                <StyledButton onClick={operateFetchQuery}>숙소</StyledButton>
+                <StyledButton onClick={operateFetchQuery} >숙소</StyledButton>
             </Link>
             <Link to="/search/experiences">
                 <StyledButton>트립</StyledButton>

@@ -8,6 +8,8 @@ import { ClearContext } from '../Header';
 import { OptionPanelSetContext } from '../Header';
 import { FetchQueryContext } from '../../Main';
 
+import { requestURL } from '../../../../setting_values/setting_values';
+
 const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
 
 const StyledInputPanel = styled(InputPanel)`
@@ -84,8 +86,23 @@ function InputField(props) {
 
     const closeResultWindow = () => setInProp(false);
 
+    // 자동 추천 검색어 노출(테스트)
+    const processKeyInput = (event) => {
+        let words = event.target.value; 
+        operateFetchKeywords(words);
+    }
+
+    const operateFetchKeywords = async (words) => {
+        try {
+            const response = await fetch(`${requestURL.SEARCH_WORDS}/${words}`, { mode: "cors" });
+            console.log(response);
+        } catch (err) {
+            console.log(err);
+        };
+    };
+
     return (
-        <InputFieldDiv onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
+        <InputFieldDiv onKeyUp={processKeyInput} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
             <CSSTransition in={inProp} timeout={200} classNames="input-field" classNames="input-panel">
                 <StyledInputPanel >
                     <StyledInputFiled
@@ -166,10 +183,10 @@ const AdditionalButtons = function (props) {
         <StyledDiv onClick={triggerClear}>
             <ExploreTestStyle>에어비엔비 둘러보기</ExploreTestStyle>
             <Link to="/search/all">
-                <StyledButton onClick={operateFetchQuery}>모두</StyledButton>
+                <StyledButton onClick={operateFetchQuery} >모두</StyledButton>
             </Link>
             <Link to="/search/stays">
-                <StyledButton onClick={operateFetchQuery}>숙소</StyledButton>
+                <StyledButton onClick={operateFetchQuery} >숙소</StyledButton>
             </Link>
             <Link to="/search/experiences">
                 <StyledButton>트립</StyledButton>

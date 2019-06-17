@@ -5,7 +5,7 @@ import { OptionPanelSetContext } from '../../../Header';
 import { ClearApplyStyle } from './ClearApplyStyle';
 import { ApplyButtonStyle } from './ClearApplyStyle';
 import { ClearButtonStyle } from './ClearApplyStyle';
-
+ 
 function Dates(props) {
 
     const closePanelContext = useContext(ClosePanelContext);

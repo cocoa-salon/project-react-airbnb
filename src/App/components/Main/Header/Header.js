@@ -5,6 +5,13 @@ import SearchPanel from './SearchPanel/SearchPanel';
 import updateGuestsReducer from './SearchPanel/SearchTabs/stateReducers/updateGuestsReducer';
 import updateTypeOfPlaceReducer from './SearchPanel/SearchTabs/stateReducers/updateTypeOfPlaceReducer';
 import updatePriceReducer from './SearchPanel/SearchTabs/stateReducers/updatePriceReducer';
+import { searchOptionPanelsfilterValues } from '../../../setting_values/setting_values';
+import { searchOptionTabsValues } from '../../../setting_values/setting_values';
+import { searchOptionPanelsValues } from '../../../setting_values/setting_values';
+
+const { guestsValues, typeOfPlaceValues, priceValues, instantBookValues } = searchOptionPanelsfilterValues;
+const { tabActivated, tabStatesToClear } = searchOptionTabsValues;
+const {panelClearButtonActivated, panelStatesToClear} = searchOptionPanelsValues; 
 
 export const ClearContext = React.createContext();
 export const OptionPanelSetContext = React.createContext();
@@ -12,52 +19,22 @@ export const OptionPanelSetContext = React.createContext();
 function Header() {
 
     // 인원 state
-    const [guestsNum, dispatchGuestsNum] = useReducer(updateGuestsReducer, {
-        adultsNum: 0,
-        childrenNum: 0,
-        infantsNum: 0,
-        totalNum: 0,
-        removeAdults: false,
-        addAdults: true,
-        removeChildren: false,
-        addChildren: true,
-        removeInfants: false,
-        addInfants: true,
-    });
+    const [guestsNum, dispatchGuestsNum] = useReducer(updateGuestsReducer, guestsValues);
 
     // 숙소타입 state
-    const [typeOfPlace, dispatchTypeOfPlace] = useReducer(updateTypeOfPlaceReducer, {
-        entireRoom: false,
-        privateRoom: false,
-        hotelRoom: false,
-        sharedRoom: false
-    });
+    const [typeOfPlace, dispatchTypeOfPlace] = useReducer(updateTypeOfPlaceReducer, typeOfPlaceValues);
 
     // 즉시예약 state
-    const [isInstantBookChecked, setIsInstantBookChecked] = useState({ isChecked: false });
+    const [isInstantBookChecked, setIsInstantBookChecked] = useState(instantBookValues);
     const toggleInstantBookChecked = () => {
         setIsInstantBookChecked({ isChecked: !isInstantBookChecked.isChecked });
     };
 
     // 가격 state
-    const [price, dispatchSetPrice] = useReducer(updatePriceReducer, {
-        defaultMin: 10000,
-        defaultMax: 500000,
-        min: 10000,
-        max: 500000,
-        tabMsg: '가격'
-    });
+    const [price, dispatchSetPrice] = useReducer(updatePriceReducer, priceValues);
 
     // 검색 옵션 탭 활성화 state    
-    const [isSearchOptionTabActivated, setIsSearchOptionTabActivated] = useState({
-        dates: false,
-        guests: false,
-        typeOfPlace: false,
-        instantBook: false,
-        price: false,
-        time: false,
-        moreFilters: false
-    });
+    const [isSearchOptionTabActivated, setIsSearchOptionTabActivated] = useState(tabActivated);
 
     // 검색 옵션 탭 하이라이트 토글
     const toggleTabOnOff = (name, isActivated) => {
@@ -65,40 +42,16 @@ function Header() {
     };
 
     // 패널 삭제 버튼 활성화 토글
-    const [isPanelClearButtonActivated, setIsPanelClearButtonActivated] = useState({
-        dates: false,
-        guests: false,
-        typeOfPlace: false,
-        instantBook: false,
-        price: false,
-        time: false,
-        moreFilters: false
-    });
+    const [isPanelClearButtonActivated, setIsPanelClearButtonActivated] = useState(panelClearButtonActivated);
 
     // 패널 설정 일괄 초기화
     const clearAll = () => {
-        setIsSearchOptionTabActivated({
-            dates: false,
-            guests: false,
-            typeOfPlace: false,
-            instantBook: false,
-            price: false,
-            time: false,
-            moreFilters: false
-        });
+        setIsSearchOptionTabActivated({...tabStatesToClear});
         dispatchGuestsNum({ type: 'clearAll' });
         dispatchTypeOfPlace({ type: 'clear' });
         setIsInstantBookChecked({ isChecked: false });
         dispatchSetPrice({ type: 'clear' });
-        setIsPanelClearButtonActivated({
-            dates: false,
-            guests: false,
-            typeOfPlace: false,
-            instantBook: false,
-            price: false,
-            time: false,
-            moreFilters: false
-        });
+        setIsPanelClearButtonActivated({...panelStatesToClear});
     };
 
     const SearchOptionGuestsPanelProps = {

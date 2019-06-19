@@ -7,6 +7,7 @@ import { FetchQueryContext } from '../../../../Main'
 import { ClearApplyStyle } from './ClearApplyStyle';
 import { ApplyButtonStyle } from './ClearApplyStyle';
 import { ClearButtonStyle } from './ClearApplyStyle';
+import { nextItemsIdxDefault } from '../../../../../../setting_values/setting_values'
 import Checkbox from '@material-ui/core/Checkbox';
 
 const typeOfPlaceDesc = {
@@ -68,12 +69,23 @@ function TypeOfPlace(props) {
         event.stopPropagation();
         closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections(); 
+        generateIndexedQueryString(fetchQueryContext.queryString.str); 
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true);
+    };
 
-        fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
+    const generateIndexedQueryString = (queryString = fetchQueryContext.queryString.str) => {
+        const regExp = /&next_items_idx=\d+/;
+        queryString = queryString.replace(queryToClear, "");
         let generatedQuery = generateQueryString();
+        if (queryString.includes("&next_items_idx=")) {
+            queryString = queryString.replace(regExp, nextItemsIdxDefault);
+            queryString += generatedQuery;
+        } else {
+            generatedQuery += nextItemsIdxDefault;
+            queryString += generatedQuery;
+        }
         queryToClear = generatedQuery;
-        fetchQueryContext.queryString.str  += generatedQuery;
-        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
+        fetchQueryContext.queryString.str = queryString;
     };
 
     // 쿼리 생성(각 검색 옵션 패널마다 상이)

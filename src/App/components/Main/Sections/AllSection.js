@@ -1,14 +1,21 @@
 import React, { useContext } from 'react';
 import { FetchQueryContext } from '../Main';
-import SectionsPlaceholder from './SectionsPlaceholder';
+import Placeholder from './Placeholder';
+import SubPlaceholder from './SubPlaceholder';
 
 const AllSection = () => {
 
     const fetchQueryContext = useContext(FetchQueryContext);
 
     return (
-        fetchQueryContext.isFallBackMsg ? <SectionsPlaceholder /> :
-        <ul style={{ listStyle: "none" }}>{fetchQueryContext.stayLists}</ul>
+        fetchQueryContext.isFallBackMsg ? <Placeholder /> :
+            <ul style={{ listStyle: "none" }}> {
+                fetchQueryContext.stayLists
+            }
+                {fetchQueryContext.IsLoadingMsg ? <SubPlaceholder /> :
+                    null
+                }
+            </ul>
     );
 };
 

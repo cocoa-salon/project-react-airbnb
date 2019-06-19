@@ -57,7 +57,7 @@ const StyledContainerLogo = styled.img`
     left: 20px; 
 `;
 
-const SectionsPlaceholder = () => 
+const Placeholder = () => 
         <ul>{blankItemsArray}</ul>
 
 const BlankItemsList = () => 
@@ -73,4 +73,4 @@ for (let i = 0; i < blankItemsNum; i++) {
     blankItemsArray.push(<BlankItemsList key={i} />);
 };
 
-export default SectionsPlaceholder;
+export default Placeholder;

@@ -1,18 +1,27 @@
 import React, { useContext, useEffect } from 'react';
 import { FetchQueryContext } from '../Main';
-import SectionsPlaceholder from './SectionsPlaceholder';
+import Placeholder from './Placeholder';
+import SubPlaceholder from './SubPlaceholder';
+import { nextItemsIdxDefault } from '../../../setting_values/setting_values'
+
 
 const MainSection = () => {
 
-    useEffect(() => {
-        fetchQueryContext.operateFetchQuery("");
-    }, []); 
-
     const fetchQueryContext = useContext(FetchQueryContext);
 
+    useEffect(() => {
+        fetchQueryContext.operateFetchQuery(nextItemsIdxDefault, true);
+    }, []);
+
     return (
-        fetchQueryContext.isFallBackMsg ? <SectionsPlaceholder /> :
-        <ul style={{ listStyle: "none" }}>{fetchQueryContext.stayLists}</ul>
+        fetchQueryContext.isFallBackMsg ? <Placeholder /> :
+            <ul style={{ listStyle: "none" }}> {
+                fetchQueryContext.stayLists
+            }
+                {fetchQueryContext.IsLoadingMsg ? <SubPlaceholder /> :
+                    null
+                }
+            </ul>
     );
 };
 

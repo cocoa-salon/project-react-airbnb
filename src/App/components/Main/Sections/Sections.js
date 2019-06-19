@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 
@@ -8,11 +9,10 @@ import StaysSection from './StaysSection';
 import ExperiencesSection from './ExperiencesSection';
 import RestaurentSection from './RestaurentSection';
 
-
 const Sections = (props) => {
 
     return (
-        <StyledDiv>
+        <StyledDiv >
             <Route exact path="/" component={MainSection} />
             <Route path="/search/all" component={AllSection} />
             <Route path="/search/stays" component={StaysSection} />

@@ -3,12 +3,11 @@ import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import { style } from './inputFieldStyle';
-
 import { ClearContext } from '../Header';
 import { OptionPanelSetContext } from '../Header';
 import { FetchQueryContext } from '../../Main';
-
 import { requestURL } from '../../../../setting_values/setting_values';
+import { nextItemsIdxDefault } from '../../../../setting_values/setting_values'
 
 const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
 
@@ -175,8 +174,8 @@ const AdditionalButtons = function (props) {
 
     const operateFetchQuery = () => {
         optionPanelSetContext.clearTypeOfPlace();
-        fetchQueryContext.queryString.str = ""; 
-        fetchQueryContext.operateFetchQuery("");
+        fetchQueryContext.queryString.str = nextItemsIdxDefault;
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true);
     }
 
     return (

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { ClearApplyStyle } from './ClearApplyStyle';
 import { ApplyButtonStyle } from './ClearApplyStyle';
 import Switch from '@material-ui/core/Switch';
-
+import { nextItemsIdxDefault } from '../../../../../../setting_values/setting_values'
 
 let queryToClear = "";
 
@@ -39,12 +39,23 @@ function InstantBook(props) {
         event.stopPropagation();
         closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
+        generateIndexedQueryString(fetchQueryContext.queryString.str);
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true);
+    };
 
-        fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
+    const generateIndexedQueryString = (queryString = fetchQueryContext.queryString.str) => {
+        const regExp = /&next_items_idx=\d+/;
+        queryString = queryString.replace(queryToClear, "");
         let generatedQuery = generateQueryString();
+        if (queryString.includes("&next_items_idx=")) {
+            queryString = queryString.replace(regExp, nextItemsIdxDefault);
+            queryString += generatedQuery;
+        } else {
+            generatedQuery += nextItemsIdxDefault;
+            queryString += generatedQuery;
+        }
         queryToClear = generatedQuery;
-        fetchQueryContext.queryString.str  += generatedQuery;
-        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
+        fetchQueryContext.queryString.str = queryString;
     };
 
     return (

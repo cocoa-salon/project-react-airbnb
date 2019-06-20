@@ -1,5 +1,5 @@
 import React from 'react';
-import airbnb_logo from '../../../../img/airbnb_logo.png'
+import airbnb_logo from '../../../../img/airbnb_logo_small_white.png'
 import styled, { css, keyframes } from 'styled-components';
 
 const blankItemsNum = 30;

@@ -80,5 +80,13 @@
 
 <img src="https://user-images.githubusercontent.com/38235501/59495236-de42c800-8ec9-11e9-9b62-34b2a00b89c8.gif" alt="">
 
+### 무한 스크롤 시 추가 콘텐츠 로드 구현
+
+- 스크롤바가 화면 하단에 설정한 특정 위치 내 도달 시 추가 콘텐츠 로드 구현(쓰로틀링 적용)
+- 스크롤 시 추가 콘텐츠 로드에 필요한 쿼리 생성, 처리 로직 추가
+- 추가 콘텐츠 로드 시 placeholder 애니메이션 추가(react-loading 패키지 이용)
+
+<img src="https://user-images.githubusercontent.com/38235501/59832755-a501d080-937f-11e9-8fd9-72b1df3bcb8d.gif" alt="">
+
 
 **기타 기능 추후 구현 예정**

@@ -17,11 +17,7 @@ const ItemsContainer  = (props) => {
     );
 };
 
-const StyledItemsList = styled.li`
-    display: inline-block;
-`;
-
-const StyledItemsContainer = styled(ItemsContainer )`
+const StyledItemsContainer = styled(ItemsContainer)`
     width: 354px;
     height: 330px;
     background: white;
@@ -83,4 +79,4 @@ const attachComma = (number) =>
 
 
 export { StyledItemsContainer };
-export { StyledItemsList }
+/* export { StyledItemsList } */

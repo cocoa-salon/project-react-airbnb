@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Header from './Header/Header';
 import Sections from './Sections/Sections';
-import { StyledItemsContainer, StyledItemsList } from './Sections/ItemsContainer ';
+import { StyledItemsContainer } from './Sections/ItemsContainer ';
 import { requestURL } from '../../setting_values/setting_values';
 import { nextItemsIdxDefault } from '../../setting_values/setting_values';
 import { OPERATE_FETCH_TIME } from '../../setting_values/setting_values';
@@ -89,9 +89,9 @@ function Main() {
                 image: infos['images']
             };
             return (
-                <StyledItemsList key={infos['_id']}>
+                <li key={infos['_id']}>
                     <StyledItemsContainer {...itemProps} />
-                </StyledItemsList>
+                </li>
             );
         });
         return mappedList;

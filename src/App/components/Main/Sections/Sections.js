@@ -28,6 +28,6 @@ const StyledDiv = styled.div`
     top: 142px;  
     width: 100%;
     height: 100%;
-    border: 1px solid rgb(230,230,230);
+    border-top: 1px solid rgb(230,230,230);
 `
 export default Sections;

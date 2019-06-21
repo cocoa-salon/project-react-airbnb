@@ -1,8 +1,14 @@
 import React from 'react';
 import SectionItemsDisplay from './SectionItemsDisplay';
+import ScrollToTopOnMount from './ScrollToTopOnMount';
 
 const AllSection = () => {
-    return <SectionItemsDisplay />
+    return (
+        <>
+            <ScrollToTopOnMount />
+            <SectionItemsDisplay />
+        </>
+    );
 };
 
 export default AllSection;

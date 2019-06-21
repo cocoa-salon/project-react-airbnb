@@ -4,11 +4,11 @@ import Main from './Main/Main'
 
 const App = () => {
 
-    return (
-      <Router>
+  return (
+    <Router>
         <Main />
-      </Router>
-    );
+    </Router>
+  );
 }
 
 export default App;

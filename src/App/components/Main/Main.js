@@ -12,8 +12,9 @@ export const FetchQueryContext = React.createContext();
 let queryString = {
     str: nextItemsIdxDefault
 };
-
 let triggerFetchTimer;
+const INCREASE_IDX_NUM = 1;
+let isSearching = true;
 
 // 포인터가 바깥에 있는 상태
 let isCursorOffPanel = true;
@@ -56,26 +57,50 @@ function Main() {
     };
 
     const [stayLists, setStayLists] = useState([]);
+    const [IsShowPlaceholder, setIsShowPlaceholder] = useState(true);
+    const [isAdditionalLoad, setIsAdditionalLoad] = useState(true);
+    const [isStopLoad, setIsStopLoad] = useState(false);
 
-    const [isFallBackMsg, setIsFallBackMsg] = useState(true);
-    const [IsLoadingMsg, setIsLoadingMsg] = useState(true);
-    
+    const [resultCount, setResultCount] = useState({
+        total: 0,
+        current: 0
+    });
+
     // 생성한 쿼리로 fetch 요청 
-    const operateFetchQuery = async (queryString, isClearState) => {
+    const operateFetchQuery = async (queryString, isInitialLoad, isSearchingArg) => {
+        isSearching = isSearchingArg;
+        if (isSearching === false) return;
         try {
-            if (isClearState) {
-                setIsFallBackMsg(true);
+            // 맨 처음 검색 시(초기화) 로딩 화면 표시
+            if (isInitialLoad) {
+                await setIsShowPlaceholder(true);
+                await setResultCount({ total: 0, current: 0 });
+                await setIsStopLoad(false); 
             }
             const response = await fetch(`${requestURL.FETCH_ALL_DATA}/${queryString}`, { mode: "cors" });
             const resultJson = await response.json();
+            if (resultJson.isEndOfResult) {
+                stopQueryFetch(resultJson);
+                return;
+            }
+            const queryResultCount = resultJson.pop();
+            setResultCount({ total: queryResultCount.total, current: queryResultCount.current });
             const mappedList = generateMappedList(resultJson);
-            setIsFallBackMsg(false);
-            setIsLoadingMsg(false);
-            isClearState ? setStayLists([...mappedList]) : setStayLists([...stayLists, ...mappedList]);
+            setIsShowPlaceholder(false);
+            isInitialLoad ? setStayLists([...mappedList]) : setStayLists([...stayLists, ...mappedList]);
+            setIsAdditionalLoad(false);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         };
     };
+
+    // 패치 요청 중단
+    const stopQueryFetch = (resultJson) => {
+        isSearching = false;
+        setStayLists([...stayLists]);
+        setIsStopLoad(true);
+        setIsAdditionalLoad(false);
+    }
 
     const generateMappedList = (resultJson) => {
         const mappedList = resultJson.map((infos) => {
@@ -98,18 +123,20 @@ function Main() {
     };
 
     const [searchOptionTabUrl, setSearchOptionTabUrl] = useState("");
-
     const [isPanelClosed, setIsPanelClosed] = useState(true);
-
     const [isFetching, setIsFetching] = useState(false);
 
     const handleScroll = (event) => {
+        if (!isSearching) {
+            return;
+        }
         let scrollHeight = document.documentElement.scrollHeight; // 도큐먼트 전체높이
         let pageYOffset = window.pageYOffset; // 바깥으로 스크롤된 도큐먼트 높이 
         let innerHeight = window.innerHeight; // 현재 보이는 도큐먼트 높이
 
+        // 쓰로틀링 
         if (scrollHeight - pageYOffset - innerHeight < 100 && !triggerFetchTimer) {
-            setIsLoadingMsg(true);
+            setIsAdditionalLoad(true);
             triggerFetchTimer = setTimeout(() => {
                 setIsFetching(true);
                 increaseNextItemsIdx();
@@ -121,16 +148,12 @@ function Main() {
     const increaseNextItemsIdx = () => {
         const template = '&next_items_idx={{}}';
         const regExp = /&next_items_idx=\d+/;
-        const increasedNum = Number(queryString.str.match(regExp)[0].match(/\d+/)[0]) + 1;
+        const increasedNum = Number(queryString.str.match(regExp)[0].match(/\d+/)[0]) + INCREASE_IDX_NUM;
         const nextItemsIdx = template.replace('{{}}', increasedNum);
         queryString.str = queryString.str.replace(regExp, nextItemsIdx);
     };
 
-    const operateContinuousFetch = () => {
-        operateFetchQuery(queryString.str, false);
-        setIsFetching(false);
-    };
-
+    // 스크롤 이벤트 등록
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
@@ -138,10 +161,16 @@ function Main() {
         }
     }, []);
 
+    // 스크롤 이벤트 발생시 패치 요청
     useEffect(() => {
         if (!isFetching) return;
         operateContinuousFetch();
     }, [isFetching]);
+
+    const operateContinuousFetch = () => {
+        operateFetchQuery(queryString.str, false, isSearching);
+        setIsFetching(false);
+    };
 
     const searchOptionTabUrlProps = {
         searchOptionTabUrl: searchOptionTabUrl,
@@ -154,7 +183,6 @@ function Main() {
         clearDimmedSections: clearDimmedSections,
         applyDimmedSections: applyDimmedSections,
         toggleDimmedSections: toggleDimmedSections,
-
         isPanelClosed: isPanelClosed,
         setIsPanelClosed: setIsPanelClosed,
     };
@@ -164,8 +192,10 @@ function Main() {
         stayLists: stayLists,
         setStayLists: setStayLists,
         queryString: queryString,
-        isFallBackMsg: isFallBackMsg,
-        IsLoadingMsg: IsLoadingMsg,
+        IsShowPlaceholder: IsShowPlaceholder,
+        isAdditionalLoad: isAdditionalLoad,
+        isStopLoad: isStopLoad,
+        resultCount: resultCount,
     };
 
     const DimmedSection = styled.div`

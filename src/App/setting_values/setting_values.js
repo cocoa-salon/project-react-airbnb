@@ -1,8 +1,8 @@
 export const requestURL = {
-    FETCH_ALL_DATA : "https://airbnbreactbackend.herokuapp.com/search/rooms",
-    SEARCH_WORDS : "https://airbnbreactbackend.herokuapp.com/search/list",
-    // FETCH_ALL_DATA: "http://localhost:8080/search/rooms",
-    // SEARCH_WORDS: "http://localhost:8080/search/list"
+    // FETCH_ALL_DATA : "https://airbnbreactbackend.herokuapp.com/search/rooms",
+    // SEARCH_WORDS : "https://airbnbreactbackend.herokuapp.com/search/list",
+    FETCH_ALL_DATA: "http://localhost:8080/search/rooms",
+    SEARCH_WORDS: "http://localhost:8080/search/list"
 };
 
 export const OPERATE_FETCH_TIME = 1000; 

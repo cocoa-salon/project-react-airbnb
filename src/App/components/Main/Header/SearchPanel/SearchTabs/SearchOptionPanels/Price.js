@@ -144,7 +144,8 @@ function Price(props) {
 
         // 쿼리 생성 및 fetch 요청
         generateIndexedQueryString(fetchQueryContext.queryString.str);
-        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true);
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true, true);
+        window.scrollTo(0, 0);
 
         // 패널 닫기, 화면 흐림 해제
         closePanelContext.setIsPanelClosed(true);

@@ -139,9 +139,10 @@ function Guests(props) {
             optionPanelSetContext.toggleTabOnOff('guests', true);
         }
         generateIndexedQueryString(fetchQueryContext.queryString.str);
-        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true);
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true, true);
         closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
+        window.scrollTo(0, 0);
     };
 
     const generateIndexedQueryString = (queryString = fetchQueryContext.queryString.str) => {

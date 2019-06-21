@@ -13,11 +13,11 @@ const Sections = (props) => {
 
     return (
         <StyledDiv >
-            <Route exact path="/" component={MainSection} />
-            <Route path="/search/all" component={AllSection} />
-            <Route path="/search/stays" component={StaysSection} />
-            <Route path="/search/experiences" component={ExperiencesSection} />
-            <Route path="/search/restaurants" component={RestaurentSection} />
+                <Route exact path="/" component={MainSection} />
+                <Route path="/search/all" component={AllSection} />
+                <Route path="/search/stays" component={StaysSection} />
+                <Route path="/search/experiences" component={ExperiencesSection} />
+                <Route path="/search/restaurants" component={RestaurentSection} />
         </StyledDiv>
     );
 };

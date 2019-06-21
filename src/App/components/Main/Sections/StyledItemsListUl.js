@@ -4,7 +4,7 @@ const StyledItemsListUl = styled.ul`
     list-style : none;
     display: flex; 
     flex-direction: row; 
-    justify-content: start; 
+    justify-content: flex-start; 
     flex-wrap: wrap;
 `
 export default StyledItemsListUl; 

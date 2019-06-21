@@ -40,7 +40,8 @@ function InstantBook(props) {
         closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
         generateIndexedQueryString(fetchQueryContext.queryString.str);
-        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true);
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true, true);
+        window.scrollTo(0, 0);
     };
 
     const generateIndexedQueryString = (queryString = fetchQueryContext.queryString.str) => {

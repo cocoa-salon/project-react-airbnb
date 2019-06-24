@@ -1,14 +1,13 @@
-import React, { useContext } from 'react';
-import { FetchQueryContext } from '../Main';
-import SectionsPlaceholder from './SectionsPlaceholder';
+import React from 'react';
+import SectionItemsDisplay from './SectionItemsDisplay';
+import ScrollToTopOnMount from './ScrollToTopOnMount';
 
 const AllSection = () => {
-
-    const fetchQueryContext = useContext(FetchQueryContext);
-
     return (
-        fetchQueryContext.isFallBackMsg ? <SectionsPlaceholder /> :
-        <ul style={{ listStyle: "none" }}>{fetchQueryContext.stayLists}</ul>
+        <>
+            <ScrollToTopOnMount />
+            <SectionItemsDisplay />
+        </>
     );
 };
 

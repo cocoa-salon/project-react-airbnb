@@ -10,6 +10,7 @@ import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import { Range } from 'rc-slider';
+import { nextItemsIdxDefault } from '../../../../../../setting_values/setting_values'
 
 const PriceOptionPanelStyle = styled(SearchOptionPanelStyle)`
     display: flex;
@@ -142,11 +143,9 @@ function Price(props) {
         event.stopPropagation();
 
         // 쿼리 생성 및 fetch 요청
-        fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
-        let generatedQuery = generateQueryString();
-        queryToClear = generatedQuery;
-        fetchQueryContext.queryString.str += generatedQuery;
-        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
+        generateIndexedQueryString(fetchQueryContext.queryString.str);
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true, true);
+        window.scrollTo(0, 0);
 
         // 패널 닫기, 화면 흐림 해제
         closePanelContext.setIsPanelClosed(true);
@@ -164,6 +163,21 @@ function Price(props) {
             optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg: priceMax}});
         } 
         optionPanelSetContext.toggleTabOnOff("price", true);
+    };
+
+    const generateIndexedQueryString = (queryString = fetchQueryContext.queryString.str) => {
+        const regExp = /&next_items_idx=\d+/;
+        queryString = queryString.replace(queryToClear, "");
+        let generatedQuery = generateQueryString();
+        if (queryString.includes("&next_items_idx=")) {
+            queryString = queryString.replace(regExp, nextItemsIdxDefault);
+            queryString += generatedQuery;
+        } else {
+            generatedQuery += nextItemsIdxDefault;
+            queryString += generatedQuery;
+        }
+        queryToClear = generatedQuery;
+        fetchQueryContext.queryString.str = queryString;
     };
 
     const clearPrice = (event) => {

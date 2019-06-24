@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import airbnb_logo from '../../../../img/airbnb_logo_small_white.png'
 
 const ItemsContainer  = (props) => {
     return (
         <div className={props.className}>
             <StyledItemImageContainer>
                 <StyledItemImage src={props.image.pictureUrl} alt="" />
+                <StyledContainerLogo src={airbnb_logo} alt="" />
             </StyledItemImageContainer>
             <StyledProperyType>{props.propertyType.toUpperCase()}</StyledProperyType>
             <StyledStaysName>{props.name}</StyledStaysName>
@@ -15,11 +17,7 @@ const ItemsContainer  = (props) => {
     );
 };
 
-const StyledItemsList = styled.li`
-    display: inline-block;
-`;
-
-const StyledItemsContainer = styled(ItemsContainer )`
+const StyledItemsContainer = styled(ItemsContainer)`
     width: 354px;
     height: 330px;
     background: white;
@@ -27,15 +25,27 @@ const StyledItemsContainer = styled(ItemsContainer )`
 `;
 
 const StyledItemImageContainer = styled.div`
+    position: relative;
     width: 343px; 
     height: 230px; 
     background: rgb(235,235,235);
 `;
 
 const StyledItemImage = styled.img`
+    position: relative;
+    z-index: 30;
     width: 343px;
     height: 230px; 
     border-radius: 5px;
+`;
+
+const StyledContainerLogo = styled.img`
+    width: 50px;
+    display: block;
+    position: absolute; 
+    top: 20px; 
+    left: 20px; 
+    z-index: 20
 `;
 
 const StyledProperyType = styled.p`
@@ -69,4 +79,4 @@ const attachComma = (number) =>
 
 
 export { StyledItemsContainer };
-export { StyledItemsList }
+/* export { StyledItemsList } */

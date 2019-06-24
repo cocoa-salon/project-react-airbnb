@@ -3,12 +3,11 @@ import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import { style } from './inputFieldStyle';
-
 import { ClearContext } from '../Header';
 import { OptionPanelSetContext } from '../Header';
 import { FetchQueryContext } from '../../Main';
-
 import { requestURL } from '../../../../setting_values/setting_values';
+import { nextItemsIdxDefault } from '../../../../setting_values/setting_values'
 
 const { RemoveKeywordButton, StyledInputFiled, StyledResultWindow } = style;
 
@@ -54,15 +53,15 @@ const StyledInputPanel = styled(InputPanel)`
     &.input-panel-exit-done {
         width: 350px;
     };
-`
+`;
 
 function InputPanel({ className, children }) {
     return (
         <div className={className}>
             {children}
         </div>
-    )
-}
+    );
+};
 
 function InputField(props) {
     const [inProp, setInProp] = useState(false);
@@ -90,7 +89,7 @@ function InputField(props) {
     const processKeyInput = (event) => {
         let words = event.target.value; 
         operateFetchKeywords(words);
-    }
+    };
 
     const operateFetchKeywords = async (words) => {
         try {
@@ -122,13 +121,13 @@ function InputField(props) {
                 </StyledResultWindow>
             </CSSTransition>
         </InputFieldDiv>
-    )
-}
+    );
+};
 
 const InputFieldDiv = styled.div`
     width: auto;
     height: 50px;
-`
+`;
 
 const AdditionalButtons = function (props) {
 
@@ -141,7 +140,7 @@ const AdditionalButtons = function (props) {
         if (event.target.tagName === 'BUTTON') {
             triggerClearValue.clearAll();
         }
-    }
+    };
 
     const StyledDiv = styled.div`
         position: relative; 
@@ -150,7 +149,8 @@ const AdditionalButtons = function (props) {
         margin-left: 3px;
         margin-bottom: 50px; 
         background: white;
-    `
+    `;
+
     const StyledButton = styled.button`
         width: auto;
         height: auto;
@@ -164,20 +164,21 @@ const AdditionalButtons = function (props) {
         &:hover {
             box-shadow: 0px 0px 1px 1px rgba(240,240,240,1);
         }
-    `
+    `;
+
     const ExploreTestStyle = styled.p`
         color: rgb(60,60,60);
         font-size: 12px;
         font-weight: bold;
         padding-left: 20px;
         margin: 0px;
-    `
+    `;
 
     const operateFetchQuery = () => {
         optionPanelSetContext.clearTypeOfPlace();
-        fetchQueryContext.queryString.str = ""; 
-        fetchQueryContext.operateFetchQuery("");
-    }
+        fetchQueryContext.queryString.str = nextItemsIdxDefault;
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true, true);
+    };
 
     return (
         <StyledDiv onClick={triggerClear}>
@@ -195,7 +196,7 @@ const AdditionalButtons = function (props) {
                 <StyledButton>레스토랑</StyledButton>
             </Link>
         </StyledDiv>
-    )
-}
+    );
+};
 
 export { InputField }; 

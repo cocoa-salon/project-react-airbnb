@@ -7,6 +7,7 @@ import { FetchQueryContext } from '../../../../Main'
 import { ClearApplyStyle } from './ClearApplyStyle';
 import { ApplyButtonStyle } from './ClearApplyStyle';
 import { ClearButtonStyle } from './ClearApplyStyle';
+import { nextItemsIdxDefault } from '../../../../../../setting_values/setting_values'
 
 const StyledButton = styled.button`
     display: inline-block;
@@ -79,26 +80,26 @@ function Guests(props) {
     const setGuestsNum = (event) => {
         const name = event.target.name;
         if (event.target.tagName !== 'BUTTON') return;
-        if (name === " addAdults" || name === "addChildren" || name === " addInfants" ) {
+        if (name === " addAdults" || name === "addChildren" || name === " addInfants") {
             optionPanelSetContext.toggleTabOnOff('guests', true);
-            optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, guests : true});
-        } 
-        checkIsRemoveAdultActivated(name); 
+            optionPanelSetContext.setIsPanelClearButtonActivated({ ...optionPanelSetContext.isPanelClearButtonActivated, guests: true });
+        }
+        checkIsRemoveAdultActivated(name);
         optionPanelSetContext.dispatchGuestsNum({ type: name });
     };
 
     const checkIsRemoveAdultActivated = (name) => {
-        if (( name === "removeAdults" && optionPanelSetContext.totalNum === 2 && optionPanelSetContext.adultsNum === 2) ||
-        ( name === "removeChildren" && optionPanelSetContext.totalNum === 2 && optionPanelSetContext.childrenNum === 1) ||
-        ( name === "removeInfants" && optionPanelSetContext.totalNum === 1 && optionPanelSetContext.infantsNum === 1)) {
-         optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, guests : false});
-        } 
+        if ((name === "removeAdults" && optionPanelSetContext.totalNum === 2 && optionPanelSetContext.adultsNum === 2) ||
+            (name === "removeChildren" && optionPanelSetContext.totalNum === 2 && optionPanelSetContext.childrenNum === 1) ||
+            (name === "removeInfants" && optionPanelSetContext.totalNum === 1 && optionPanelSetContext.infantsNum === 1)) {
+            optionPanelSetContext.setIsPanelClearButtonActivated({ ...optionPanelSetContext.isPanelClearButtonActivated, guests: false });
+        }
     };
 
     const clearGuestNum = (event) => {
         event.stopPropagation();
         optionPanelSetContext.dispatchGuestsNum({ type: 'clear' });
-        optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, guests : false});
+        optionPanelSetContext.setIsPanelClearButtonActivated({ ...optionPanelSetContext.isPanelClearButtonActivated, guests: false });
     };
 
 
@@ -117,34 +118,46 @@ function Guests(props) {
     // 쿼리 생성(각 검색 옵션 패널마다 상이)
     const generateQueryString = () => {
         let queryString = "";
-        if(optionPanelSetContext.adultsNum === 0) {
+        if (optionPanelSetContext.adultsNum === 0) {
             queryString += templateGuest.adults.replace(regExpGuest.adults, 1);
-        } else if(optionPanelSetContext.adultsNum > 0) {
+        } else if (optionPanelSetContext.adultsNum > 0) {
             queryString += templateGuest.adults.replace(regExpGuest.adults, optionPanelSetContext.adultsNum);
         }
-        if(optionPanelSetContext.childrenNum > 0) {
+        if (optionPanelSetContext.childrenNum > 0) {
             queryString += templateGuest.children.replace(regExpGuest.children, optionPanelSetContext.childrenNum);
-        } 
-        if(optionPanelSetContext.infantsNum > 0) {
+        }
+        if (optionPanelSetContext.infantsNum > 0) {
             queryString += templateGuest.infants.replace(regExpGuest.infants, optionPanelSetContext.infantsNum);
-        } 
+        }
         return queryString;
     }
 
     const applyGuestNum = (event) => {
         event.stopPropagation();
-        if(optionPanelSetContext.adultsNum === 0) {
+        if (optionPanelSetContext.adultsNum === 0) {
             optionPanelSetContext.dispatchGuestsNum({ type: ' addAdults' });
             optionPanelSetContext.toggleTabOnOff('guests', true);
         }
-
-        fetchQueryContext.queryString.str = fetchQueryContext.queryString.str.replace(queryToClear, "");
-        let generatedQuery = generateQueryString();
-        queryToClear = generatedQuery;
-        fetchQueryContext.queryString.str  += generatedQuery;
-        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str);
+        generateIndexedQueryString(fetchQueryContext.queryString.str);
+        fetchQueryContext.operateFetchQuery(fetchQueryContext.queryString.str, true, true);
         closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
+        window.scrollTo(0, 0);
+    };
+
+    const generateIndexedQueryString = (queryString = fetchQueryContext.queryString.str) => {
+        const regExp = /&next_items_idx=\d+/;
+        queryString = queryString.replace(queryToClear, "");
+        let generatedQuery = generateQueryString();
+        if (queryString.includes("&next_items_idx=")) {
+            queryString = queryString.replace(regExp, nextItemsIdxDefault);
+            queryString += generatedQuery;
+        } else {
+            generatedQuery += nextItemsIdxDefault;
+            queryString += generatedQuery;
+        }
+        queryToClear = generatedQuery;
+        fetchQueryContext.queryString.str = queryString;
     };
 
     return (
@@ -153,8 +166,8 @@ function Guests(props) {
             <GuestsNumSetButton guestType="어린이" rightButton="removeChildren" leftButton="addChildren" numbers={optionPanelSetContext.childrenNum} />
             <GuestsNumSetButton guestType="유아" rightButton="removeInfants" leftButton=" addInfants" numbers={optionPanelSetContext.infantsNum} />
             <ClearApplyStyle>
-                <ClearButtonStyle visible={optionPanelSetContext.isPanelClearButtonActivated.guests}  name="clear" onClick={clearGuestNum}>
-                    { optionPanelSetContext.isPanelClearButtonActivated.guests ? '삭제' : null }
+                <ClearButtonStyle visible={optionPanelSetContext.isPanelClearButtonActivated.guests} name="clear" onClick={clearGuestNum}>
+                    {optionPanelSetContext.isPanelClearButtonActivated.guests ? '삭제' : null}
                 </ClearButtonStyle>
                 <ApplyButtonStyle name="apply" onClick={applyGuestNum}>
                     적용

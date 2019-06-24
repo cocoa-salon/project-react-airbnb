@@ -1,13 +1,10 @@
 import React from 'react';
-import airbnb_logo from '../../../../img/airbnb_logo.png'
+import airbnb_logo from '../../../../img/airbnb_logo_small_white.png'
 import styled, { css, keyframes } from 'styled-components';
+import StyledItemsListUl from './StyledItemsListUl';
 
 const blankItemsNum = 30;
 const blankItemsArray = [];
-
-const StyledItemsList = styled.li`
-    display: inline-block;
-`;
 
 const containerFade = keyframes`
     0% {
@@ -57,20 +54,20 @@ const StyledContainerLogo = styled.img`
     left: 20px; 
 `;
 
-const SectionsPlaceholder = () => 
-        <ul>{blankItemsArray}</ul>
+const Placeholder = () => 
+        <StyledItemsListUl>{blankItemsArray}</StyledItemsListUl>
 
 const BlankItemsList = () => 
-    <StyledItemsList>
+    <li>
         <StyledItemImageContainer active={true}>
             <StyledContainerLogo src={airbnb_logo} alt="" />
         </StyledItemImageContainer>
         <StyledItemsInfoContainer active={true} />
-    </StyledItemsList>
+    </li>
 
 
 for (let i = 0; i < blankItemsNum; i++) {
     blankItemsArray.push(<BlankItemsList key={i} />);
 };
 
-export default SectionsPlaceholder;
+export default Placeholder;

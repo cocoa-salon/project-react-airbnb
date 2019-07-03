@@ -11,6 +11,7 @@ import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import { Range } from 'rc-slider';
 import { nextItemsIdxDefault } from '../../../../../../setting_values/setting_values'
+import { VictoryBar, VictoryChart, VictoryAxis } from 'victory';
 
 const PriceOptionPanelStyle = styled(SearchOptionPanelStyle)`
     display: flex;
@@ -57,7 +58,18 @@ const CurrencyStyle = styled.span`
 
 let queryToClear = "";
 
-function Price(props) {
+const data = [
+    { quarter: 1, earnings: 10 },
+    { quarter: 2, earnings: 3 },
+    { quarter: 3, earnings: 9 },
+    { quarter: 4, earnings: 2 },
+    { quarter: 5, earnings: 7 },
+    { quarter: 6, earnings: 5 },
+    { quarter: 7, earnings: 2 },
+    { quarter: 8, earnings: 1 }
+];
+
+const Price = (props) => {
 
     const optionPanelSetContext = useContext(OptionPanelSetContext);
     const closePanelContext = useContext(ClosePanelContext);
@@ -70,7 +82,7 @@ function Price(props) {
     const refSlider = useRef(null);
 
     // 가격에 콤마 추가
-    const attachComma = (number) => 
+    const attachComma = (number) =>
         number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     // 슬라이더 막대 이동시 이벤트 처리
@@ -85,47 +97,47 @@ function Price(props) {
     const handleOnAfterChange = (event) => {
         const minValue = event[0];
         const maxValue = event[1];
-        optionPanelSetContext.dispatchSetPrice({type: "setPrices", payload: {minValue: minValue, maxValue: maxValue}});
-        if(minValue === price.defaultMin && maxValue === price.defaultMax) {
-            optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, price : false});
-        } else optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, price : true});
+        optionPanelSetContext.dispatchSetPrice({ type: "setPrices", payload: { minValue: minValue, maxValue: maxValue } });
+        if (minValue === price.defaultMin && maxValue === price.defaultMax) {
+            optionPanelSetContext.setIsPanelClearButtonActivated({ ...optionPanelSetContext.isPanelClearButtonActivated, price: false });
+        } else optionPanelSetContext.setIsPanelClearButtonActivated({ ...optionPanelSetContext.isPanelClearButtonActivated, price: true });
     };
 
     // 가격 입력 시 이벤트 처리
     const handleOnChangeInput = (event) => {
         const name = event.target.name;
         const value = Number(event.target.value);
-        if(name === "priceMin") setPriceMin(value);
-        else if(name === "priceMax" ) setPriceMax(value);
+        if (name === "priceMin") setPriceMin(value);
+        else if (name === "priceMax") setPriceMax(value);
     };
 
     // 최소값 입력 및 상태 업데이트
     const setPriceMin = (value) => {
         if (value >= price.max || isNaN(value)) return;
         checkClearButtonOnChange(value, price.defaultMin, price.max, price.defaultMax);
-        optionPanelSetContext.dispatchSetPrice({type: "setPriceMin", payload: { minValue: value }});
+        optionPanelSetContext.dispatchSetPrice({ type: "setPriceMin", payload: { minValue: value } });
     };
 
     // 최대값 입력 및 상태 업데이트
     const setPriceMax = (value) => {
         if (value > price.defaultMax || isNaN(value)) return;
         checkClearButtonOnChange(value, price.defaultMax, price.min, price.defaultMin);
-        optionPanelSetContext.dispatchSetPrice({type: "setPriceMax", payload: { maxValue: value }});
+        optionPanelSetContext.dispatchSetPrice({ type: "setPriceMax", payload: { maxValue: value } });
     };
 
     // 가격 직접 입력시 삭제 버튼 노출 여부 결정
-    const checkClearButtonOnChange = (value, defaultMinMax1, minMax, defaultMinMax2 ) => {
-        if(value === defaultMinMax1 && minMax === defaultMinMax2 ) {
-            optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, price : false});
-        } else optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, price : true});
+    const checkClearButtonOnChange = (value, defaultMinMax1, minMax, defaultMinMax2) => {
+        if (value === defaultMinMax1 && minMax === defaultMinMax2) {
+            optionPanelSetContext.setIsPanelClearButtonActivated({ ...optionPanelSetContext.isPanelClearButtonActivated, price: false });
+        } else optionPanelSetContext.setIsPanelClearButtonActivated({ ...optionPanelSetContext.isPanelClearButtonActivated, price: true });
     }
 
     // 탭에 표시할 가격 정보
     const tabMsgs = {
-        priceDefault : '가격',
-        prices : `\u{FFE6} ${attachComma(price.min)}- \u{FFE6} ${attachComma(price.max)}`,
-        priceMin : `최대 \u{FFE6} ${attachComma(price.max)}`,
-        priceMax : `\u{FFE6} ${attachComma(price.min)} +`
+        priceDefault: '가격',
+        prices: `\u{FFE6} ${attachComma(price.min)}- \u{FFE6} ${attachComma(price.max)}`,
+        priceMin: `최대 \u{FFE6} ${attachComma(price.max)}`,
+        priceMax: `\u{FFE6} ${attachComma(price.min)} +`
     };
 
     const { priceDefault, prices, priceMin, priceMax } = tabMsgs;
@@ -151,17 +163,17 @@ function Price(props) {
         closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
 
-        if(price.min === price.defaultMin && price.max === price.defaultMax) {
+        if (price.min === price.defaultMin && price.max === price.defaultMax) {
             optionPanelSetContext.toggleTabOnOff("price", false);
-            optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg : priceDefault}});
-            return; 
+            optionPanelSetContext.dispatchSetPrice({ type: "setTabState", payload: { tabMsg: priceDefault } });
+            return;
         } else if (price.min !== price.defaultMin && price.max !== price.defaultMax) {
-            optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg : prices}});
-        } else if(price.min === price.defaultMin) {
-            optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg: priceMin}});
-        } else if(price.max === price.defaultMax) {
-            optionPanelSetContext.dispatchSetPrice({type: "setTabState", payload: { tabMsg: priceMax}});
-        } 
+            optionPanelSetContext.dispatchSetPrice({ type: "setTabState", payload: { tabMsg: prices } });
+        } else if (price.min === price.defaultMin) {
+            optionPanelSetContext.dispatchSetPrice({ type: "setTabState", payload: { tabMsg: priceMin } });
+        } else if (price.max === price.defaultMax) {
+            optionPanelSetContext.dispatchSetPrice({ type: "setTabState", payload: { tabMsg: priceMax } });
+        }
         optionPanelSetContext.toggleTabOnOff("price", true);
     };
 
@@ -183,12 +195,22 @@ function Price(props) {
     const clearPrice = (event) => {
         event.stopPropagation();
         optionPanelSetContext.toggleTabOnOff("price", false);
-        optionPanelSetContext.dispatchSetPrice({type: 'clear'});
-        optionPanelSetContext.setIsPanelClearButtonActivated({...optionPanelSetContext.isPanelClearButtonActivated, price : false});
+        optionPanelSetContext.dispatchSetPrice({ type: 'clear' });
+        optionPanelSetContext.setIsPanelClearButtonActivated({ ...optionPanelSetContext.isPanelClearButtonActivated, price: false });
     };
+
+    const wonCurrency = "\u{FFE6}"
+    const PriceAvgMsg = (props) => <div {...props}>평균 1박 요금은 {wonCurrency}{attachComma(fetchQueryContext.priceAvg)}입니다.</div>;
+    const StyledPriceAvgMsg = styled.div`
+        color: rgb(60,60,60); 
+    `;
 
     return (
         <PriceOptionPanelStyle>
+            <StyledPriceAvgMsg as={PriceAvgMsg} />
+            <div>
+                <VictoryBar data={fetchQueryContext.priceRangeMap} x="priceRangeNum" y="itemNum" />
+            </div>
             <SliderStyle>
                 <Range
                     ref={refSlider}
@@ -200,6 +222,7 @@ function Price(props) {
                     max={price.defaultMax}
                     defaultValue={[price.defaultMin, price.defaultMax]}
                     value={[price.min, price.max]}
+                    marks={{ 50000: 50000, 100000: 100000, 150000: 150000 }}
                     step={2000}
                 />
             </SliderStyle>
@@ -216,7 +239,7 @@ function Price(props) {
             </PriceInputContainerStyle>
             <ClearApplyStyle>
                 <ClearButtonStyle visible={optionPanelSetContext.isPanelClearButtonActivated.price} name="clear" onClick={clearPrice}>
-                    { optionPanelSetContext.isPanelClearButtonActivated.price ? '삭제' : null }
+                    {optionPanelSetContext.isPanelClearButtonActivated.price ? '삭제' : null}
                 </ClearButtonStyle>
                 <ApplyButtonStyle onClick={applyPrice}>
                     적용

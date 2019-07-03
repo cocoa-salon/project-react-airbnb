@@ -172,6 +172,40 @@ function Main() {
         setIsFetching(false);
     };
 
+    // 가격대 분포 관련 상태
+    const [priceRangeMap, setPriceRangeMap] = useState([]);
+    const [priceAvg, setPriceAvg] = useState(0);
+
+    // 가격대 분포 정보 요청
+    const fetchPriceRangeMap = async () => {
+        try {
+            const priceRangePromiseObj = await fetch(requestURL.FETCH_PRICE_RANGE_MAP, { mode: "cors" });
+            const priceRangeMapObj = await priceRangePromiseObj.json();
+            console.log(priceRangeMapObj);
+            getPriceAvg(priceRangeMapObj);
+            setPriceRangeMap([...priceRangeMapObj]);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const getPriceAvg = (priceRangeMapObj) => {
+        let priceRangeList = [];
+        priceRangeMapObj.forEach(v => {
+            priceRangeList = [...priceRangeList, ...v['priceList']];
+        });
+        console.log(priceRangeList);
+        let priceAvg = Math.round(priceRangeList.reduce((sum, price) => {
+            return sum + price;
+        },0) / priceRangeList.length); 
+        setPriceAvg(priceAvg);
+    }
+
+    // 가격대 분포 정보 요청
+    useEffect(() => {
+        fetchPriceRangeMap();
+    }, []);
+
     const searchOptionTabUrlProps = {
         searchOptionTabUrl: searchOptionTabUrl,
         setSearchOptionTabUrl: setSearchOptionTabUrl,
@@ -196,6 +230,8 @@ function Main() {
         isAdditionalLoad: isAdditionalLoad,
         isStopLoad: isStopLoad,
         resultCount: resultCount,
+        priceRangeMap: priceRangeMap,
+        priceAvg: priceAvg
     };
 
     const DimmedSection = styled.div`

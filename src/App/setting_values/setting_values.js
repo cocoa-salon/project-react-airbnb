@@ -1,8 +1,11 @@
 export const requestURL = {
     FETCH_ALL_DATA : "https://airbnbreactbackend.herokuapp.com/search/rooms",
     SEARCH_WORDS : "https://airbnbreactbackend.herokuapp.com/search/list",
+    FETCH_PRICE_RANGE_MAP : "https://airbnbreactbackend.herokuapp.com/search/price_range"
+
     // FETCH_ALL_DATA: "http://localhost:8080/search/rooms",
-    // SEARCH_WORDS: "http://localhost:8080/search/list"
+    // SEARCH_WORDS: "http://localhost:8080/search/list",
+    // FETCH_PRICE_RANGE_MAP : "http://localhost:8080/search/price_range"
 };
 
 export const OPERATE_FETCH_TIME = 1000; 
@@ -34,9 +37,9 @@ export const searchOptionPanelsfilterValues = {
     // 가격 state
     priceValues : {
         defaultMin: 10000,
-        defaultMax: 500000,
+        defaultMax: 200000,
         min: 10000,
-        max: 500000,
+        max: 200000,
         tabMsg: '가격'
     },
 

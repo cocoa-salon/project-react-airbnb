@@ -28,9 +28,9 @@ const handleChangeMax = (price, maxValue) => {
 const clearChecked = () => {
     return {
         defaultMin: 10000,
-        defaultMax: 500000,
+        defaultMax: 200000,
         min: 10000,
-        max: 500000,
+        max: 200000,
         tabMsg: '가격'
     };
 };

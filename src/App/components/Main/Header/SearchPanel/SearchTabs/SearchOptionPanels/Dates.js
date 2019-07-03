@@ -1,12 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import { ClosePanelContext } from '../../../../Main'
 import { OptionPanelSetContext } from '../../../Header';
 import { ClearApplyStyle } from './ClearApplyStyle';
 import { ApplyButtonStyle } from './ClearApplyStyle';
 import { ClearButtonStyle } from './ClearApplyStyle';
- 
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+
 function Dates(props) {
+
+    const [dateTest, setDateTest] = useState({date : null});
+    const [focused, setFocused] = useState(false); 
+
 
     const closePanelContext = useContext(ClosePanelContext);
     const contextValue = useContext(OptionPanelSetContext);
@@ -25,6 +30,7 @@ function Dates(props) {
     return (
         <SearchOptionPanelStyle>
             달력, 기간을 설정하는 옵션 패널
+        
             <ClearApplyStyle>
                 <ClearButtonStyle visible={contextValue.isPanelClearButtonActivated.date} onClick={clearDates}>
                     {contextValue.isPanelClearButtonActivated ? '삭제' : null}

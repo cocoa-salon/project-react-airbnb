@@ -200,17 +200,20 @@ const Price = (props) => {
     };
 
     const wonCurrency = "\u{FFE6}"
+    const Placeholder = (props) => <div {...props}>결과를 불러오고 있습니다.</div>;
     const PriceAvgMsg = (props) => <div {...props}>평균 1박 요금은 {wonCurrency}{attachComma(fetchQueryContext.priceAvg)}입니다.</div>;
     const StyledPriceAvgMsg = styled.div`
-        color: rgb(60,60,60); 
+        color: rgb(120,120,120); 
     `;
 
     return (
         <PriceOptionPanelStyle>
-            <StyledPriceAvgMsg as={PriceAvgMsg} />
-            <div>
-                <VictoryBar data={fetchQueryContext.priceRangeMap} x="priceRangeNum" y="itemNum" />
-            </div>
+            {!fetchQueryContext.isPricePlaceholder ? <StyledPriceAvgMsg as={Placeholder} /> :
+                <div>
+                    <StyledPriceAvgMsg as={PriceAvgMsg} />
+                    <VictoryBar data={fetchQueryContext.priceRangeMap} x="priceRangeNum" y="itemNum" />
+                </div>
+            }
             <SliderStyle>
                 <Range
                     ref={refSlider}

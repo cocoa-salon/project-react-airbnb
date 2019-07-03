@@ -79,6 +79,7 @@ function Main() {
             }
             const response = await fetch(`${requestURL.FETCH_ALL_DATA}/${queryString}`, { mode: "cors" });
             const resultJson = await response.json();
+            console.log(resultJson);
             if (resultJson.isEndOfResult) {
                 stopQueryFetch(resultJson);
                 return;
@@ -175,6 +176,7 @@ function Main() {
     // 가격대 분포 관련 상태
     const [priceRangeMap, setPriceRangeMap] = useState([]);
     const [priceAvg, setPriceAvg] = useState(0);
+    const [isPricePlaceholder, setIsPricePlaceholder] = useState(false); 
 
     // 가격대 분포 정보 요청
     const fetchPriceRangeMap = async () => {
@@ -184,6 +186,7 @@ function Main() {
             console.log(priceRangeMapObj);
             getPriceAvg(priceRangeMapObj);
             setPriceRangeMap([...priceRangeMapObj]);
+            setIsPricePlaceholder(true); 
         } catch (error) {
             console.error(error);
         }
@@ -194,7 +197,6 @@ function Main() {
         priceRangeMapObj.forEach(v => {
             priceRangeList = [...priceRangeList, ...v['priceList']];
         });
-        console.log(priceRangeList);
         let priceAvg = Math.round(priceRangeList.reduce((sum, price) => {
             return sum + price;
         },0) / priceRangeList.length); 
@@ -231,7 +233,8 @@ function Main() {
         isStopLoad: isStopLoad,
         resultCount: resultCount,
         priceRangeMap: priceRangeMap,
-        priceAvg: priceAvg
+        priceAvg: priceAvg,
+        isPricePlaceholder: isPricePlaceholder
     };
 
     const DimmedSection = styled.div`

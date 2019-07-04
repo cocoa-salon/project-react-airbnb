@@ -58,17 +58,6 @@ const CurrencyStyle = styled.span`
 
 let queryToClear = "";
 
-const data = [
-    { quarter: 1, earnings: 10 },
-    { quarter: 2, earnings: 3 },
-    { quarter: 3, earnings: 9 },
-    { quarter: 4, earnings: 2 },
-    { quarter: 5, earnings: 7 },
-    { quarter: 6, earnings: 5 },
-    { quarter: 7, earnings: 2 },
-    { quarter: 8, earnings: 1 }
-];
-
 const Price = (props) => {
 
     const optionPanelSetContext = useContext(OptionPanelSetContext);

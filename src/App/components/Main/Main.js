@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Header from './Header/Header';
 import Sections from './Sections/Sections';
-import { StyledItemsContainer } from './Sections/ItemsContainer ';
+import { StyledItemsContainer } from './Sections/ItemsContainer';
 import { requestURL } from '../../setting_values/setting_values';
 import { nextItemsIdxDefault } from '../../setting_values/setting_values';
 import { OPERATE_FETCH_TIME } from '../../setting_values/setting_values';
@@ -79,7 +79,6 @@ function Main() {
             }
             const response = await fetch(`${requestURL.FETCH_ALL_DATA}/${queryString}`, { mode: "cors" });
             const resultJson = await response.json();
-            console.log(resultJson);
             if (resultJson.isEndOfResult) {
                 stopQueryFetch(resultJson);
                 return;
@@ -183,7 +182,6 @@ function Main() {
         try {
             const priceRangePromiseObj = await fetch(requestURL.FETCH_PRICE_RANGE_MAP, { mode: "cors" });
             const priceRangeMapObj = await priceRangePromiseObj.json();
-            console.log(priceRangeMapObj);
             getPriceAvg(priceRangeMapObj);
             setPriceRangeMap([...priceRangeMapObj]);
             setIsPricePlaceholder(true); 
@@ -246,7 +244,7 @@ function Main() {
         background: white;
         opacity: ${ isDimmed ? 0.8 : 0};
         display: ${ isDimmed ? "block" : "none"};
-        z-index: 20;
+        z-index: 40;
     `
 
     return (

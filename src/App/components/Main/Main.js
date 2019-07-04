@@ -60,6 +60,7 @@ function Main() {
     const [IsShowPlaceholder, setIsShowPlaceholder] = useState(true);
     const [isAdditionalLoad, setIsAdditionalLoad] = useState(true);
     const [isStopLoad, setIsStopLoad] = useState(false);
+    const [isInitialResult, setIsInitialResult] = useState(false);
 
     const [resultCount, setResultCount] = useState({
         total: 0,
@@ -75,18 +76,19 @@ function Main() {
             if (isInitialLoad) {
                 await setIsShowPlaceholder(true);
                 await setResultCount({ total: 0, current: 0 });
-                await setIsStopLoad(false); 
-            }
+                await setIsStopLoad(false);
+            };
             const response = await fetch(`${requestURL.FETCH_ALL_DATA}/${queryString}`, { mode: "cors" });
             const resultJson = await response.json();
             if (resultJson.isEndOfResult) {
                 stopQueryFetch(resultJson);
                 return;
-            }
+            };
             const queryResultCount = resultJson.pop();
             setResultCount({ total: queryResultCount.total, current: queryResultCount.current });
             const mappedList = generateMappedList(resultJson);
             setIsShowPlaceholder(false);
+            setIsInitialResult(true);
             isInitialLoad ? setStayLists([...mappedList]) : setStayLists([...stayLists, ...mappedList]);
             setIsAdditionalLoad(false);
         } catch (err) {
@@ -97,7 +99,13 @@ function Main() {
     // 패치 요청 중단
     const stopQueryFetch = (resultJson) => {
         isSearching = false;
-        setStayLists([...stayLists]);
+        if (resultJson.isInitialResult) {
+            setIsInitialResult(false);
+            setIsShowPlaceholder(false);
+            setStayLists([]);
+        } else {
+            setStayLists([...stayLists]);
+        }
         setIsStopLoad(true);
         setIsAdditionalLoad(false);
     }
@@ -175,7 +183,7 @@ function Main() {
     // 가격대 분포 관련 상태
     const [priceRangeMap, setPriceRangeMap] = useState([]);
     const [priceAvg, setPriceAvg] = useState(0);
-    const [isPricePlaceholder, setIsPricePlaceholder] = useState(false); 
+    const [isPricePlaceholder, setIsPricePlaceholder] = useState(false);
 
     // 가격대 분포 정보 요청
     const fetchPriceRangeMap = async () => {
@@ -184,7 +192,7 @@ function Main() {
             const priceRangeMapObj = await priceRangePromiseObj.json();
             getPriceAvg(priceRangeMapObj);
             setPriceRangeMap([...priceRangeMapObj]);
-            setIsPricePlaceholder(true); 
+            setIsPricePlaceholder(true);
         } catch (error) {
             console.error(error);
         }
@@ -197,7 +205,7 @@ function Main() {
         });
         let priceAvg = Math.round(priceRangeList.reduce((sum, price) => {
             return sum + price;
-        },0) / priceRangeList.length); 
+        }, 0) / priceRangeList.length);
         setPriceAvg(priceAvg);
     }
 
@@ -232,7 +240,8 @@ function Main() {
         resultCount: resultCount,
         priceRangeMap: priceRangeMap,
         priceAvg: priceAvg,
-        isPricePlaceholder: isPricePlaceholder
+        isPricePlaceholder: isPricePlaceholder,
+        isInitialResult: isInitialResult
     };
 
     const DimmedSection = styled.div`

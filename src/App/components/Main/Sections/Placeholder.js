@@ -3,7 +3,7 @@ import airbnb_logo from '../../../../img/airbnb_logo_small_white.png'
 import styled, { css, keyframes } from 'styled-components';
 import StyledItemsListUl from './StyledItemsListUl';
 
-const blankItemsNum = 30;
+const blankItemsNum = 6;
 const blankItemsArray = [];
 
 const containerFade = keyframes`

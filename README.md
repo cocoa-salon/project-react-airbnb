@@ -88,5 +88,12 @@
 
 <img src="https://user-images.githubusercontent.com/38235501/59832755-a501d080-937f-11e9-8fd9-72b1df3bcb8d.gif" alt="">
 
+### 날짜(체크인, 체크아웃) 지정 기능 구현
+
+- react-dates 라이브러리 활용, 기본 날짜 지정 기능 구현
+- 날짜 지정 후 DB 검색을 위한 query string 생성
+- 당일 이전 날짜 지정 비활성화
+
+<img src="https://user-images.githubusercontent.com/38235501/60881256-434acd00-a280-11e9-9e56-258675217289.gif" alt="">
 
 **기타 기능 추후 구현 예정**

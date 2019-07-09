@@ -16,12 +16,16 @@ let queryToClear = "";
 function Dates(props) {
 
     const closePanelContext = useContext(ClosePanelContext);
-    const contextValue = useContext(OptionPanelSetContext);
+    const optionPanelSetContext = useContext(OptionPanelSetContext);
 
     const handleDate = ({ startDate, endDate }) => {
         generateQueryString(startDate, endDate);
-        contextValue.setCheckIn(startDate);
-        contextValue.setCheckOut(endDate);
+        optionPanelSetContext.setCheckIn(startDate);
+        optionPanelSetContext.setCheckOut(endDate);
+        optionPanelSetContext.toggleTabOnOff('dates', true);
+        optionPanelSetContext.setIsPanelClearButtonActivated({
+            ...optionPanelSetContext.isPanelClearButtonActivated, dates: true
+        });
     };
 
     const generateQueryString = (startDate, endDate) => {
@@ -42,12 +46,17 @@ function Dates(props) {
     };
 
     const handleFocus = (focusedInput) => {
-        contextValue.setFocusedInput(focusedInput || "startDate");
+        optionPanelSetContext.setFocusedInput(focusedInput || "startDate");
     };
 
     const clearDates = (event) => {
         event.stopPropagation();
-        contextValue.setIsPanelClearButtonActivated(false);
+        optionPanelSetContext.setCheckIn(null);
+        optionPanelSetContext.setCheckOut(null);
+        optionPanelSetContext.toggleTabOnOff('dates', false);
+        optionPanelSetContext.setIsPanelClearButtonActivated({
+            ...optionPanelSetContext.isPanelClearButtonActivated, dates: false
+        });
     };
 
     const applyDates = (event) => {
@@ -59,17 +68,17 @@ function Dates(props) {
     return (
         <SearchOptionPanelStyle>
             <DayPickerRangeController
-                startDate={contextValue.checkIn} // momentPropTypes.momentObj or null,
-                endDate={contextValue.checkOut} // momentPropTypes.momentObj or null,
+                startDate={optionPanelSetContext.checkIn} // momentPropTypes.momentObj or null,
+                endDate={optionPanelSetContext.checkOut} // momentPropTypes.momentObj or null,
                 onDatesChange={handleDate} // PropTypes.func.isRequired,
-                focusedInput={contextValue.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                focusedInput={optionPanelSetContext.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                 onFocusChange={handleFocus} // PropTypes.func.isRequired,
                 initialVisibleMonth={() => moment().add(2, "M")}
                 numberOfMonths={2}
             />
             <ClearApplyStyle>
-                <ClearButtonStyle visible={contextValue.isPanelClearButtonActivated.date} onClick={clearDates}>
-                    {contextValue.isPanelClearButtonActivated ? '삭제' : null}
+                <ClearButtonStyle visible={optionPanelSetContext.isPanelClearButtonActivated.dates} onClick={clearDates}>
+                    {optionPanelSetContext.isPanelClearButtonActivated ? '삭제' : null}
                 </ClearButtonStyle>
                 <ApplyButtonStyle onClick={applyDates}>
                     적용

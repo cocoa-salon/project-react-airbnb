@@ -9,7 +9,7 @@ import { searchOptionPanelsfilterValues } from '../../../setting_values/setting_
 import { searchOptionTabsValues } from '../../../setting_values/setting_values';
 import { searchOptionPanelsValues } from '../../../setting_values/setting_values';
 
-const { guestsValues, typeOfPlaceValues, priceValues, instantBookValues } = searchOptionPanelsfilterValues;
+const { datesValues, guestsValues, typeOfPlaceValues, priceValues, instantBookValues } = searchOptionPanelsfilterValues;
 const { tabActivated, tabStatesToClear } = searchOptionTabsValues;
 const { panelClearButtonActivated, panelStatesToClear } = searchOptionPanelsValues;
 
@@ -19,8 +19,8 @@ export const OptionPanelSetContext = React.createContext();
 function Header() {
 
     // 날짜 state
-    const [checkIn, setCheckIn] = useState(null);
-    const [checkOut, setCheckOut] = useState(null);
+    const [checkIn, setCheckIn] = useState(datesValues.checkIn);
+    const [checkOut, setCheckOut] = useState(datesValues.checkOut);
     const [focusedInput, setFocusedInput] = useState("startDate");
 
     // 인원 state

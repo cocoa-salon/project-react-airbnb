@@ -12,6 +12,12 @@ export const OPERATE_FETCH_TIME = 1000;
 export const nextItemsIdxDefault = "&next_items_idx=1";
 export const searchOptionPanelsfilterValues = {
 
+    // 날짜 state
+    datesValues: {
+        checkIn: null,
+        checkOut: null
+    },
+
     // 인원 state
     guestsValues : {
         adultsNum: 0,

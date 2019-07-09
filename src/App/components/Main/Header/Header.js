@@ -52,6 +52,8 @@ function Header() {
     // 패널 설정 일괄 초기화
     const clearAll = () => {
         setIsSearchOptionTabActivated({ ...tabStatesToClear });
+        setCheckIn(null);
+        setCheckOut(null);
         dispatchGuestsNum({ type: 'clearAll' });
         dispatchTypeOfPlace({ type: 'clear' });
         setIsInstantBookChecked({ isChecked: false });

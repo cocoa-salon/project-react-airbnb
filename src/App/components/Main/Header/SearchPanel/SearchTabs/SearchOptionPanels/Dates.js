@@ -45,7 +45,6 @@ function Dates(props) {
         let regCheckIn = new RegExp('{{checkIn}}');
         let regCheckOut = new RegExp('{{checkOut}}');
         queryString = template.replace(regCheckIn, checkInDate).replace(regCheckOut, checkOutDate);
-        console.log(queryString);
 
         return queryString;
     };

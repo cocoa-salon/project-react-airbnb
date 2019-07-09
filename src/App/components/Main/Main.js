@@ -198,6 +198,7 @@ function Main() {
         }
     };
 
+    // 평균 가격 계산
     const getPriceAvg = (priceRangeMapObj) => {
         let priceRangeList = [];
         priceRangeMapObj.forEach(v => {

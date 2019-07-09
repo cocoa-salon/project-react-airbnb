@@ -7,12 +7,15 @@ import { ClearApplyStyle } from './ClearApplyStyle';
 import { ApplyButtonStyle } from './ClearApplyStyle';
 import { ClearButtonStyle } from './ClearApplyStyle';
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import { DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import moment from 'moment';
 import 'moment/locale/ko';
 
 let queryToClear = "";
+
+const SearchOptionPanelDatesStyle = styled(SearchOptionPanelStyle)`
+    width: 620px;
+`;
 
 function Dates(props) {
 
@@ -67,20 +70,16 @@ function Dates(props) {
         closePanelContext.clearDimmedSections();
     };
 
-    const SearchOptionPanelDatesStyle = styled(SearchOptionPanelStyle)`
-        width: 620px;
-    `
-
     return (
-        <SearchOptionPanelStyle>
+        <SearchOptionPanelDatesStyle>
             <DayPickerRangeController
                 startDate={optionPanelSetContext.checkIn} // momentPropTypes.momentObj or null,
                 endDate={optionPanelSetContext.checkOut} // momentPropTypes.momentObj or null,
                 onDatesChange={handleDate} // PropTypes.func.isRequired,
                 focusedInput={optionPanelSetContext.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                 onFocusChange={handleFocus} // PropTypes.func.isRequired,
-                initialVisibleMonth={() => moment().add(2, "M")}
                 numberOfMonths={2}
+                noBorder={true}
             />
             <ClearApplyStyle>
                 <ClearButtonStyle visible={optionPanelSetContext.isPanelClearButtonActivated.dates} onClick={clearDates}>
@@ -90,7 +89,7 @@ function Dates(props) {
                     적용
                 </ApplyButtonStyle>
             </ClearApplyStyle>
-        </SearchOptionPanelStyle>
+        </SearchOptionPanelDatesStyle>
     );
 }
 

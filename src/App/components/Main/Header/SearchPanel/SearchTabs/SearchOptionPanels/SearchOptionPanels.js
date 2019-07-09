@@ -5,6 +5,8 @@ import { ClosePanelContext } from '../../../../Main';
 import SelectedSearchOptionPanels from './SelectedSearchOptionPanels';
 
 const SearchOptionPanelArea = styled.div`
+    position: relative;
+    top: 16px;
     width: 400px;
     height: 100%; 
 `;
@@ -20,7 +22,7 @@ const SearchOptionPanels = (props) => {
     };
 
     return (
-        <SearchOptionPanelArea data-cursoroff={true} onMouseLeave={handleIsOnMouseLeavePanel} onMouseEnter={handleIsOnMouseLeavePanel}>
+        <SearchOptionPanelArea className="PanelArea" data-cursoroff={true} onMouseLeave={handleIsOnMouseLeavePanel} onMouseEnter={handleIsOnMouseLeavePanel}>
                 <Route path={`${closePanelContext.searchOptionTabUrl}/:id`} render={(props) =>
                     <SelectedSearchOptionPanels match={props.match} />
                 } />

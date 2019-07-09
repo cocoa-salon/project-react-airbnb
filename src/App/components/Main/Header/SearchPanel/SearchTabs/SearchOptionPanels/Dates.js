@@ -11,6 +11,9 @@ import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
 import 'moment/locale/ko';
 
+
+let queryToClear = "";
+
 function Dates(props) {
 
     const refInput = useRef(null);
@@ -18,18 +21,37 @@ function Dates(props) {
     const closePanelContext = useContext(ClosePanelContext);
     const contextValue = useContext(OptionPanelSetContext);
 
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [checkIn, setCheckIn] = useState(null);
+    const [checkOut, setCheckOut] = useState(null);
+
     const [focusedInput, setFocusedInput] = useState("startDate");
 
-    const handleDate = ({startDate, endDate}) => {
-        setStartDate(startDate);
-        setEndDate(endDate);
-    }
+    const handleDate = ({ startDate, endDate }) => {
+        generateQueryString(startDate, endDate);
+        setCheckIn(startDate);
+        setCheckOut(endDate);
+    };
+
+    const generateQueryString = (startDate, endDate) => {
+        const checkInDate = startDate.format('YYYY-MM-DD');
+        let checkOutDate = "checkout";
+        if (endDate) {
+            checkOutDate = endDate.format('YYYY-MM-DD')
+        };
+
+        let queryString = "";
+        const template = `&checkin={{checkIn}}&checkout={{checkOut}}`;
+        let regCheckIn = new RegExp('{{checkIn}}');
+        let regCheckOut = new RegExp('{{checkOut}}');
+        queryString = template.replace(regCheckIn, checkInDate).replace(regCheckOut, checkOutDate);
+        console.log(queryString);
+
+        return queryString;
+    };
 
     const handleFocus = (focusedInput) => {
         setFocusedInput(focusedInput || "startDate");
-    }
+    };
 
     const clearDates = (event) => {
         event.stopPropagation();
@@ -44,16 +66,16 @@ function Dates(props) {
 
     return (
         <SearchOptionPanelStyle>
-        <DayPickerRangeController
+            <DayPickerRangeController
                 ref={refInput}
-                startDate={startDate} // momentPropTypes.momentObj or null,
-                endDate={endDate} // momentPropTypes.momentObj or null,
+                startDate={checkIn} // momentPropTypes.momentObj or null,
+                endDate={checkOut} // momentPropTypes.momentObj or null,
                 onDatesChange={handleDate} // PropTypes.func.isRequired,
                 focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                 onFocusChange={handleFocus} // PropTypes.func.isRequired,
                 initialVisibleMonth={() => moment().add(2, "M")}
                 numberOfMonths={2}
-            /> 
+            />
             <ClearApplyStyle>
                 <ClearButtonStyle visible={contextValue.isPanelClearButtonActivated.date} onClick={clearDates}>
                     {contextValue.isPanelClearButtonActivated ? '삭제' : null}
@@ -63,7 +85,7 @@ function Dates(props) {
                 </ApplyButtonStyle>
             </ClearApplyStyle>
         </SearchOptionPanelStyle>
-    )
+    );
 }
 
 export default Dates;

@@ -74,9 +74,9 @@ function Main() {
         try {
             // 맨 처음 검색 시(초기화) 로딩 화면 표시
             if (isInitialLoad) {
-                await setIsShowPlaceholder(true);
-                await setResultCount({ total: 0, current: 0 });
-                await setIsStopLoad(false);
+                setIsShowPlaceholder(true);
+                setResultCount({ total: 0, current: 0 });
+                setIsStopLoad(false);
             };
             const response = await fetch(`${requestURL.FETCH_ALL_DATA}/${queryString}`, { mode: "cors" });
             const resultJson = await response.json();

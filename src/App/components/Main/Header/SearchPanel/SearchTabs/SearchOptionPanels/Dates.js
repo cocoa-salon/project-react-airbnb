@@ -1,4 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
+import styled from 'styled-components';
 import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import { ClosePanelContext } from '../../../../Main'
 import { OptionPanelSetContext } from '../../../Header';
@@ -23,17 +24,18 @@ function Dates(props) {
         optionPanelSetContext.setCheckIn(startDate);
         optionPanelSetContext.setCheckOut(endDate);
         optionPanelSetContext.toggleTabOnOff('dates', true);
-        optionPanelSetContext.setIsPanelClearButtonActivated({
-            ...optionPanelSetContext.isPanelClearButtonActivated, dates: true
-        });
+        if (startDate && endDate) {
+            optionPanelSetContext.setIsPanelClearButtonActivated({
+                ...optionPanelSetContext.isPanelClearButtonActivated, dates: true
+            });
+        }
     };
 
     const generateQueryString = (startDate, endDate) => {
-        const checkInDate = startDate.format('YYYY-MM-DD');
+        let checkInDate = "checkin";
         let checkOutDate = "checkout";
-        if (endDate) {
-            checkOutDate = endDate.format('YYYY-MM-DD')
-        };
+        if (startDate) checkInDate = startDate.format('YYYY-MM-DD');
+        if (endDate) checkOutDate = endDate.format('YYYY-MM-DD');
 
         let queryString = "";
         const template = `&checkin={{checkIn}}&checkout={{checkOut}}`;
@@ -64,6 +66,10 @@ function Dates(props) {
         closePanelContext.setIsPanelClosed(true);
         closePanelContext.clearDimmedSections();
     };
+
+    const SearchOptionPanelDatesStyle = styled(SearchOptionPanelStyle)`
+        width: 620px;
+    `
 
     return (
         <SearchOptionPanelStyle>

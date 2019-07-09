@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useEffect  } from 'react';
 import styled from 'styled-components';
 import SearchOptionPanelStyle from './SearchOptionPanelStyle';
 import { ClosePanelContext } from '../../../../Main'
@@ -7,8 +7,9 @@ import { ClearApplyStyle } from './ClearApplyStyle';
 import { ApplyButtonStyle } from './ClearApplyStyle';
 import { ClearButtonStyle } from './ClearApplyStyle';
 import 'react-dates/initialize';
-import { DayPickerRangeController } from 'react-dates';
+import { DayPickerRangeController, isInclusivelyBeforeDay, isInclusivelyAfterDay } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
+import moment from 'moment';
 import 'moment/locale/ko';
 
 let queryToClear = "";
@@ -79,6 +80,7 @@ function Dates(props) {
                 onFocusChange={handleFocus} // PropTypes.func.isRequired,
                 numberOfMonths={2}
                 noBorder={true}
+                isOutsideRange={(day) => day.isBefore(moment())}
             />
             <ClearApplyStyle>
                 <ClearButtonStyle visible={optionPanelSetContext.isPanelClearButtonActivated.dates} onClick={clearDates}>

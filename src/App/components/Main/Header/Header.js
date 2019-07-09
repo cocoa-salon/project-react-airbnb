@@ -11,12 +11,17 @@ import { searchOptionPanelsValues } from '../../../setting_values/setting_values
 
 const { guestsValues, typeOfPlaceValues, priceValues, instantBookValues } = searchOptionPanelsfilterValues;
 const { tabActivated, tabStatesToClear } = searchOptionTabsValues;
-const {panelClearButtonActivated, panelStatesToClear} = searchOptionPanelsValues; 
+const { panelClearButtonActivated, panelStatesToClear } = searchOptionPanelsValues;
 
 export const ClearContext = React.createContext();
 export const OptionPanelSetContext = React.createContext();
 
 function Header() {
+
+    // 날짜 state
+    const [checkIn, setCheckIn] = useState(null);
+    const [checkOut, setCheckOut] = useState(null);
+    const [focusedInput, setFocusedInput] = useState("startDate");
 
     // 인원 state
     const [guestsNum, dispatchGuestsNum] = useReducer(updateGuestsReducer, guestsValues);
@@ -46,13 +51,22 @@ function Header() {
 
     // 패널 설정 일괄 초기화
     const clearAll = () => {
-        setIsSearchOptionTabActivated({...tabStatesToClear});
+        setIsSearchOptionTabActivated({ ...tabStatesToClear });
         dispatchGuestsNum({ type: 'clearAll' });
         dispatchTypeOfPlace({ type: 'clear' });
         setIsInstantBookChecked({ isChecked: false });
         dispatchSetPrice({ type: 'clear' });
-        setIsPanelClearButtonActivated({...panelStatesToClear});
+        setIsPanelClearButtonActivated({ ...panelStatesToClear });
     };
+
+    const SearchOptionDatesPanelProps = {
+        checkIn: checkIn,
+        setCheckIn: setCheckIn,
+        checkOut: checkOut,
+        setCheckOut: setCheckOut,
+        focusedInput: focusedInput,
+        setFocusedInput: setFocusedInput
+    }
 
     const SearchOptionGuestsPanelProps = {
         guestsNum: guestsNum,
@@ -88,6 +102,7 @@ function Header() {
         <FixedHeader>
             <ClearContext.Provider value={{ clearAll: clearAll, toggleTabOnOff: toggleTabOnOff }}>
                 <OptionPanelSetContext.Provider value={{
+                    ...SearchOptionDatesPanelProps,
                     ...SearchOptionGuestsPanelProps,
                     ...SearchOptionTypeOfPlacePanelProps,
                     ...SearchOptionInstantBookPanelProps,

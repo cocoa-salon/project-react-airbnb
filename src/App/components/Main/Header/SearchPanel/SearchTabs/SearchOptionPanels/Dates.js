@@ -11,25 +11,17 @@ import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
 import 'moment/locale/ko';
 
-
 let queryToClear = "";
 
 function Dates(props) {
 
-    const refInput = useRef(null);
-
     const closePanelContext = useContext(ClosePanelContext);
     const contextValue = useContext(OptionPanelSetContext);
 
-    const [checkIn, setCheckIn] = useState(null);
-    const [checkOut, setCheckOut] = useState(null);
-
-    const [focusedInput, setFocusedInput] = useState("startDate");
-
     const handleDate = ({ startDate, endDate }) => {
         generateQueryString(startDate, endDate);
-        setCheckIn(startDate);
-        setCheckOut(endDate);
+        contextValue.setCheckIn(startDate);
+        contextValue.setCheckOut(endDate);
     };
 
     const generateQueryString = (startDate, endDate) => {
@@ -50,7 +42,7 @@ function Dates(props) {
     };
 
     const handleFocus = (focusedInput) => {
-        setFocusedInput(focusedInput || "startDate");
+        contextValue.setFocusedInput(focusedInput || "startDate");
     };
 
     const clearDates = (event) => {
@@ -67,11 +59,10 @@ function Dates(props) {
     return (
         <SearchOptionPanelStyle>
             <DayPickerRangeController
-                ref={refInput}
-                startDate={checkIn} // momentPropTypes.momentObj or null,
-                endDate={checkOut} // momentPropTypes.momentObj or null,
+                startDate={contextValue.checkIn} // momentPropTypes.momentObj or null,
+                endDate={contextValue.checkOut} // momentPropTypes.momentObj or null,
                 onDatesChange={handleDate} // PropTypes.func.isRequired,
-                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                focusedInput={contextValue.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                 onFocusChange={handleFocus} // PropTypes.func.isRequired,
                 initialVisibleMonth={() => moment().add(2, "M")}
                 numberOfMonths={2}
